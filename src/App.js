@@ -14,6 +14,9 @@ class App extends Component {
           <p>
           WowZee WowZee WooWoo ... changes by kevin
           </p>
+          <p>
+          WomBee WomBee WooLoo ... changes by kevin
+          </p>
           <a className="App-link"
              href="https://reactjs.org"
              target="_blank"
