@@ -1,10 +1,17 @@
-import React from 'react';
+import React    from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import Button   from '@material-ui/core/Button';
 import * as serviceWorker from './util/serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+function App() {
+  return (
+    <Button variant="contained" color="primary">
+      Hello Eatery Nod
+    </Button>
+  );
+}
+
+ReactDOM.render(<App/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
