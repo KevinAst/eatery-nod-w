@@ -2,7 +2,7 @@
   "name": "eatery-nod-w",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://KevinAst.github.io/eatery-nod-w",
+  "homepage": "https://eatery-nod-w.js.org",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
