@@ -1,14 +1,11 @@
 import React    from 'react';
 import ReactDOM from 'react-dom';
-import Button   from '@material-ui/core/Button';
+import SplashScreen from './util/SplashScreen';
 import * as serviceWorker from './util/serviceWorker';
 
 function App() {
-  return (
-    <Button variant="contained" color="primary">
-      Hello Eatery Nod
-    </Button>
-  );
+  const spinMsg = 'WowZee WooWoo ... Now is the time for every good man to come to the aid of his country.';
+  return <SplashScreen msg={spinMsg}/>;
 }
 
 ReactDOM.render(<App/>, document.getElementById('root'));
