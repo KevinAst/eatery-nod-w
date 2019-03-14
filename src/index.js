@@ -1,17 +1,14 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
-import CssBaseline        from '@material-ui/core/CssBaseline';
-import Notify             from './util/notify';
+import MainLayout         from './util/layout/MainLayout';
 import TempJunk           from './TempJunk';
 import * as serviceWorker from './util/serviceWorker';
 
 function App() {
   return (
-    <React.Fragment>
-      <Notify/>      {/* ?? required in root  */}
-      <CssBaseline/> {/* ?? required in root  */}
-      <TempJunk/>    {/* ?? temp for now */}
-    </React.Fragment>
+    <MainLayout>
+      <TempJunk/>
+    </MainLayout>
   );
 }
 
