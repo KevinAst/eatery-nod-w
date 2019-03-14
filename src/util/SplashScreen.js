@@ -2,7 +2,6 @@ import React         from 'react';
 //? import PropTypes     from 'prop-types';
 import { withStyles }   from '@material-ui/core/styles';
 import Typography       from '@material-ui/core/Typography';
-import CssBaseline      from '@material-ui/core/CssBaseline';
 import Paper            from '@material-ui/core/Paper';
 import AppBar           from '@material-ui/core/AppBar';
 import Toolbar          from '@material-ui/core/Toolbar';
@@ -57,9 +56,6 @@ function SplashScreen({msg, classes}) {
   // ?? use Typography in place of <p>
   return (
     <main className={classes.main}> {/* ?? wonder if this should go in root */}
-
-      {/* <CssBaseline/> ?? unsure how much this is doing ... should go in root if we do use */}
-      <CssBaseline/>
 
       <Paper className={classes.paper}>
 
