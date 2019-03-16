@@ -71,7 +71,7 @@ const mainStyles = (theme) => ({
 
 function MainLayout({isThemeLight, children, classes}) {
   const themeInUse = isThemeLight ? lightTheme : darkTheme;
-  console.log('***eatery-nod-w*** <MainLayout> MUI theme in use:', themeInUse)
+  // console.log('***eatery-nod-w*** <MainLayout> MUI theme in use:', themeInUse)
   return (
     <MuiThemeProvider theme={themeInUse}>
       <CssBaseline/>

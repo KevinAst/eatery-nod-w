@@ -40,7 +40,7 @@ import isFunction         from 'lodash.isfunction';
  *                   
  *   - toast ..... ({msg, duration=5, actions})                    ditto              via toast.xyz()    'bottom-left'    false  ditto
  *   - alert ..... ({msg, actions})                                null               via alert.xyz()    'top-center'     true   ditto
- *   - confirm ... ({msg, actions})                                null               via confirm.xyz()  'bottom-right'   true   requires client action(s)
+ *   - confirm ... ({msg, actions})                                null               via confirm.xyz()  'top-right'      true   requires client action(s)
  * ```
  *
  * **Setup**:
@@ -517,7 +517,7 @@ function confirmBase({msg, actions, ...unknownArgs}, level) {
     msg,
     duration: null, // force user acknowledgment
     level,          // NOTE: level is defaulted by the root notify()
-    position: 'bottom-right',
+    position: 'top-right',
     modal: true,
     actions,
   });

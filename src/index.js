@@ -1,14 +1,14 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
-import MainLayout         from './util/layout/MainLayout';
+import AppLayout          from './util/layout/AppLayout';
 import TempJunk           from './TempJunk';
 import * as serviceWorker from './util/serviceWorker';
 
 function App() {
   return (
-    <MainLayout>
+    <AppLayout title="Pool">
       <TempJunk/>
-    </MainLayout>
+    </AppLayout>
   );
 }
 

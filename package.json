@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
     "lodash.isfunction": "^3.0.9",
     "lodash.isstring": "^4.0.1",
     "notistack": "^0.5.0",
