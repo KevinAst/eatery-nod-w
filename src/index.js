@@ -1,15 +1,18 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
-import AppLayout          from './util/layout/AppLayout';
-import TempJunk           from './TempJunk';
+//import AppLayout          from './util/layout/AppLayout';
+//import TempJunk           from './TempJunk';
+import TempList           from './TempList';
 import * as serviceWorker from './util/serviceWorker';
 
 function App() {
-  return (
-    <AppLayout title="Pool">
-      <TempJunk/>
-    </AppLayout>
-  );
+  // ?? OLD
+  //? return (
+  //?   <AppLayout title="Pool">
+  //?     <TempJunk/>
+  //?   </AppLayout>
+  //? );
+  return <TempList/>;
 }
 
 ReactDOM.render(<App/>, document.getElementById('root'));

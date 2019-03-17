@@ -53,7 +53,7 @@ import {toast,
 const appStyles = (theme) => ({
 
   app: {
-    display: 'flex',
+    display: 'flex', // KJB: does not seem to be doing anything
   },
 
   appBar: {
@@ -91,9 +91,15 @@ const appStyles = (theme) => ({
 
   content: {
     flexGrow: 1,
-    padding:  theme.spacing.unit * 3,
-    height:   '100vh', // 100% of viewport height
-    overflow: 'auto',  // add scrollbar ONLY when necessary
+    height: '100vh',                 // content window is height is same as our viewport (100%)
+    overflow: 'auto',                // add scrollbar ONLY when necessary
+
+    paddingTop:    '4em', // HACK: so ToolBar doesn't cover up ... must be a better way
+    paddingBottom: '4em', // HACK: so BottomBar doesn't cover up ... must be a better way
+    // padding: theme.spacing.unit * 3, // ... from sample content ... sample: 8 * 3
+
+    // KJB: temporarily make content window VERY VISIBLE
+    // backgroundColor: 'pink',
   },
 
 });
@@ -239,11 +245,12 @@ function AppLayout({title, children, classes, bottomBarContent}) {
         </Drawer>
 
         {/* Page Content */}
-        <div className={classes.content}>
+        {/* $$AI: multiple <main> appears to be allowed (although NOT technically correct) ... in this app does NOT seem to matter if THIS is <main> or <div> */}
+        <main className={classes.content}>
           {children}
-        </div>
+        </main>
 
-        {/* Optional Bottom Bar */}
+        {/* Optional Bottom Bar TODO: ?? look into <BottomNavigation>  */}
         {bottomBarContent && (
            <AppBar className={classes.bottomBar}
                    position="absolute">
