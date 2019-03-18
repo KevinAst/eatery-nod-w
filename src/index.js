@@ -1,18 +1,25 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
+//import MainLayout         from './util/layout/MainLayout';
+//import SplashScreen       from './util/SplashScreen';
 //import AppLayout          from './util/layout/AppLayout';
 //import TempJunk           from './TempJunk';
 import TempList           from './TempList';
 import * as serviceWorker from './util/serviceWorker';
 
 function App() {
-  // ?? OLD
+  // TEMP: various sandboxes (one or the other)
+  return <TempList/>;
   //? return (
   //?   <AppLayout title="Pool">
   //?     <TempJunk/>
   //?   </AppLayout>
   //? );
-  return <TempList/>;
+  //? return (
+  //?   <MainLayout>
+  //?     <SplashScreen msg="This is a test outside of AppLayout"/>
+  //?   </MainLayout>
+  //? );
 }
 
 ReactDOM.render(<App/>, document.getElementById('root'));

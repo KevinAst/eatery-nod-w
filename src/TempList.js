@@ -1,28 +1,24 @@
-import React        from 'react';
+import React         from 'react';
 
-import withStyles         from '@material-ui/core/styles/withStyles';
+import withStyles    from '@material-ui/core/styles/withStyles';
 
-import AppLayout    from './util/layout/AppLayout';
+import AppLayout     from './util/layout/AppLayout';
+import SplashScreen  from './util/SplashScreen';
 
-import Typography   from '@material-ui/core/Typography';
+import Typography    from '@material-ui/core/Typography';
 
-import ListItemIcon       from '@material-ui/core/ListItemIcon';
-import EateryIcon           from '@material-ui/icons/Restaurant';
+import ListItemIcon  from '@material-ui/core/ListItemIcon';
+import EateryIcon    from '@material-ui/icons/Restaurant';
 
+import List          from '@material-ui/core/List';
+import ListItem      from '@material-ui/core/ListItem';
+import ListItemText  from '@material-ui/core/ListItemText';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import {toast}          from './util/notify';
-
-import TempJunk           from './TempJunk';
+import {toast}       from './util/notify';
 
 const listStyles = (theme) => ({
-
   list: {
   },
-
 });
 
 const showEateryDetail = () => toast.warn({msg: 'showing selected eatery'});
@@ -61,11 +57,30 @@ const myListItems = (num) => { // convenience list item builder (for demo purpos
 };
 
 function TempList({classes}) {
+
+  const [splashVisible, setSplashVisible] = React.useState(false); // KJB: WowZee ANOTHER HOOK!
+
+  function showSplashScreen() {
+    setSplashVisible(true);
+  }
+
   return (
     <AppLayout title="Pool List Test">
       <List className={classes.list}>
+
+        <ListItem key="show-SplashScreen"
+                  dense
+                  button
+                  divider
+                  onClick={showSplashScreen}>
+          <ListItemText primary="Show SplashScreen"/>
+        </ListItem>
+
         {myListItems(50)}
       </List>
+
+      {splashVisible &&
+       <SplashScreen msg="This is a test.  I hope it works! Currently I am NOT configured to turn off this Splash :-("/>}
     </AppLayout>
   );
 }
