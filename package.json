@@ -23,12 +23,26 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "action-u": "^0.2.0",
+    "astx-redux-util": "^1.0.0",
+    "feature-redux": "^1.0.0",
+    "feature-redux-logic": "^1.0.0",
+    "feature-router": "^1.0.0",
+    "feature-u": "^1.0.1",
+    "firebase": "^5.9.0",
+    "geodist": "^0.2.1",
+    "lodash.isequal": "^4.5.0",
     "lodash.isfunction": "^3.0.9",
     "lodash.isstring": "^4.0.1",
     "notistack": "^0.5.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
+    "react-redux": "^6.0.1",
+    "react-scripts": "2.1.5",
+    "redux": "^4.0.1",
+    "redux-logic": "^2.1.1",
+    "reselect": "^4.0.0",
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "gh-pages": "^2.0.1"
