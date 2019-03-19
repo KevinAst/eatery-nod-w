@@ -95,6 +95,7 @@
  *   For more usage scenarios, please refer to the discloseError.js utility.
  */
 
+/* eslint-disable no-extend-native */  // we are very careful NOT to break native behavior of the Error object
 
 if (!Error.prototype.defineUserMsg) { // key off of one of several extension points
 
