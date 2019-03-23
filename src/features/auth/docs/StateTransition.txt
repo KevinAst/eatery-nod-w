@@ -1,0 +1,107 @@
+********************************************************************************
+* State Transition
+********************************************************************************
+
+This document highlights how actions, logic, and reducers interact
+together to maintain this feature's state (a text document is used to
+accommodate the wide free-format content).
+
+
+Actions (see: actions.js)                        Logic (see: logic.js)                                          Reducer (see: state.js)
+==============================================   ============================================================   ===============================
+fassets.actions.bootstrapComplete() .........................................................................   - NONE
+                                                 startAuthorization:
+                                                 ==================
+                                                   DISPATCH .autoSignIn()           
+
+auth                                             
+  .autoSignIn() .............................   ............................................................   - NONE
+                                                 checkDeviceCredentials:
+                                                 ======================
+                                                   async: fassets.deviceService.fetchCredentials() via localStorage() 
+                                                          - YES: DISPATCH .haveDeviceCredentials(encodedCredentials)  
+                                                          - NO:  DISPATCH .noDeviceCredentials()
+                                                          - ERR: discloseError(err) -and- manually signin
+                                                                 DISPATCH .noDeviceCredentials()
+
+    .haveDeviceCredentials(encodedCredentials)   ............................................................   - NONE
+                                                 autoSignIn:                                               
+                                                 ==========
+                                                   DISPATCH signIn(email, pass)
+
+    .noDeviceCredentials() ..................................................................................   - NONE
+     -and- signOut() below                       manualSignIn:                                             
+                                                 ============
+                                                   DISPATCH signIn.open()
+                                                              
+  .signIn(email, pass) ......................................................................................   - NONE
+                                                 signIn:
+                                                 ======
+                                                   async: fassets.authService.signIn(action.email, action.pass)
+                                                          - SUCCESS: fassets.deviceService.storeCredentials(action.email, action.pass)
+                                                                     DISPATCH .complete(user)
+                                                          - FAIL:    discloseError(err)
+                                                                     DISPATCH signIn.open(action, msg) .. display signin sreen
+                                                                                                           
+    .complete(user) ........................................................................................    - set user FROM action.user (using toStruct())
+
+                                                 supplementSignInComplete:
+                                                 ========================
+                                                   process():
+                                                   ---------
+                                                     DISPATCH userProfileChanged(action.user) ... in the future this action will also be dispatched when the user has the ability to change their pool
+                                                                                                           
+                                                 signInCleanup:
+                                                 =============
+                                                   DISPATCH signIn.close()                                 
+
+
+    > USED in secondary signin screen to refresh user, 
+           in an effort to determine if they have verified their email 
+    .checkEmailVerified() ..................................................................................    - set user FROM action.user (using toStruct())
+                                                 checkEmailVerified:
+                                                 ==================
+                                                   transform():
+                                                   -----------
+                                                     fassets.authService.refreshUser()
+                                                       .then( supplement action with most current user)
+                                                                    
+    > USED in secondary signin screen to request service
+           to resend the verification email instructions
+    .resendEmailVerification() .............................................................................    - NONE
+                                                 resendEmailVerification:
+                                                 =======================
+                                                   transform():
+                                                   -----------
+                                                     fassets.authService.resendEmailVerification()
+
+                                                                                                               
+    > iForm logic (auto-generated) ............. > iForm logic (auto-generated) ............................    > iForm logic (auto-generated)
+    .open([domain] [,formMsg])                                                                                 
+    .fieldChanged(fieldName, value)                                                                            
+    .fieldTouched(fieldName)                                                                                   
+    .process(values, domain)                     processSignIn:
+                                                 =============
+                                                   DISPATCH signIn(email, pass)                           
+      .reject(msgs)                                                                                            
+    .close()                                                                                                   
+
+
+  .signOut() ...............................................................................................    - set user TO empty User (i.e. NOT signed in)
+                                                 signOut:                                                       - TODO: what about eateries and discovery (may want to clear them when user signs back in)
+                                                 =======
+                                                   async: fassets.authService.signOut()
+                                                          - ERR: discloseError(err)
+                                                   async: fassets.deviceService.removeCredentials()
+                                                          - ERR: discloseError(err)
+
+
+  > ALSO: this action is monitored by 'other' features (ex: 'eateries')
+  .userProfileChanged(user) ................................................................................   - set user FROM action.user (using toStruct())
+
+
+                                                                                                               
+  > TODO
+  .signUp() ................................................................................................    - TODO
+                                                 TODO:
+                                                 ====

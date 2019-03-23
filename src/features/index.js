@@ -1,15 +1,15 @@
-//? import device                        from './device/feature';
-//? import deviceService                 from './device/deviceService/feature';
+import device                        from './device/feature';
+import deviceService                 from './device/deviceService/feature';
 
-//? import auth                          from './auth/feature';
-//? import authService                   from './auth/authService/feature';
-//? import authServiceFirebase           from './auth/authService/authServiceFirebase/feature';
-//? import authServiceMock               from './auth/authService/authServiceMock/feature';
+import auth                          from './auth/feature';
+import authService                   from './auth/authService/feature';
+import authServiceFirebase           from './auth/authService/authServiceFirebase/feature';
+import authServiceMock               from './auth/authService/authServiceMock/feature';
 
-//? import eateries                      from './eateries/feature';
-//? import eateryService                 from './eateries/eateryService/feature';
-//? import eateryServiceFirebase         from './eateries/eateryService/eateryServiceFirebase/feature';
-//? import eateryServiceMock             from './eateries/eateryService/eateryServiceMock/feature';
+import eateries                      from './eateries/feature';
+import eateryService                 from './eateries/eateryService/feature';
+import eateryServiceFirebase         from './eateries/eateryService/eateryServiceFirebase/feature';
+import eateryServiceMock             from './eateries/eateryService/eateryServiceMock/feature';
 
 //? import discovery                     from './discovery/feature';
 //? import discoveryService              from './discovery/discoveryService/feature';
@@ -17,7 +17,7 @@
 //? import discoveryServiceMock          from './discovery/discoveryService/discoveryServiceMock/feature';
 
 //? import leftNav                       from './util/leftNav/feature';
-//? import currentView                   from './util/currentView/feature';
+import currentView                   from './util/currentView/feature';
 import bootstrap                         from './util/bootstrap/feature';
 //? import firebaseInit                  from './util/firebaseInit/feature';
 import layout                            from './util/layout/feature';
@@ -29,18 +29,18 @@ import layout                            from './util/layout/feature';
 // ... see README.md for details
 export default [
 
-  //? device,
-  //? deviceService,
+  device,
+  deviceService,
 
-  //? auth,
-  //? authService,
-  //? authServiceFirebase,
-  //? authServiceMock,
+  auth,
+  authService,
+  authServiceFirebase,
+  authServiceMock,
 
-  //? eateries,
-  //? eateryService,
-  //? eateryServiceFirebase,
-  //? eateryServiceMock,
+  eateries,
+  eateryService,
+  eateryServiceFirebase,
+  eateryServiceMock,
 
   //? discovery,
   //? discoveryService,
@@ -49,7 +49,7 @@ export default [
 
   // ... util
   //? leftNav,
-  //? currentView,
+  currentView,
   bootstrap,
   //? firebaseInit,
   layout,
