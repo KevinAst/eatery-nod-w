@@ -1,6 +1,8 @@
 import React              from 'react';
 import PropTypes          from 'prop-types';
 import withStyles         from '@material-ui/core/styles/withStyles';
+import {withFassets}      from 'feature-u';
+import withState          from '../../../../util/withState';
 
 import Drawer             from  '@material-ui/core/Drawer';
 import AppBar             from  '@material-ui/core/AppBar';
@@ -40,15 +42,10 @@ import {toast,
  *
  * USAGE:
  * ```
- *   <AppLayout title="Pool">
+ *   <AppLayout>
  *     ... page content here
  *   </AppLayout>
  * ```
- * 
- * NOTE: This implementation was initially gleaned from the MUI
- *       Dashboard page layout example. ? my version is SOO pruned down, not sure I want to even reference this
- *        - Visual: https://material-ui.com/getting-started/page-layout-examples/dashboard/
- *        - Source: https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/page-layout-examples/dashboard
  */
 
 const appStyles = (theme) => ({
@@ -105,11 +102,21 @@ const appStyles = (theme) => ({
 
 });
 
-
-function AppLayout({title, children, classes, bottomBarContent}) {
+function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) {
 
   //*** Authorization *** ----------------------------------------------------------
   const isAuthorized = true; // pretend user is authorized
+
+  // no-op when NO user is signed in
+  // ... in this case, there is NO <AppLayout>, just it's parent <MainLayout>
+  // ... this supports auth screens (which do not have an App header)
+  if (!curUser.isUserSignedIn()) {
+    return children;
+  }
+
+  // define our auxiliary view content
+  const curViewAuxiliaryContent = resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent);
+  const {TitleComp, FooterComp} = curViewAuxiliaryContent;
 
 
   //*** User Menu *** --------------------------------------------------------------
@@ -143,22 +150,15 @@ function AppLayout({title, children, classes, bottomBarContent}) {
   const handleLeftNavOp = (txt) => toast.success({msg: `doing ${txt}`});
 
   const myListItem = (txt, indx) => ( // convenience list item builder (for demo purposes only)
-                                      <ListItem button
-                                                key={`${txt}_${indx}`}
-                                                onClick={()=>handleLeftNavOp(txt)}>
-                                        <ListItemIcon>{indx%2 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-                                        <ListItemText primary={txt}/>
-                                        <ListItemSecondaryAction onClick={()=>handleLeftNavOp(`SECONDARY: ${txt}`)}>
-                                          <ListItemIcon>{indx%2 ? <MailIcon/> : <InboxIcon/>}</ListItemIcon>
-                                        </ListItemSecondaryAction>
-                                      </ListItem>
-  );
-
-  // TEMPORARY: pretend we have bottomBarContent
-  bottomBarContent = (
-    <Typography color="inherit">
-      My Bottom Bar
-    </Typography>
+    <ListItem button
+              key={`${txt}_${indx}`}
+              onClick={()=>handleLeftNavOp(txt)}>
+      <ListItemIcon>{indx%2 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
+      <ListItemText primary={txt}/>
+      <ListItemSecondaryAction onClick={()=>handleLeftNavOp(`SECONDARY: ${txt}`)}>
+        <ListItemIcon>{indx%2 ? <MailIcon/> : <InboxIcon/>}</ListItemIcon>
+      </ListItemSecondaryAction>
+    </ListItem>
   );
 
   //*** Render our AppLayout *** ---------------------------------------------------
@@ -171,136 +171,128 @@ function AppLayout({title, children, classes, bottomBarContent}) {
         <Toolbar className={classes.toolbar}
                  disableGutters={false}>
 
+          {/* Left Nav Activation Button */}
           <IconButton className={classes.menuButton}
                       color="inherit"
                       onClick={openLeftNav}>
             <MenuIcon/>
           </IconButton>
 
-          <Typography component="h1"
-                      variant="h6"
-                      color="inherit"
-                      noWrap
-                      className={classes.title}>
-            {title}
-          </Typography>
+          {/* Title */}
+          <div className={classes.title}>
+            <TitleComp/>
+          </div>
 
-          <IconButton color="inherit"> {/* KJB: Badge sample  */}
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon/>
-            </Badge>
-          </IconButton>
-
-          {isAuthorized && /* User Profile Menu - only show authorized ... not really applicable in our case but keep for pattern */ (
-             <div>
-               <IconButton color="inherit"
-                           onClick={handleUserMenuOpen}>
-                 <AccountCircle/>
-               </IconButton>
-               <Menu anchorEl={anchorUserMenu}
-                     anchorOrigin={{
-                       vertical: 'top',
-                       horizontal: 'right',
-                     }}
-                     transformOrigin={{
-                       vertical: 'top',
-                       horizontal: 'right',
-                     }}
-                     open={userMenuOpen}
-                     onClose={handleUserMenuClose}>
-                 <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
-                 <MenuItem onClick={handleUserMenuClose}>My account</MenuItem>
-                 <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
-               </Menu>
-             </div>
-           )}
+          {/* User Profile Menu */}
+          <div>
+            <IconButton color="inherit"
+                        onClick={handleUserMenuOpen}>
+              <AccountCircle/>
+            </IconButton>
+            <Menu anchorEl={anchorUserMenu}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={userMenuOpen}
+                  onClose={handleUserMenuClose}>
+              <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
+              <MenuItem onClick={handleUserMenuClose}>My account</MenuItem>
+              <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+            </Menu>
+          </div>
 
         </Toolbar>
       </AppBar>
 
-      {/* Left Nav */}
+      {/* Left Nav Menu */}
       {/* AI: have seen some usage of tabIndex in <div> under <Drawer> (unsure if needed)
-          tabIndex={0} ... should be focus-able in sequential keyboard navigation, but its order is defined by the document's source order
-        */}
-        <Drawer open={leftNavVisible}
-                onClose={closeLeftNav}>
-          <div className={classes.leftNav}
-               onClick={closeLeftNav}
-               onKeyDown={closeLeftNav}>
-            <AppBar position="static">
-              <Toolbar>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                  Select a view
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            <List>
-              {['WowZee', 'WowZee James', 'WooWoo'].map((txt, indx) => myListItem(txt, indx))}
-            </List>
-            <Divider/>
-            <List>
-              {['WomBee', 'WomBee Very Long Item', 'WooLoo'].map((txt, indx) => myListItem(txt, indx))}
-            </List>
-          </div>
-        </Drawer>
+          tabIndex={0} ... should be focus-able in sequential keyboard navigation, but its order is defined by the document's source order */}
+      <Drawer open={leftNavVisible}
+              onClose={closeLeftNav}>
+        <div className={classes.leftNav}
+             onClick={closeLeftNav}
+             onKeyDown={closeLeftNav}>
+          <AppBar position="static">
+            <Toolbar>
+              <Typography variant="h6" color="inherit" className={classes.grow}>
+                Select a view
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <List>
+            {['WowZee', 'WowZee James', 'WooWoo'].map((txt, indx) => myListItem(txt, indx))}
+          </List>
+          <Divider/>
+          <List>
+            {['WomBee', 'WomBee Very Long Item', 'WooLoo'].map((txt, indx) => myListItem(txt, indx))}
+          </List>
+        </div>
+      </Drawer>
 
-        {/* Page Content */}
-        {/* $$AI: multiple <main> appears to be allowed (although NOT technically correct) ... in this app does NOT seem to matter if THIS is <main> or <div> */}
-          <main className={classes.content}>
-            {children}
-          </main>
+      {/* Page Content */}
+      <main className={classes.content}>
+        {children}
+      </main>
 
-          {/* Optional Bottom Bar TODO: ?? look into <BottomNavigation>  */}
-            {bottomBarContent && (
-               <AppBar className={classes.bottomBar}
-                       position="absolute">
-                 <Toolbar className={classes.toolbar}
-                          disableGutters={false}>
-                   {bottomBarContent}
-                 </Toolbar>
-               </AppBar>
-             )}
+      {/* Optional Bottom Bar */}
+      {FooterComp && (
+         <AppBar className={classes.bottomBar}
+                 position="absolute">
+           <Toolbar className={classes.toolbar}
+                    disableGutters={false}>
+             <FooterComp/>
+           </Toolbar>
+         </AppBar>
+       )}
 
     </div>
   );
 }
 
 AppLayout.propTypes = {
-  title:            PropTypes.string.isRequired, // page title
-  children:         PropTypes.node.isRequired,   // main page content (like eateries and discovery)
-  classes:          PropTypes.object.isRequired,
-  bottomBarContent: PropTypes.node,              // optional bottom bar content
+  children: PropTypes.node.isRequired, // main page content (like eateries and discovery)
 };
 
-AppLayout.defaultProps = {
-  title: 'Eatery Nod',
-};
 
-export default withStyles(appStyles)(AppLayout);
+const AppLayoutWithState = withState({
+  component: AppLayout,
+  mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded freom withFassets() below
+    return {
+      curUser:  fassets.sel.curUser(appState),
+      curView:  fassets.sel.getView(appState),
+    };
+  },
+});
 
-// ?? AI: dynamically no-op <AppLayout> when NOT signed in <<< VIA auth state
-//        ... allowing the auth screens to NOT have the App header
-//        ... I think we can just use <React.Fragment>
+const AppLayoutWithFassets = withFassets({
+  component: AppLayoutWithState,
+  mapFassetsToProps: {
+    fassets:              '.', // introduce fassets into props via the '.' keyword
+    viewAuxiliaryContent: 'AppLayout.view.*@withKeys',
+  }
+});
+
+export default /* AppLayoutWithStyles = */  withStyles(appStyles)(AppLayoutWithFassets);
 
 
-// - INJECT FOLLOWING:
-//   * ?? title          VIA fassets use contract   <<< DYNAMIC CONTENT: THIS WILL CHANGE over run-time
-//                           INDEXED by currentView     - a fassets use contract INDEXED by currentView!!!
-//                           for MORE DYNAMIC CONTENT     ... USE CONTRACT: 'AppControl.*' <<< where * is the viewName 
-//                                                        ... DEFINE:
-//                                                            'AppControl.eateries': {
-//                                                              title: () =>         ... a component
-//                                                                                       - KOOL: this component can use redux state
-//                                                                                         for things like the `pool`
-//                                                              bottomControl: () => ... a component
-//                                                            }
-//                                                        ... AppLayout will simply need to find th matching 'AppControl.*' INDEXED by currentView
-//   * ?? leftNav items  VIA fassets use contract
-//                           MORE STATIC IN NATURE
-//                           ... does NOT change
-//   * ?? auth menu      VIA fassets use contract
-//                           MORE STATIC IN NATURE
-//                           ... does NOT change
-//   * ?? bottom control VIA fassets use contract   <<< DYNAMIC CONTENT: THIS WILL CHANGE over run-time
-//                           INDEXED by currentView
-//                           for MORE DYNAMIC CONTENT
+
+function resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent) {
+  const matchKey = `AppLayout.view.${curView}`;
+  const [, curViewAuxiliaryContent] = viewAuxiliaryContent.find( ([key]) => key === matchKey ) || defaultViewAuxiliaryContent;
+  return curViewAuxiliaryContent;
+}
+
+const defaultViewAuxiliaryContent = ['AppLayout.view.DEFAULT', {
+  TitleComp: () => (
+    <Typography variant="h6"
+                color="inherit"
+                noWrap>
+      Eatery Nod
+    </Typography>
+  ),
+}];

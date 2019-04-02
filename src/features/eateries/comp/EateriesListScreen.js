@@ -1,22 +1,20 @@
-import React         from 'react';
-import {withFassets} from 'feature-u';
-import withState     from '../../../util/withState';
-import withStyles    from '@material-ui/core/styles/withStyles';
+import React               from 'react';
+import {withFassets}       from 'feature-u';
+import withState           from '../../../util/withState';
+import withStyles          from '@material-ui/core/styles/withStyles';
 
-import Typography    from '@material-ui/core/Typography';
+import _eateriesAct        from '../actions';
+import * as _eateriesSel   from '../state';
 
-import ListItemIcon  from '@material-ui/core/ListItemIcon';
-import EateryIcon    from '@material-ui/icons/Restaurant';
+import Typography          from '@material-ui/core/Typography';
+import ListItemIcon        from '@material-ui/core/ListItemIcon';
+import RestaurantIcon      from '@material-ui/icons/Restaurant';
+import List                from '@material-ui/core/List';
+import ListItem            from '@material-ui/core/ListItem';
+import ListItemText        from '@material-ui/core/ListItemText';
 
-import List          from '@material-ui/core/List';
-import ListItem      from '@material-ui/core/ListItem';
-import ListItemText  from '@material-ui/core/ListItemText';
-
-import SplashScreen      from '../../../util/SplashScreen';
-
-import _eateriesAct      from '../actions';
-import * as _eateriesSel from '../state';
-
+import EateryDetailScreen  from './EateryDetailScreen';
+import SplashScreen        from '../../../util/SplashScreen';
 
 const listStyles = (theme) => ({ // ? NOT currently used ... a big fat no-op
   list: {
@@ -27,7 +25,7 @@ const listStyles = (theme) => ({ // ? NOT currently used ... a big fat no-op
 /**
  * EateriesListScreen displaying a set of eateries (possibly filtered).
  */
-function EateriesListScreen({classes, curUser, filteredEateries, filter, showDetail, handleSpin}) {
+function EateriesListScreen({classes, curUser, filteredEateries, filter, selectedEatery, spinMsg, showDetail}) {
 
   if (!filteredEateries) {
     return <SplashScreen msg="... waiting for pool entries"/>;
@@ -44,7 +42,7 @@ function EateriesListScreen({classes, curUser, filteredEateries, filter, showDet
         // ?? additional style: ... NOTE have not yet seen this rendering
         //    - ? red color (or secondary
         //    - ? format "(as the crow flies)" on second line -and- smaller
-        const subTxt = `${currentDistance} mile ${currentDistance===1?'':'s'} (as the crow flies)`;
+        const subTxt = `${currentDistance} mile${currentDistance===1?'':'s'} (as the crow flies)`;
         content.push((
           <ListItem key={`subheader${currentDistance}`}
                     dense
@@ -55,32 +53,28 @@ function EateriesListScreen({classes, curUser, filteredEateries, filter, showDet
         ));
       }
       // supply our primary entry content
-      // ?? additional style:
-      //    - ? format "(distance x miles)" smaller
-      const txt = `${eatery.name} (${eatery.distance} mile ${currentDistance===1?'':'s'})`;
       content.push((
-
         <ListItem key={eatery.id}
                   dense
                   button
                   divider
                   onClick={()=>showDetail(eatery.id)}>
           <ListItemIcon>
-            <EateryIcon/>
+            <RestaurantIcon/>
           </ListItemIcon>
 
           <ListItemText 
               primary={
-                <Typography component="span"
-                            variant="h6"
-                            noWrap>
-                  {txt}
+                <Typography variant="h6"
+                  noWrap>
+                  {eatery.name}
+                  <Typography inline={true} noWrap>
+                    &nbsp;({`${eatery.distance} mile${currentDistance===1?'':'s'}`})
+                  </Typography>
                 </Typography>
               }
               secondary={
-                <Typography component="span"
-                            variant="subtitle1"
-                            noWrap>
+                <Typography variant="subtitle1" noWrap>
                   {eatery.addr}
                 </Typography>
               }/>
@@ -90,20 +84,14 @@ function EateriesListScreen({classes, curUser, filteredEateries, filter, showDet
     return content;
   }
 
-  // ?? retrofit following:
-  //    - ? title: 
-  //      <Title>Pool <Text note>({curUser.pool})</Text></Title>
-  //      {filter.distance && <Text note>(within {filter.distance} mile{filter.distance===1?'':'s'})</Text>}
-  //    - ? footer:
-  //      <Button vertical
-  //              onPress={handleSpin}>
-  //        <Icon style={commonStyles.icon} name="color-wand"/>
-  //        <Text style={commonStyles.icon}>Spin</Text>
-  //      </Button>
   return (
-    <List className={classes.list}>
-      { listContent() }
-    </List>
+    <>
+      <List className={classes.list}>
+        { listContent() }
+      </List>
+      {spinMsg && <SplashScreen msg={spinMsg}/>}
+      {selectedEatery && <EateryDetailScreen eatery={selectedEatery}/>}
+    </>
   );
 }
 
@@ -113,6 +101,8 @@ const EateriesListScreenWithState = withState({
     return {
       filteredEateries: _eateriesSel.getFilteredEateries(appState),
       filter:           _eateriesSel.getListViewFilter(appState),
+      selectedEatery:   _eateriesSel.getSelectedEatery(appState),
+      spinMsg:          _eateriesSel.getSpinMsg(appState),
       curUser:          fassets.sel.curUser(appState),
     };
   },
@@ -121,9 +111,6 @@ const EateriesListScreenWithState = withState({
       showDetail(eateryId) {
         //console.log(`xx showDetail for ${eateryId}`);
         dispatch( _eateriesAct.viewDetail(eateryId) );
-      },
-      handleSpin() {
-        dispatch( _eateriesAct.spin() );
       },
     };
   },
@@ -134,6 +121,6 @@ const EateriesListScreenWithStyles = withStyles(listStyles)(EateriesListScreenWi
 export default /* EateriesListScreenWithFassets = */ withFassets({
   component: EateriesListScreenWithStyles,
   mapFassetsToProps: {
-    fassets:     '.',            // introduce fassets into props via the '.' keyword
+    fassets: '.', // introduce fassets into props via the '.' keyword
   }
 });

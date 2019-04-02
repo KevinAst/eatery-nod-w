@@ -38,12 +38,14 @@ export default [
       // *** at this point we know the active view is ours
       // ***
       
-      // display anotated SplashScreen, when the spin operation is active
-      const spinMsg = _eateriesSel.getSpinMsg(appState);
-      if (spinMsg) {
-        return <SplashScreen msg={spinMsg}/>;
-      }
+      //?????????????????? NOW DONE IN EateriesListScreen
+      //? // display anotated SplashScreen, when the spin operation is active
+      //? const spinMsg = _eateriesSel.getSpinMsg(appState);
+      //? if (spinMsg) {
+      //?   return <SplashScreen msg={spinMsg}/>;
+      //? }
       
+      //?????????????????? NOW DONE IN EateriesListScreen
       //? // display an eatery detail, when one is selected
       //? const selectedEatery = _eateriesSel.getSelectedEatery(appState);
       //? if (selectedEatery) {

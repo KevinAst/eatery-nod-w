@@ -6,6 +6,9 @@ import * as _eateriesSel  from './state';
 import logic              from './logic';
 import route              from './route';
 //? import EateryLeftNavItem  from './comp/EateryLeftNavItem'; ?? NOT RETROFITTED YET
+import EateriesTitle      from './comp/EateriesTitle';
+import EateriesFooter     from './comp/EateriesFooter';
+
 
 // feature: eateries
 //          manage and promotes the eateries view (a list of pooled
@@ -25,10 +28,16 @@ export default createFeature({
       'sel.getEateryDbPool':   _eateriesSel.getDbPool, // ... slight naming variation to original selector
     },
 
-    // ?? NOT RETROFITTED YET
-    // defineUse: {
-    //   'leftNavItem.EateryItem': EateryLeftNavItem, // inject our entry into the leftNav
-    // }
+    defineUse: {
+      // ?? NOT RETROFITTED YET
+      // 'leftNavItem.EateryItem': EateryLeftNavItem, // inject our entry into the leftNav
+
+      // auxiliary view content for the eateries view
+      [`AppLayout.view.${_eateries}`]: {
+        TitleComp:  EateriesTitle,
+        FooterComp: EateriesFooter,
+      },
+    }
   },
 
   reducer,

@@ -22,11 +22,19 @@ export default createFeature({
     //?   'closeLeftNav': closeSideBar, // closeLeftNav(): void ... close the SideBar ... slight naming variation to original
     //? },
 
+    use: [
+      //?? L8TR: is a required resource
+      // ['leftNavItem.*', {required: true, type: fassetValidations.comp}], // expecting: ?? <ListItem/>
 
-    //?? L8TR: is a required resource
-    //use: [
-    //  ['leftNavItem.*', {required: true, type: fassetValidations.comp}], // expecting: ?? <ListItem/>
-    //],
+      // 'AppLayout.view.*': ...... auxiliary view content that varies per view (the wildcard ('*') is indexed by `currentView`)
+      //   ViewAuxiliaryContent: {
+      //     TitleComp: () => ..... a component defining the header title
+      //                            DEFAULT: rendering of 'Eatery Nod'
+      //     FooterComp: () => .... a component defining the entire footer content
+      //                            DEFAULT: no footer
+      //   }
+      ['AppLayout.view.*', {required: false, type: fassetValidations.any}], // expecting: ViewAuxiliaryContent object
+    ],
   },
 
   // inject our various layout components into the root of our app
