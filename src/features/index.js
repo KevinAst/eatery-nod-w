@@ -17,7 +17,6 @@ import eateryServiceMock             from './eateries/eateryService/eateryServic
 //? import discoveryServiceMock          from './discovery/discoveryService/discoveryServiceMock/feature';
 
 //? import leftNav                       from './util/leftNav/feature';
-import currentView                   from './util/currentView/feature';
 import bootstrap                         from './util/bootstrap/feature';
 //? import firebaseInit                  from './util/firebaseInit/feature';
 import layout                            from './util/layout/feature';
@@ -49,7 +48,6 @@ export default [
 
   // ... util
   //? leftNav,
-  currentView,
   bootstrap,
   //? firebaseInit,
   layout,

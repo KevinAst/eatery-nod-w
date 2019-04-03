@@ -9,5 +9,5 @@ accommodate the wide free-format content).
 
 Actions (see: actions.js)  Logic (NONE)  Reducer (see: state.js)
 =========================  ============  ===============================
-currentView                                             
+layout
   .changeView(viewName) ...............  - set currentView FROM action payload
