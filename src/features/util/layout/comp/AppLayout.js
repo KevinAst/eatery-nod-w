@@ -4,27 +4,19 @@ import withStyles         from '@material-ui/core/styles/withStyles';
 import {withFassets}      from 'feature-u';
 import withState          from '../../../../util/withState';
 
-import Drawer             from  '@material-ui/core/Drawer';
-import AppBar             from  '@material-ui/core/AppBar';
-import Toolbar            from  '@material-ui/core/Toolbar';
-import List               from  '@material-ui/core/List';
-import Typography         from  '@material-ui/core/Typography';
-import Divider            from  '@material-ui/core/Divider';
-import IconButton         from  '@material-ui/core/IconButton';
-import Badge              from  '@material-ui/core/Badge';
-import MenuIcon           from  '@material-ui/icons/Menu';
-import NotificationsIcon  from  '@material-ui/icons/Notifications';
+import LeftNav            from './LeftNav'; //??$$ NEW
+import {openLeftNav}      from './LeftNav'; //??$$ NEW
+
+import AppBar             from '@material-ui/core/AppBar';
+import Toolbar            from '@material-ui/core/Toolbar';
+import Typography         from '@material-ui/core/Typography';
+import IconButton         from '@material-ui/core/IconButton';
+import MenuIcon           from '@material-ui/icons/Menu';
 
 import AccountCircle      from '@material-ui/icons/AccountCircle';
 import Menu               from '@material-ui/core/Menu';
 import MenuItem           from '@material-ui/core/MenuItem';
 
-import ListItem           from '@material-ui/core/ListItem';
-import ListItemIcon       from '@material-ui/core/ListItemIcon';
-import ListItemText       from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction  from '@material-ui/core/ListItemSecondaryAction';
-import InboxIcon          from '@material-ui/icons/MoveToInbox';
-import MailIcon           from '@material-ui/icons/Mail';
 
 import {toast,
         confirm}          from '../../../../util/notify';
@@ -83,10 +75,6 @@ const appStyles = (theme) => ({
     flexGrow: 1, // moves right-most toolbar items to the right
   },
 
-  leftNav: {
-    width: 250, // make width significant enough to space out our secondary menu icons
-  },
-
   content: {
     flexGrow: 1,
     height: '100vh',                 // content window is height is same as our viewport (100%)
@@ -103,9 +91,6 @@ const appStyles = (theme) => ({
 });
 
 function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) {
-
-  //*** Authorization *** ----------------------------------------------------------
-  const isAuthorized = true; // pretend user is authorized
 
   // no-op when NO user is signed in
   // ... in this case, there is NO <AppLayout>, just it's parent <MainLayout>
@@ -142,24 +127,6 @@ function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) 
     });
   }
 
-  //*** Left Nav *** ---------------------------------------------------------------
-  const [leftNavVisible, setLeftNavVisible] = React.useState(false);
-  const openLeftNav     = () => setLeftNavVisible(true);
-  const closeLeftNav    = () => setLeftNavVisible(false);
-  //const toggleLeftNav   = () => setLeftNavVisible(!leftNavVisible);
-  const handleLeftNavOp = (txt) => toast.success({msg: `doing ${txt}`});
-
-  const myListItem = (txt, indx) => ( // convenience list item builder (for demo purposes only)
-    <ListItem button
-              key={`${txt}_${indx}`}
-              onClick={()=>handleLeftNavOp(txt)}>
-      <ListItemIcon>{indx%2 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-      <ListItemText primary={txt}/>
-      <ListItemSecondaryAction onClick={()=>handleLeftNavOp(`SECONDARY: ${txt}`)}>
-        <ListItemIcon>{indx%2 ? <MailIcon/> : <InboxIcon/>}</ListItemIcon>
-      </ListItemSecondaryAction>
-    </ListItem>
-  );
 
   //*** Render our AppLayout *** ---------------------------------------------------
   return (
@@ -171,7 +138,7 @@ function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) 
         <Toolbar className={classes.toolbar}
                  disableGutters={false}>
 
-          {/* Left Nav Activation Button */}
+          {/* Left Nav Activation Button ??$$ TEST openLeftNav */}
           <IconButton className={classes.menuButton}
                       color="inherit"
                       onClick={openLeftNav}>
@@ -209,30 +176,8 @@ function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) 
         </Toolbar>
       </AppBar>
 
-      {/* Left Nav Menu */}
-      {/* AI: have seen some usage of tabIndex in <div> under <Drawer> (unsure if needed)
-          tabIndex={0} ... should be focus-able in sequential keyboard navigation, but its order is defined by the document's source order */}
-      <Drawer open={leftNavVisible}
-              onClose={closeLeftNav}>
-        <div className={classes.leftNav}
-             onClick={closeLeftNav}
-             onKeyDown={closeLeftNav}>
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" color="inherit" className={classes.grow}>
-                Select a view
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <List>
-            {['WowZee', 'WowZee James', 'WooWoo'].map((txt, indx) => myListItem(txt, indx))}
-          </List>
-          <Divider/>
-          <List>
-            {['WomBee', 'WomBee Very Long Item', 'WooLoo'].map((txt, indx) => myListItem(txt, indx))}
-          </List>
-        </div>
-      </Drawer>
+      {/* ??$$ NEW */}
+      <LeftNav/>
 
       {/* Page Content */}
       <main className={classes.content}>
@@ -261,7 +206,7 @@ AppLayout.propTypes = {
 
 const AppLayoutWithState = withState({
   component: AppLayout,
-  mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded freom withFassets() below
+  mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
     return {
       curUser:  fassets.sel.curUser(appState),
       curView:  fassets.sel.getView(appState),

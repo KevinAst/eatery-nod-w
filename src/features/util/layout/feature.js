@@ -35,8 +35,10 @@ export default createFeature({
     },
 
     use: [
-      //?? L8TR: is a required resource
-      // ['leftNavItem.*', {required: true, type: fassetValidations.comp}], // expecting: ?? <ListItem/>
+      // ??$$ NEW ... was 'leftNavItem.*'
+      // 'AppLayout.LeftNavItem.*': ... component entries of the left-nav bar
+      //                                expecting: <ListItem/>
+      ['AppLayout.LeftNavItem.*', {required: false, type: fassetValidations.comp}], // ?? eventually required
 
       // 'AppLayout.view.*': ...... auxiliary view content that varies per view (the wildcard ('*') is indexed by `currentView`)
       //   ViewAuxiliaryContent: {
