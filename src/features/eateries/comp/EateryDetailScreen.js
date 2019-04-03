@@ -105,7 +105,6 @@ function EateryDetailScreen({curUser, eatery, handleClose, handleSpin, fullScree
             <ListItemIcon>
               <PhoneIcon/>
             </ListItemIcon>
-            {/* ?? Phone and Dialer how do I disable this on desktop */}
             <ListItemText 
                 primary={
                   <Link variant="body1" 
@@ -116,6 +115,7 @@ function EateryDetailScreen({curUser, eatery, handleClose, handleSpin, fullScree
                   </Link>
                 }/>
           </ListItem>
+
           <ListItem>
             <ListItemIcon>
               <LinkIcon/>
