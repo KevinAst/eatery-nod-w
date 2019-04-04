@@ -21,5 +21,5 @@ export default {
                   // true:      generate 'non verbose' logs (e.g. actions will NOT include redux state)
                   // 'verbose': generate 'verbose'     logs (e.g. actions WILL     include redux state)
 
-  sandbox: false, // should app enable diagnostic sandbox controls?
+  sandbox: true,  // should app enable diagnostic sandbox controls?
 };

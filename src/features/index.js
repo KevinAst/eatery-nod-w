@@ -22,7 +22,7 @@ import bootstrap                         from './util/bootstrap/feature';
 import layout                            from './util/layout/feature';
 
 //? import logActions                    from './diagnostic/logActions/feature';
-//? import sandbox                       from './diagnostic/sandbox/feature';
+import sandbox                       from './util/diagnostic/sandbox/feature';
 
 // accumulate ALL features
 // ... see README.md for details
@@ -54,5 +54,5 @@ export default [
 
   // ... diagnostic
   //? logActions,
-  //? sandbox,
+  sandbox,
 ];
