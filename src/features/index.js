@@ -16,10 +16,10 @@ import eateryServiceMock             from './eateries/eateryService/eateryServic
 //? import discoveryServiceGooglePlaces  from './discovery/discoveryService/discoveryServiceGooglePlaces/feature';
 //? import discoveryServiceMock          from './discovery/discoveryService/discoveryServiceMock/feature';
 
-//? import leftNav                       from './util/leftNav/feature';
-import bootstrap                         from './util/bootstrap/feature';
-//? import firebaseInit                  from './util/firebaseInit/feature';
-import layout                            from './util/layout/feature';
+import bootstrap                     from './util/bootstrap/feature';
+//? import firebaseInit              from './util/firebaseInit/feature';
+import layout                        from './util/layout/feature';
+import pwa                           from './util/pwa/feature';
 
 import logActions                    from './util/diagnostic/logActions/feature';
 import sandbox                       from './util/diagnostic/sandbox/feature';
@@ -47,10 +47,10 @@ export default [
   //? discoveryServiceMock,
 
   // ... util
-  //? leftNav,
   bootstrap,
   //? firebaseInit,
   layout,
+  pwa,
 
   // ... diagnostic
   logActions,
