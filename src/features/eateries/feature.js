@@ -5,7 +5,7 @@ import reducer            from './state';
 import * as _eateriesSel  from './state';
 import logic              from './logic';
 import route              from './route';
-//? import EateryLeftNavItem  from './comp/EateryLeftNavItem'; ?? NOT RETROFITTED YET
+import EateryLeftNavItem  from './comp/EateryLeftNavItem';
 import EateriesTitle      from './comp/EateriesTitle';
 import EateriesFooter     from './comp/EateriesFooter';
 
@@ -29,8 +29,7 @@ export default createFeature({
     },
 
     defineUse: {
-      // ?? NOT RETROFITTED YET
-      // 'leftNavItem.EateryItem': EateryLeftNavItem, // inject our entry into the leftNav
+      [`AppLayout.LeftNavItem.${_eateries}`]: EateryLeftNavItem, // inject our entry into the leftNav
 
       // auxiliary view content for the eateries view
       [`AppLayout.view.${_eateries}`]: {

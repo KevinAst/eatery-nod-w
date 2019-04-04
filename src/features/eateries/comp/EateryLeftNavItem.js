@@ -1,38 +1,37 @@
 import React         from 'react';
-import {withFassets} from 'feature-u';
-import withState     from '../../../util/withState';
 import _eateries     from '../featureName';
 import _eateriesAct  from '../actions';
 
-//?? obsolete
-// import {Body,
-//         Button,
-//         Icon,
-//         Left,
-//         ListItem,
-//         Right,
-//         Text}        from 'native-base';
+import withStyles    from '@material-ui/core/styles/withStyles';
+import {withFassets} from 'feature-u';
+import withState     from '../../../util/withState';
+
+import Divider                  from '@material-ui/core/Divider';
+import ListItem                 from '@material-ui/core/ListItem';
+import ListItemIcon             from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction  from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText             from '@material-ui/core/ListItemText';
+import PoolIcon                 from '@material-ui/icons/RestaurantMenu'; // possibilities: Restaurant RestaurantMenu Star StarRate Stars BlurOn AllOut DragIndicator GroupWork Reorder Apps Whatshot
+import SettingsIcon             from '@material-ui/icons/Tune';           // possibilities: Tune PermDataSetting Settings PhonelinkSetup FilterList Filter
 
 /**
- * EateryLeftNavItem: our Eatery entry into the leftNav.
+ * EateryLeftNavItem: our Eatery entry into the LeftNav.
  */
-function EateryLeftNavItem({changeView, handleFilter}) {
+function EateryLeftNavItem({classes, changeView, handleFilter}) {
 
   // render our menu item
   return (
-    <ListItem icon onPress={()=>changeView()}>
-      <Left>
-        <Icon name="bonfire" style={{color: 'red'}}/>
-      </Left>
-      <Body>
-        <Text style={{color: 'red'}}>Pool</Text>
-      </Body>
-      <Right>
-        <Button transparent onPress={handleFilter}>
-          <Icon active name="options"/>
-        </Button>
-      </Right>
-    </ListItem>
+    <>
+      <ListItem button
+                onClick={changeView}>
+        <ListItemIcon className={classes.major}><PoolIcon/></ListItemIcon>
+        <ListItemText primaryTypographyProps={{className:classes.major}} primary="Pool"/>
+        <ListItemSecondaryAction onClick={handleFilter}>
+          <ListItemIcon className={classes.minor}><SettingsIcon/></ListItemIcon>
+        </ListItemSecondaryAction>
+      </ListItem>
+      <Divider/>
+    </>
   );
 }
 
@@ -42,20 +41,28 @@ const EateryLeftNavItemWithState = withState({
     return {
       changeView() {
         dispatch( fassets.actions.changeView(_eateries) );
-        fassets.closeLeftNav();
       },
       handleFilter() {
         dispatch( _eateriesAct.filterForm.open() );
-        fassets.closeLeftNav();
       },
     };
   },
 });
 
-export default /* ?? EateryLeftNavItemWithFassets = */ withFassets({
+const EateryLeftNavItemWithFassets = withFassets({
   component: EateryLeftNavItemWithState,
   mapFassetsToProps: {
     fassets: '.', // ... introduce fassets into props via the '.' keyword
   }
 });
 
+const styles = (theme) => ({
+  major: {
+    color: theme.palette.secondary.main, // redish
+  },
+  minor:{
+    color: theme.palette.primary.main,   // bluish
+  },
+});
+
+export default /* EateryLeftNavItemWithStyle = */  withStyles(styles)(EateryLeftNavItemWithFassets);

@@ -23,11 +23,6 @@ export default createFeature({
 
   // our public face ...
   fassets: {
-    //?? NO NEED FOR THIS ANYMORE
-    //? define: {
-    //?   'openLeftNav':  openSideBar,  // openLeftNav():  void ... open  the SideBar ... slight naming variation to original
-    //?   'closeLeftNav': closeSideBar, // closeLeftNav(): void ... close the SideBar ... slight naming variation to original
-    //? },
 
     define: {
       'actions.changeView': _layoutAct.changeView, // changeView(viewName)
@@ -35,10 +30,9 @@ export default createFeature({
     },
 
     use: [
-      // ??$$ NEW ... was 'leftNavItem.*'
       // 'AppLayout.LeftNavItem.*': ... component entries of the left-nav bar
       //                                expecting: <ListItem/>
-      ['AppLayout.LeftNavItem.*', {required: false, type: fassetValidations.comp}], // ?? eventually required
+      ['AppLayout.LeftNavItem.*', {required: true, type: fassetValidations.comp}],
 
       // 'AppLayout.view.*': ...... auxiliary view content that varies per view (the wildcard ('*') is indexed by `currentView`)
       //   ViewAuxiliaryContent: {
