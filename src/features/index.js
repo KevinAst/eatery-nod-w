@@ -21,7 +21,7 @@ import bootstrap                         from './util/bootstrap/feature';
 //? import firebaseInit                  from './util/firebaseInit/feature';
 import layout                            from './util/layout/feature';
 
-//? import logActions                    from './diagnostic/logActions/feature';
+import logActions                    from './util/diagnostic/logActions/feature';
 import sandbox                       from './util/diagnostic/sandbox/feature';
 
 // accumulate ALL features
@@ -53,6 +53,6 @@ export default [
   layout,
 
   // ... diagnostic
-  //? logActions,
+  logActions,
   sandbox,
 ];

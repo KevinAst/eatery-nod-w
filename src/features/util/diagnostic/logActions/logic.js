@@ -1,11 +1,8 @@
 import {createLogic}      from 'redux-logic';
 import _logActions        from './featureName';
-import featureFlags       from '../../../featureFlags';
+import featureFlags       from '../../../../featureFlags';
 
 let lastState = null;
-
-const rawJson2Str    = (obj) => JSON.stringify(obj);
-const prettyJson2Str = (obj) => JSON.stringify(obj, '\n', 2);
 
 /**
  * Log all dispatched actions.
@@ -22,7 +19,11 @@ export const actionLogger = createLogic({
 
   transform({getState, action}, next) {
 
-    console.log('Dispatched Action: ' + prettyJson2Str(action));
+    if (featureFlags.log === 'verbose') { // group action/state together
+      console.group(`Action: ${action.type}`);
+    }
+
+    console.log('Dispatched Action: ', action);
 
     // TODO: retrofit to use log-u:
     // // log dispatched action
@@ -40,14 +41,17 @@ export const actionLogger = createLogic({
   process({getState, action, fassets}, dispatch, done) {
 
     if (featureFlags.log === 'verbose') { // state can be big ... log conditionally
+
       const curState = getState();
       if (curState === lastState) {
         console.log('Current State: UNCHANGED');
       }
       else {
-        console.log('Current State: ' + rawJson2Str(curState));
+        console.log('Current State: ', curState);
       }
       lastState = curState;
+
+      console.groupEnd();
     }
 
     done();
