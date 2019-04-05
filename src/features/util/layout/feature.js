@@ -8,7 +8,6 @@ import reducer              from './state';
 import * as _layoutSel      from './state';
 
 import MainLayout           from './comp/MainLayout';
-import AppLayout            from './comp/AppLayout';
 
 // feature: layout
 //          ?? retrofit description -and- update README.md
@@ -56,9 +55,7 @@ export default createFeature({
   appWillStart({fassets, curRootAppElm}) {
     return (
       <MainLayout>
-        <AppLayout>
-          {curRootAppElm}
-        </AppLayout>
+        {curRootAppElm}
       </MainLayout>
     );
   }

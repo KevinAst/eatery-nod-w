@@ -1,9 +1,12 @@
 import React              from 'react';
 import PropTypes          from 'prop-types';
+import withState          from '../../../../util/withState';
+import {withFassets}      from 'feature-u';
 import withStyles         from '@material-ui/core/styles/withStyles';
 import {MuiThemeProvider,      // NOTE: MuiThemeProvider **SHOULD** be at the root of ALL visible components
         createMuiTheme}   from '@material-ui/core/styles';
 import CssBaseline        from '@material-ui/core/CssBaseline';
+import AppLayout          from './AppLayout';
 import Notify             from '../../../../util/notify';
 
 /**
@@ -71,15 +74,27 @@ const mainStyles = (theme) => ({
   },
 });
 
-function MainLayout({isThemeLight, children, classes}) {
+function MainLayout({isThemeLight, curUser, classes, children}) {
   const themeInUse = isThemeLight ? lightTheme : darkTheme;
-  // console.log('***eatery-nod-w*** <MainLayout> MUI theme in use:', themeInUse)
+  // console.log('***eatery-nod-w*** <MainLayout> MUI theme in use:', themeInUse) // ?????????? TRASH THIS
+  
+  // conditionally inject AppLayout when user is signed-in
+  const theRestOfTheStory = curUser.isUserSignedIn() ? (
+    <AppLayout>
+      {children}
+    </AppLayout>
+  ) : (
+    <>
+      {children}
+    </>
+  );
+
   return (
     <MuiThemeProvider theme={themeInUse}>
       <CssBaseline/>
       <Notify/>
       <main className={classes.main}>
-        {children}
+        {theRestOfTheStory}
       </main>
     </MuiThemeProvider>
   );
@@ -95,9 +110,25 @@ MainLayout.defaultProps = {
   isThemeLight: false,
 };
 
+const MainLayoutWithState = withState({
+  component: MainLayout,
+  mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
+    return {
+      curUser: fassets.sel.curUser(appState),
+    };
+  },
+});
+
+const MainLayoutWithFassets = withFassets({
+  component: MainLayoutWithState,
+  mapFassetsToProps: {
+    fassets: '.', // introduce fassets into props via the '.' keyword
+  }
+});
+
 // ?? make theme directives dynamically switchable at run-time (currently isThemeLight, but could be more)
 //    - ? persist either in cookies or browser state api (so as to be more persistance than redux state)
 //    - ? inject edit control into left-nav VIA fassets use contract
 //        ... need a concept of "secondary" so as to NOT be at top
 
-export default withStyles(mainStyles)(MainLayout);
+export default /* AppLayoutWithStyles = */ withStyles(mainStyles)(MainLayoutWithFassets);

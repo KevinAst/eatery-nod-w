@@ -80,15 +80,7 @@ const appStyles = (theme) => ({
 
 });
 
-function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) {
-
-  // ?? move this into MainLayout -and- curUser
-  // no-op when NO user is signed in
-  // ... in this case, there is NO <AppLayout>, just it's parent <MainLayout>
-  // ... this supports auth screens (which do not have an App header)
-  if (!curUser.isUserSignedIn()) {
-    return children;
-  }
+function AppLayout({curView, viewAuxiliaryContent, classes, children}) {
 
   // define our auxiliary view content
   const curViewAuxiliaryContent = resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent);
@@ -153,7 +145,6 @@ const AppLayoutWithState = withState({
   component: AppLayout,
   mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
     return {
-      curUser:  fassets.sel.curUser(appState),
       curView:  fassets.sel.getView(appState),
     };
   },
@@ -167,7 +158,7 @@ const AppLayoutWithFassets = withFassets({
   }
 });
 
-export default /* AppLayoutWithStyles = */  withStyles(appStyles)(AppLayoutWithFassets);
+export default /* AppLayoutWithStyles = */ withStyles(appStyles)(AppLayoutWithFassets);
 
 
 
