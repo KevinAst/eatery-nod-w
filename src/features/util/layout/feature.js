@@ -30,18 +30,23 @@ export default createFeature({
     },
 
     use: [
-      // 'AppLayout.LeftNavItem.*': ... component entries of the left-nav bar
-      //                                expecting: <ListItem/>
+      // 'AppLayout.UserMenuItem.*': ... component entries of the user-profile menu
+      //                                 EXPECTING: <UserMenuItem/>
+      ['AppLayout.UserMenuItem.*', {required: true, type: fassetValidations.comp}],
+
+      // 'AppLayout.LeftNavItem.*': .... component entries of the left-nav bar
+      //                                 EXPECTING: <ListItem/>
       ['AppLayout.LeftNavItem.*', {required: true, type: fassetValidations.comp}],
 
-      // 'AppLayout.view.*': ...... auxiliary view content that varies per view (the wildcard ('*') is indexed by `currentView`)
-      //   ViewAuxiliaryContent: {
-      //     TitleComp: () => ..... a component defining the header title
-      //                            DEFAULT: rendering of 'Eatery Nod'
-      //     FooterComp: () => .... a component defining the entire footer content
-      //                            DEFAULT: no footer
+      // 'AppLayout.view.*': ........... auxiliary view content that varies per view
+      //                                 (the wildcard ('*') is indexed by `currentView`)
+      //   ViewAuxiliaryContent: {       EXPECTING: ViewAuxiliaryContent object
+      //     TitleComp: () => .......... a component defining the header title
+      //                                 DEFAULT: rendering of 'Eatery Nod'
+      //     FooterComp: () => ......... a component defining the entire footer content
+      //                                 DEFAULT: no footer
       //   }
-      ['AppLayout.view.*', {required: false, type: fassetValidations.any}], // expecting: ViewAuxiliaryContent object
+      ['AppLayout.view.*', {required: false, type: fassetValidations.any}],
     ],
   },
 

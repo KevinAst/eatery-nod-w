@@ -1,25 +1,18 @@
-import React              from 'react';
-import PropTypes          from 'prop-types';
-import withStyles         from '@material-ui/core/styles/withStyles';
-import {withFassets}      from 'feature-u';
-import withState          from '../../../../util/withState';
+import React          from 'react';
+import PropTypes      from 'prop-types';
+import withStyles     from '@material-ui/core/styles/withStyles';
+import {withFassets}  from 'feature-u';
+import withState      from '../../../../util/withState';
 
-import LeftNav            from './LeftNav'; //??$$ NEW
-import {openLeftNav}      from './LeftNav'; //??$$ NEW
+import LeftNav        from './LeftNav';
+import {openLeftNav}  from './LeftNav';
+import UserMenu       from './UserMenu';
 
-import AppBar             from '@material-ui/core/AppBar';
-import Toolbar            from '@material-ui/core/Toolbar';
-import Typography         from '@material-ui/core/Typography';
-import IconButton         from '@material-ui/core/IconButton';
-import MenuIcon           from '@material-ui/icons/Menu';
-
-import AccountCircle      from '@material-ui/icons/AccountCircle';
-import Menu               from '@material-ui/core/Menu';
-import MenuItem           from '@material-ui/core/MenuItem';
-
-
-import {toast,
-        confirm}          from '../../../../util/notify';
+import AppBar         from '@material-ui/core/AppBar';
+import IconButton     from '@material-ui/core/IconButton';
+import MenuIcon       from '@material-ui/icons/Menu';
+import Toolbar        from '@material-ui/core/Toolbar';
+import Typography     from '@material-ui/core/Typography';
 
 
 /**
@@ -83,15 +76,13 @@ const appStyles = (theme) => ({
     paddingTop:    '4em', // HACK: so ToolBar doesn't cover up ... must be a better way
     paddingBottom: '4em', // HACK: so BottomBar doesn't cover up ... must be a better way
     // padding: theme.spacing.unit * 3, // ... from sample content ... sample: 8 * 3
-
-    // KJB: temporarily make content window VERY VISIBLE
-    // backgroundColor: 'pink',
   },
 
 });
 
 function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) {
 
+  // ?? move this into MainLayout -and- curUser
   // no-op when NO user is signed in
   // ... in this case, there is NO <AppLayout>, just it's parent <MainLayout>
   // ... this supports auth screens (which do not have an App header)
@@ -103,32 +94,6 @@ function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) 
   const curViewAuxiliaryContent = resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent);
   const {TitleComp, FooterComp} = curViewAuxiliaryContent;
 
-
-  //*** User Menu *** --------------------------------------------------------------
-  const [anchorUserMenu, setAnchorUserMenu] = React.useState(null); // KJB: WowZee MY FIRST hook!
-  const userMenuOpen = Boolean(anchorUserMenu);
-
-  function handleUserMenuOpen(event) {
-    setAnchorUserMenu(event.currentTarget);
-  }
-
-  function handleUserMenuClose() {
-    setAnchorUserMenu(null);
-  }
-
-  function handleSignOut() {
-    handleUserMenuClose();
-    confirm.warn({ 
-      msg: 'Are you sure you wish to sign out?', 
-      actions: [
-        { txt: 'Sign Out', action: () => toast.success({msg: 'Now pretending you are signed out!'}) },
-        { txt: 'Go Back' }
-      ]
-    });
-  }
-
-
-  //*** Render our AppLayout *** ---------------------------------------------------
   return (
     <div className={classes.app}>
 
@@ -138,7 +103,7 @@ function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) 
         <Toolbar className={classes.toolbar}
                  disableGutters={false}>
 
-          {/* Left Nav Activation Button ??$$ TEST openLeftNav */}
+          {/* Left Nav Activation Button openLeftNav */}
           <IconButton className={classes.menuButton}
                       color="inherit"
                       onClick={openLeftNav}>
@@ -151,32 +116,12 @@ function AppLayout({curUser, curView, viewAuxiliaryContent, classes, children}) 
           </div>
 
           {/* User Profile Menu */}
-          <div>
-            <IconButton color="inherit"
-                        onClick={handleUserMenuOpen}>
-              <AccountCircle/>
-            </IconButton>
-            <Menu anchorEl={anchorUserMenu}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={userMenuOpen}
-                  onClose={handleUserMenuClose}>
-              <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
-              <MenuItem onClick={handleUserMenuClose}>My account</MenuItem>
-              <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
-            </Menu>
-          </div>
+          <UserMenu/>
 
         </Toolbar>
       </AppBar>
 
-      {/* ??$$ NEW */}
+      {/* Left Nav */}
       <LeftNav/>
 
       {/* Page Content */}
@@ -226,13 +171,14 @@ export default /* AppLayoutWithStyles = */  withStyles(appStyles)(AppLayoutWithF
 
 
 
+
 function resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent) {
   const matchKey = `AppLayout.view.${curView}`;
-  const [, curViewAuxiliaryContent] = viewAuxiliaryContent.find( ([key]) => key === matchKey ) || defaultViewAuxiliaryContent;
+  const [, curViewAuxiliaryContent] = viewAuxiliaryContent.find( ([key]) => key === matchKey ) || fallbackViewAuxiliaryContent;
   return curViewAuxiliaryContent;
 }
 
-const defaultViewAuxiliaryContent = ['AppLayout.view.DEFAULT', {
+const fallbackViewAuxiliaryContent = ['AppLayout.view.FALLBACK', {
   TitleComp: () => (
     <Typography variant="h6"
                 color="inherit"
