@@ -1,33 +1,40 @@
 import React        from 'react';
+import withState    from '../../../util/withState';
 import UserMenuItem from '../../util/layout/comp/UserMenuItem';
+import _authAct     from '../actions';
 import {toast,
-        confirm}    from '../../../util/notify'; // ?? temporary
-
-// ?? temporary ... test onClick argument passthrough
-function testArgPassthrough(myArg) {
-  console.log('?? testing onClick argument passthrough (expecting event): ', myArg );
-}
-
-// ?? temporary
-function handleSignOut() {
-  confirm.warn({ 
-    msg: 'Are you sure you wish to sign out?', 
-    actions: [
-      { txt: 'Sign Out', action: () => toast.success({msg: 'Now pretending you are signed out!'}) },
-      { txt: 'Go Back' }
-    ]
-  });
-}
+        confirm}    from '../../../util/notify';
 
 /**
- * AuthUserMenu: gather user sign-in credentials.
+ * AuthUserMenu: our user-profile menu items (in the App Header)
  */
-export default function AuthUserMenu() {
+function AuthUserMenu({signOut}) {
   return (
     <>
-      <UserMenuItem onClick={testArgPassthrough}>Test Arg Passthrough</UserMenuItem>
-      <UserMenuItem disableGutters>My account</UserMenuItem> {/* GREAT: test props pass-through with disableGutters */}
-      <UserMenuItem onClick={handleSignOut}>Sign Out</UserMenuItem>
+      <UserMenuItem onClick={doL8tr}>User Profile</UserMenuItem>
+      <UserMenuItem onClick={doL8tr}>My Account</UserMenuItem>
+      <UserMenuItem onClick={signOut}>Sign Out</UserMenuItem>
     </>
   );
+}
+
+export default /* AuthUserMenuWithState = */ withState({
+  component: AuthUserMenu,
+  mapDispatchToProps(dispatch) {
+    return {
+      signOut() {
+        confirm.warn({ 
+          msg: 'Are you sure you wish to sign out?', 
+          actions: [
+            { txt: 'Sign Out', action: () => dispatch( _authAct.signOut() ) },
+            { txt: 'Go Back' }
+          ]
+        });
+      },
+    };
+  },
+});
+
+function doL8tr() {
+  toast.warn({msg: 'NOT implemented yet (coming soon)!'})
 }
