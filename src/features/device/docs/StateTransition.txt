@@ -10,9 +10,11 @@ Actions (see: actions.js)                        Logic (see: logic.js)          
 ==============================================   ============================================================   ===============================
 device
 
-  > the full GUI can now be used (i.e. react-native components is now fully initialized)
-    ... dispatched via the 'bootstrap.fonts' use contract
- .guiIsReady() ...............................................................................................  - device.guiReady = true
+  > toggle the UI Theme ('light'/'dark')
+ .toggleUITheme() ...........................................................................................  - device.uiTheme = 'light'/'dark'
+                                                 persistUITheme:
+                                                 ==============
+                                                   deviceService.storeUITheme(...fromCurState)
 
   > set device GPS location
     ... dispatched via the 'bootstrap.location' use contract
