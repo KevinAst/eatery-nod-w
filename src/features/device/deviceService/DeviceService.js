@@ -6,6 +6,7 @@ import featureFlags    from '../../../featureFlags';
 const credentialsKey       = 'eatery-nod:credentials';
 const credentialsSeparator = '/';
 
+
 /**
  * DeviceService promotes a simplified abstraction of several device
  * services (both Expo and react-native), providing a consistent "GO
@@ -14,7 +15,7 @@ const credentialsSeparator = '/';
  * Some services are "mockable", at an individual method level, as
  * specified by our featureFlags.
  */
-export default class DeviceService {
+class DeviceService {
 
   /**
    * Instantiate the DeviceService service object.
@@ -22,6 +23,26 @@ export default class DeviceService {
   constructor() {
     // conditionally mock various service methods, as directed by featureFlags
     mock_getCurPos_asNeeded(this);
+  }
+
+
+  /**
+   * Fetch the UI Theme stored on local device (if any).
+   * 
+   * @return {string} the persisted UI Theme (undefined for none).
+   */
+  fetchUITheme() {
+    return deviceStorage.getItem('uiTheme');
+  }
+
+
+  /**
+   * Store the supplied UI Theme on local device.
+   * 
+   * @param {string} uiTheme the UI Theme to store.
+   */
+  storeUITheme(uiTheme) {
+    deviceStorage.setItem('uiTheme', uiTheme);
   }
 
 
@@ -172,3 +193,74 @@ function mock_getCurPos_asNeeded(deviceService) {
   }
 
 }
+
+// export our instantiated service directly
+// ... because in select cases it is needed early, 
+//     and therefore imported directly
+//     (ex: src/features/device/state.js)
+export default new DeviceService();
+
+
+//***
+//*** Abstract the Web Storage API (gracefully no-oping for unsupported browsers)
+//***
+//***  NOTE 1: This API is synchronous!
+//***  NOTE 2: Apparently this API is available on both http (non SSL) as well as https (SSL).
+//***
+
+// feature detection
+// ... NOTE: can't just assert window.localStorage exists
+//           see: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#Feature-detecting_localStorage
+const _localStorageAvailable = storageAvailable('localStorage');
+function storageAvailable(type) {
+  var storage;
+  try {
+    storage = window[type];
+    var x = '__storage_test__';
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  }
+  catch(e) {
+    return e instanceof DOMException && (
+      // everything except Firefox
+      e.code === 22 ||
+      // Firefox
+      e.code === 1014 ||
+      // test name field too, because code might not be present
+      // everything except Firefox
+      e.name === 'QuotaExceededError' ||
+      // Firefox
+      e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+           // acknowledge QuotaExceededError only if there's something already stored
+           (storage && storage.length !== 0);
+  }
+}
+
+// log warning when deviceStorage is NOT in affect
+if (!_localStorageAvailable) {
+  console.warn('***WARNING*** DeviceService feature ... localStorage (Web Storage API) is NOT available in this browser ... all deviceStorage usage will silently no-op!!');
+}
+
+// our localStorage pass-through that gracefully no-ops for unsupported browsers
+const deviceStorage = {
+  setItem(keyName, keyValue) {
+    if (_localStorageAvailable) {
+      window.localStorage.setItem(keyName, keyValue);
+    }
+  },
+  getItem(keyName) {
+    if (_localStorageAvailable) {
+      return window.localStorage.getItem(keyName);
+    }
+  },
+  removeItem(keyName) {
+    if (_localStorageAvailable) {
+      window.localStorage.removeItem(keyName);
+    }
+  },
+};
+
+// TEMP crude test of deviceStorage ... invoke these separately!
+// deviceStorage.setItem('WowZeeKey', 'WowZeeValue');
+// console.log(`test deviceStorage ... '${deviceStorage.getItem('WowZeeKey')}'`);

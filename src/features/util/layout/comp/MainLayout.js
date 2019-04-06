@@ -74,9 +74,8 @@ const mainStyles = (theme) => ({
   },
 });
 
-function MainLayout({isThemeLight, curUser, classes, children}) {
-  const themeInUse = isThemeLight ? lightTheme : darkTheme;
-  // console.log('***eatery-nod-w*** <MainLayout> MUI theme in use:', themeInUse) // ?????????? TRASH THIS
+function MainLayout({uiTheme, curUser, classes, children}) {
+  const themeInUse = uiTheme==='dark' ? darkTheme : lightTheme;
   
   // conditionally inject AppLayout when user is signed-in
   const theRestOfTheStory = curUser.isUserSignedIn() ? (
@@ -101,19 +100,15 @@ function MainLayout({isThemeLight, curUser, classes, children}) {
 }
 
 MainLayout.propTypes = {
-  isThemeLight: PropTypes.bool.isRequired,
   children:     PropTypes.node.isRequired,
   classes:      PropTypes.object.isRequired,
-};
-
-MainLayout.defaultProps = {
-  isThemeLight: false,
 };
 
 const MainLayoutWithState = withState({
   component: MainLayout,
   mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
     return {
+      uiTheme: fassets.sel.getUITheme(appState),
       curUser: fassets.sel.curUser(appState),
     };
   },
@@ -125,10 +120,5 @@ const MainLayoutWithFassets = withFassets({
     fassets: '.', // introduce fassets into props via the '.' keyword
   }
 });
-
-// ?? make theme directives dynamically switchable at run-time (currently isThemeLight, but could be more)
-//    - ? persist either in cookies or browser state api (so as to be more persistance than redux state)
-//    - ? inject edit control into left-nav VIA fassets use contract
-//        ... need a concept of "secondary" so as to NOT be at top
 
 export default /* AppLayoutWithStyles = */ withStyles(mainStyles)(MainLayoutWithFassets);

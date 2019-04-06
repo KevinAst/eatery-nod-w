@@ -3,11 +3,18 @@ import {reducerHash}      from 'astx-redux-util';
 import {slicedReducer}    from 'feature-redux';
 import _device            from './featureName';
 import _deviceAct         from './actions';
+import deviceService      from './deviceService/DeviceService'; // NOTE: Special Case - need deviceSerice early (import it)
 
 // ***
 // *** Our feature reducer, managing state for our device.
 // ***
 const reducer = slicedReducer(_device, combineReducers({
+
+  // uiTheme: 'light'/'dark'
+  uiTheme: reducerHash({
+    [_deviceAct.toggleUITheme]: (state, action) => state==='dark' ? 'light' : 'dark',
+  }, deviceService.fetchUITheme() ), // initialState
+
 
   // guiReady: boolean ... has GUI been initialized, and ready to use?
   // - The native-base library requires specific fonts to be loaded :-(
@@ -49,6 +56,9 @@ export default reducer;
                                   /** Our feature state root (via slicedReducer as a single-source-of-truth) */
 const getFeatureState           = (appState) => reducer.getSlicedState(appState);
 const gfs = getFeatureState;      // ... concise alias (used internally)
+
+                                  /** UI Theme: 'light'/'dark' */
+export const getUITheme         = (appState) => gfs(appState).uiTheme || 'light'; // default to 'light' (on first occurrence -or- deviceStorage() NOT supported)
 
                                   /** Can FULL GUI be used (e.g. native-base components)?
                                       Needed by a limited few GUI components (that render EARLY), 

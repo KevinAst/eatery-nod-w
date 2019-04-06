@@ -1,5 +1,5 @@
 import {createFeature}  from 'feature-u';
-import DeviceService    from './DeviceService';
+import deviceService    from './DeviceService';
 
 // feature: deviceService
 //          promotes a simplified abstraction of several device
@@ -11,7 +11,7 @@ export default createFeature({
   // our public face ...
   fassets: {
     define: {
-      'deviceService': new DeviceService(),
+      'deviceService': deviceService,
     },
   },
 });

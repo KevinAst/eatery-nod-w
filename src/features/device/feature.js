@@ -1,10 +1,13 @@
 import {createFeature}     from 'feature-u';
 import _device             from './featureName';
 import {createBootstrapFn} from '../util/bootstrap/bootstrapFn';
+import ToggleUITheme       from './comp/ToggleUITheme';
 import _deviceAct          from './actions';
 import reducer,
-       {isGuiReady,
+       {getUITheme,
+        isGuiReady,
         getDeviceLoc}      from './state';
+import logic               from './logic';
 
 // feature: device
 //          initialize the device for use by the app (full details in README)
@@ -12,12 +15,16 @@ export default createFeature({
   name: _device,
 
   reducer,
+  logic,
 
   // our public face ...
   fassets: {
 
     // various 'bootstrap.*' resources to initialize
     defineUse: {
+      // inject our user-profile menu item to toggle UI Theme ('light'/'dark')
+      'AppLayout.UserMenuItem.UIThemeToggle': ToggleUITheme,
+
       'bootstrap.location': createBootstrapFn('Waiting for Device Location',
                                               ({dispatch, fassets}) => {
                                                 return fassets.deviceService.getCurPos()
@@ -39,6 +46,9 @@ export default createFeature({
     define: {
 
       //*** public selectors ***
+
+                          // UI Theme: 'light'/'dark'
+      'sel.getUITheme':   getUITheme,
 
                           // Can FULL GUI be used (e.g. native-base components)?
                           // Needed by a limited few GUI components (that render EARLY), 

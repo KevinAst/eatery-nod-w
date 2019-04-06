@@ -4,6 +4,11 @@ import _device           from './featureName';
 export default generateActions.root({
   [_device]: { // prefix all actions with our feature name, guaranteeing they unique app-wide!
 
+    toggleUITheme: { // actions.toggleUITheme(): Action
+                     // > toggle the UI Theme ('light'/'dark')
+                     actionMeta: {},
+    },
+
     guiIsReady: { // actions.guiIsReady(): Action
                   // > the full GUI can now be used (i.e. react-native components is now fully initialized)
                   actionMeta: {},
