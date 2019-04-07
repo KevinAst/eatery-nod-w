@@ -1,6 +1,6 @@
 import {createFeature}     from 'feature-u';
 import _device             from './featureName';
-import {createBootstrapFn} from '../util/bootstrap/bootstrapFn';
+import {createBootstrapFn} from '../bootstrap/bootstrapFn';
 import ToggleUITheme       from './comp/ToggleUITheme';
 import _deviceAct          from './actions';
 import reducer,

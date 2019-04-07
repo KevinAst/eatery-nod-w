@@ -1,5 +1,4 @@
-function noOp() {
-}
+import noOp from './noOp';
 
 /**
  * A set of diagnostic conditional functions:

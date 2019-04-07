@@ -1,7 +1,8 @@
 //? import {Location,
 //?         Permissions}   from 'expo';                   // ?? THERE IS NO expo
 //? import {AsyncStorage}  from 'react-native';           // ?? THERE IS NO react-native
-import featureFlags    from '../../../featureFlags';
+import featureFlags    from '../../../../featureFlags';
+import noOp            from '../../../../util/noOp';
 
 const credentialsKey       = 'eatery-nod:credentials';
 const credentialsSeparator = '/';
@@ -29,10 +30,10 @@ class DeviceService {
   /**
    * Fetch the UI Theme stored on local device (if any).
    * 
-   * @return {string} the persisted UI Theme (undefined for none).
+   * @return {string} the persisted UI Theme (null for none - suitable to be used as initial redux state (vs. undefined)).
    */
   fetchUITheme() {
-    return deviceStorage.getItem('uiTheme');
+    return deviceStorage.getItem('uiTheme') || null;
   }
 
 
@@ -243,22 +244,14 @@ if (!_localStorageAvailable) {
 }
 
 // our localStorage pass-through that gracefully no-ops for unsupported browsers
-const deviceStorage = {
-  setItem(keyName, keyValue) {
-    if (_localStorageAvailable) {
-      window.localStorage.setItem(keyName, keyValue);
-    }
-  },
-  getItem(keyName) {
-    if (_localStorageAvailable) {
-      return window.localStorage.getItem(keyName);
-    }
-  },
-  removeItem(keyName) {
-    if (_localStorageAvailable) {
-      window.localStorage.removeItem(keyName);
-    }
-  },
+const deviceStorage = _localStorageAvailable ? {
+  setItem:    (keyName, keyValue) => window.localStorage.setItem(keyName, keyValue),
+  getItem:    (keyName)           => window.localStorage.getItem(keyName),
+  removeItem: (keyName)           => window.localStorage.removeItem(keyName),
+} : {
+  setItem:    noOp,
+  getItem:    noOp,
+  removeItem: noOp,
 };
 
 // TEMP crude test of deviceStorage ... invoke these separately!

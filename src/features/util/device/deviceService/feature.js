@@ -11,7 +11,7 @@ export default createFeature({
   // our public face ...
   fassets: {
     define: {
-      'deviceService': deviceService,
+      deviceService,
     },
   },
 });

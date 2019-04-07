@@ -1,5 +1,5 @@
-import device                        from './device/feature';
-import deviceService                 from './device/deviceService/feature';
+import device                        from './util/device/feature';
+import deviceService                 from './util/device/deviceService/feature';
 
 import auth                          from './auth/feature';
 import authService                   from './auth/authService/feature';
