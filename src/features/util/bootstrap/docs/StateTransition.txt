@@ -26,9 +26,6 @@ bootstrap()  ...................................................................
                                                    - various client-supplied bootstraps:
 
                                                      ... example (from 'device' feature):
-                                                         * 'bootstrap.fonts'
-                                                           - dispatch guiIsReady()
-
                                                          * 'bootstrap.location'
                                                            - dispatch setLoc(location)
 

@@ -9,11 +9,6 @@ export default generateActions.root({
                      actionMeta: {},
     },
 
-    guiIsReady: { // actions.guiIsReady(): Action
-                  // > the full GUI can now be used (i.e. react-native components is now fully initialized)
-                  actionMeta: {},
-    },
-
     setLoc: { // actions.setLoc(loc): Action
               // > set device GPS location
               actionMeta: {
