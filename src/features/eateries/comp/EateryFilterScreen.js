@@ -1,31 +1,60 @@
-import React        from 'react';
-import withState    from '../../../util/withState';
-import PropTypes    from 'prop-types';
-import {Body,
-        Button,
-        Container,
-        Content,
-        Form,
-        Icon,
-        Header,
-        Left,
-        Right,
-        Spinner,
-        Text,
-        Title,
-        View}                from 'native-base';
-import commonStyles          from '../../commonStyles';
+import React                 from 'react';
+
+import withState             from '../../../util/withState';
+import {withStyles}          from '@material-ui/core/styles';
+import withMobileDialog      from '@material-ui/core/withMobileDialog';
+
 import eateryFilterFormMeta  from '../eateryFilterFormMeta';
 import ITextField            from '../../../util/iForms/comp/ITextField';
 import IRadioField           from '../../../util/iForms/comp/IRadioField';
+
+import CloseIcon             from '@material-ui/icons/Close';
+import Dialog                from '@material-ui/core/Dialog';
+import DialogActions         from '@material-ui/core/DialogActions';
+import DialogContent         from '@material-ui/core/DialogContent';
+import DialogContentText     from '@material-ui/core/DialogContentText';
+import DialogTitle           from '@material-ui/core/DialogTitle';
+import Button                from '@material-ui/core/Button';
+import IconButton            from '@material-ui/core/IconButton';
+import Slide                 from '@material-ui/core/Slide';
+import Typography            from '@material-ui/core/Typography';
+import FormHelperText        from '@material-ui/core/FormHelperText';
+import InProgress            from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
+
+function Transition(props) {
+  return <Slide direction="left" timeout="1000" {...props} />;
+}
+
+const styles = theme => ({
+
+  titleBar: {
+    display:         'flex',
+    alignItems:      'center', // vertically align title text with close (X) to it's right
+    padding:         '10px 15px',
+    color:           theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+  },
+
+  title: {
+    flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  entry: {
+    margin:   '30px 0px',
+  },
+
+  inProgress: {
+    margin: theme.spacing.unit * 4,
+  },
+
+});
+
 
 /**
  * EateryFilterScreen: gather filter information (selection criteria) 
  * for our eatery pool view.
  */
-function EateryFilterScreen({iForm}) {
-
-  const verticalSpacing = <View style={{paddingVertical: 10}}/>;
+function EateryFilterScreen({iForm, fullScreen, classes}) {
 
   const formLabel       = iForm.getLabel();
   const formInProcess   = iForm.inProcess();
@@ -34,78 +63,87 @@ function EateryFilterScreen({iForm}) {
     iForm,
   };
 
+  const formErrMsg = iForm.getMsg();
 
   return (
-    <Container style={commonStyles.container}>
-      <Header>
-        <Left>
-          <Button transparent onPress={iForm.handleClose}>
-            <Icon name="close"/>
+    <Dialog open={true}
+            onClose={iForm.handleClose}
+            fullScreen={fullScreen}
+            TransitionComponent={Transition}>
+
+      <form onSubmit={iForm.handleProcess}>
+
+        <DialogTitle disableTypography className={classes.titleBar}>
+          <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            {formLabel}
+          </Typography>
+          <IconButton color="inherit" onClick={iForm.handleClose}>
+            <CloseIcon/>
+          </IconButton>
+        </DialogTitle>
+
+        <DialogContent>
+
+          <DialogContentText className={classes.entry}>
+            filter your pool with these settings ...
+          </DialogContentText>
+
+          <div className={classes.entry}>
+            <ITextField fieldName="distance"
+                        iForm={iForm}
+                        autoFocus
+                        type="number"
+                        helperText="prune entries within this distance (leave blank to view entire pool)"/>
+          </div>
+
+          <div className={classes.entry}>
+            <IRadioField {...sortOrderRadioProps}
+                         row
+                         helperText="sort entries by Restaurant (name) or Distance">
+              <IRadioField.Op value="name"     label="Restaurant" {...sortOrderRadioProps}/>
+              <IRadioField.Op value="distance" label="Distance" {...sortOrderRadioProps}/>
+            </IRadioField>
+          </div>
+
+          {formErrMsg && (
+             <div className={classes.entry}>
+               <FormHelperText error>{formErrMsg}</FormHelperText>
+             </div>
+           )}
+
+          {formInProcess && (
+             <div className={classes.entry}>
+               <InProgress className={classes.inProgress} color="secondary"/>
+             </div>
+           )}
+
+        </DialogContent>
+
+        <DialogActions>
+
+          <Button type="submit"
+                  variant="contained"
+                  color="primary">
+            Filter Pool
           </Button>
-        </Left>
-        <Body>
-          <Title>{formLabel}</Title>
-        </Body>
-        <Right>
-          <Button transparent onPress={iForm.handleProcess} disabled={formInProcess}>
-            <Icon name="paper-plane"/>
+
+          {/* Cancel button not used (in lieu of the X CloseIcon control)
+          <Button onClick={iForm.handleClose}
+                  variant="contained"
+                  color="primary">
+            Cancel
           </Button>
-        </Right>
-      </Header>
+          */}
 
+        </DialogActions>
 
-      <Content keyboardShouldPersistTaps="handled">
-        <Form>
+      </form>
 
-          {verticalSpacing}
-
-          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10}}>
-            <Text style={{fontStyle: 'italic'}}>filter your pool with these settings ...</Text>
-          </View>
-
-          {verticalSpacing}
-          <ITextField fieldName="distance"
-                      iForm={iForm}
-                      keyboardType="numeric"/>
-          <Note>   ... optionally prune entries within this distance</Note>
-          <Note>   ... leave blank to view entire pool</Note>
-
-          {verticalSpacing}
-          <IRadioField {...sortOrderRadioProps}>
-            <IRadioField.Op value="name"     label="Restaurant" {...sortOrderRadioProps}/>
-            <IRadioField.Op value="distance" label="Distance" {...sortOrderRadioProps}/>
-          </IRadioField>
-
-          {verticalSpacing}
-
-          {/* form msg */}
-          <Text style={{color:'red'}}>{iForm.getMsg()}</Text>
-
-          {verticalSpacing}
-
-          {/* inProcess spinner  */}
-          {formInProcess && <Spinner color="blue"/>}
-
-        </Form>
-      </Content>
-    </Container>
+    </Dialog>
   );
 }
 
-// convenience Note component (internal usage)
-function Note({children}) {
-  return (
-    <Text note style={{paddingRight: 20, paddingLeft: 20}}>
-      {children}
-    </Text>
-  );
-}
-
-EateryFilterScreen.propTypes = {
-  iForm: PropTypes.object.isRequired,
-};
-
-export default /*??EateryFilterScreenWithState = */ withState({
+const EateryFilterScreenWithState = withState({
   component: EateryFilterScreen,
   mapStateToProps(appState) {
     return {
@@ -122,3 +160,9 @@ export default /*??EateryFilterScreenWithState = */ withState({
     };
   },
 });
+
+const EateryFilterScreenWithStyles = withStyles(styles)(EateryFilterScreenWithState);
+
+// inject responsive `fullScreen` true/false prop based on screen size
+// ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
+export default withMobileDialog({breakpoint: 'sm'})(EateryFilterScreenWithStyles);

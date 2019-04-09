@@ -205,7 +205,7 @@ export default function IFormMeta({formDesc,
    * iForm.
    *
    * @param {ActionGenesis} [appInjectedFormActions] optionally
-   * specify additional app-specific action creators to suplement the
+   * specify additional app-specific action creators to supplement the
    * auto-generated formActions.  This is typically used to introduce
    * fail/complete actions that are spawned out of app-specific logic
    * modules.  NOTE: the formAction root can even become an action
@@ -542,7 +542,7 @@ export default function IFormMeta({formDesc,
 
       [formActions.fieldChanged]: (state, action) => {
 
-        // carve out new container (supporing immutable state)
+        // carve out new container (supporting immutable state)
         const newState = {...state};
 
         // merge new field value
@@ -598,7 +598,7 @@ export default function IFormMeta({formDesc,
 
   /**
    * Create an IForm helper object, providing convenience
-   * accessors/handlers, avoiding direct formState intepretation.
+   * accessors/handlers, avoiding direct formState interpretation.
    *
    * @param {ReduxState} formState the redux form state supporting
    * self's form.
@@ -765,8 +765,15 @@ export default function IFormMeta({formDesc,
     /**
      * Service an IForm process request.
      */
-    function handleProcess() {
+    function handleProcess(event) {
       dispatch( formActions.process() );
+
+      // for <form onSubmit> handlers, prevent anything from being submitted to the server
+      // ... old technique would be to "return false" from the handler, 
+      //     but this is no longer supported in react
+      if (event) {
+        event.preventDefault();
+      }
     }
 
     /**

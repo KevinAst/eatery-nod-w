@@ -5,7 +5,7 @@ import {featureRoute,
 import featureName         from './featureName';
 import EateriesListScreen  from './comp/EateriesListScreen';
 //? import EateryDetailScreen  from './comp/EateryDetailScreen'; // ?? these components are NOT compilable yet
-//? import EateryFilterScreen  from './comp/EateryFilterScreen'; // ?? these components are NOT compilable yet
+import EateryFilterScreen  from './comp/EateryFilterScreen'; // ?? these components are NOT compilable yet
 import SplashScreen        from '../../util/SplashScreen';
 
 // ***
@@ -17,12 +17,12 @@ export default [
   featureRoute({
     priority: PRIORITY.HIGH,
     content({fassets, appState}) {
-      //? // display EateryFilterScreen, when form is active (accomplished by our logic)
-      //? // ... this is done as a priority route, because this screen can be used to
-      //? //     actually change the view - so we display it regarless of the state of the active view
-      //? if (_eateriesSel.isFormFilterActive(appState)) {
-      //?   return <EateryFilterScreen/>;
-      //? }
+      // display EateryFilterScreen, when form is active (accomplished by our logic)
+      // ... this is done as a priority route, because this screen can be used to
+      //     actually change the view - so we display it regarless of the state of the active view
+      if (_eateriesSel.isFormFilterActive(appState)) {
+        return <EateryFilterScreen/>;
+      }
     }
   }),
 

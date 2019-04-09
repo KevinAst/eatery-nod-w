@@ -1,11 +1,5 @@
 import React        from 'react';
-import {View}       from 'react-native';
-import {Item,
-        Label,
-        Icon,
-        Input,
-        Right,
-        Text}       from 'native-base';
+import TextField    from '@material-ui/core/TextField';
 import PropTypes    from 'prop-types';
 import verify       from '../../verify';
 
@@ -16,59 +10,57 @@ import verify       from '../../verify';
  *   - interfacing with IForm (accessors, and handlers)
  *
  * Usage:
- *   <ITextField fieldName="myFieldName"
+ *   <ITextField fieldName="myFieldName" ... the IFormMeta fieldName
  *               iForm={IForm}
- *               ... extra props from native-base Input comp
+ *               ... extra props from material-ui TextField comp
  *                   EX:
- *                   placeholder='John'
- *                   keyboardType='email-address'
- *                   secureTextEntry
+ *                   autoFocus
+ *                   type="number"
+ *                   helperText="... help text here"/>
+ *                   ... etc.
  */
-export default function ITextField({fieldName, iForm, ...inputExtraProps}) {
+export default function ITextField({fieldName, iForm, ...extraProps}) {
 
-  const fieldLabel   = iForm.getLabel(fieldName);
-  verify(fieldLabel, `<ITextField> supplied fieldName '${fieldName}' is NOT recognized for the supplied iForm: '${iForm.getLabel()}'`);
-  const fieldValue   = iForm.getValue(fieldName);
-  const fieldValidationIsExposed = iForm.isValidationExposed(fieldName);
+  // validate properties
+  const check = verify.prefix('<ITextField> property violation: ')
 
-  // compute field success/error adornments, dynamically exposed based field touches
-  let   iconDom = null; // optional DOM for error/success icon
-  let   msgDom  = null; // optional DOM displaying field validation message
-  const itemExtraProps = {};
+  // ... fieldName
+  check(fieldName, 'fieldName is required');
 
-  if (fieldValidationIsExposed) {
+  // ... iForm
+  check(iForm, 'iForm is required');
+  check(iForm.handleFieldTouched, `iForm prop MUST be an IFormMeta object ... in fieldName: '${fieldName}'`); // NOTE: duck type check
+
+  // ... fieldName must be defined in iForm
+  const fieldLabel = iForm.getLabel(fieldName);
+  check(fieldLabel, `supplied fieldName '${fieldName}' does NOT exist in the supplied iForm: '${iForm.getLabel()}'`);
+
+  // ... insure NO clashes with props we use internally
+  //     NOTE: we allow helperText to be supplied (and overwrite on error situations)
+  ['label', 'value', 'disabled', 'onChange', 'onBlur', 'error'].forEach(
+    (prop) => check(!extraProps[prop], `'${prop}' prop cannot be used (it is managed internally) ... for fieldName: '${fieldName}'`)
+  );
+
+  // compute field success/error adornments
+  // ... dynamically exposed based on user field touches
+  const managedProps = {};
+  if (iForm.isValidationExposed(fieldName)) {
     const fieldMsg = iForm.getMsg(fieldName);   // null/undefined for NO msg (i.e. valid/clean)
     if (fieldMsg) { // error adornment
-      itemExtraProps.error = true;
-      iconDom = <Icon name="close-circle"/>;
-      // NOTE: had to use <View> with style (for some reason, <Item> usage errors in middleware
-      msgDom  = <View style={{flexDirection: 'row', paddingRight: 10}}>
-                  <Right>
-                    <Text style={{color:'red'}}>{fieldMsg}</Text>
-                  </Right>
-                </View>;
-    }
-    else {  // success adornment
-      itemExtraProps.success = true;
-      iconDom = <Icon name="checkmark-circle"/>;
+      managedProps.error      = true;     // mark field with error color
+      managedProps.helperText = fieldMsg; // overwrite helperText to hold the field error message
     }
   }
 
-  // emit ITextField
-  // console.log(`?? field: '${fieldName}', inputExtraProps: `, inputExtraProps);
+  // emit an ITextField that is auto-wired to the supplied iForm
   return (
-    <View>
-      <Item fixedLabel {...itemExtraProps}>
-        <Label>{fieldLabel}</Label>
-        <Input value={fieldValue}
-               editable={!iForm.inProcess()}
-               onChangeText={(txt) => iForm.handleFieldChanged(fieldName, txt)}
-               onEndEditing={()    => iForm.handleFieldTouched(fieldName)}
-               {...inputExtraProps}/>
-        {iconDom}
-      </Item>
-      {msgDom}
-    </View>
+    <TextField label={fieldLabel}
+               value={iForm.getValue(fieldName)}
+               disabled={iForm.inProcess()}
+               onChange={(event) => iForm.handleFieldChanged(fieldName, event.target.value)}
+               onBlur={() => iForm.handleFieldTouched(fieldName)}
+               {...extraProps}
+               {...managedProps}/>
   );
 }
 
