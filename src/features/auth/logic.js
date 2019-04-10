@@ -35,34 +35,15 @@ export const checkDeviceCredentials = createLogic({
 
   process({getState, action, fassets}, dispatch, done) {
 
-    // ?? temporary: bypass until we have some deviceService ... pretend we have credentials
-    if (1==1) {
-      const encodedCredentials = '??encodedCredentials';
+    const encodedCredentials = fassets.deviceService.fetchCredentials();
+    if (encodedCredentials) {
       dispatch( _authAct.autoSignIn.haveDeviceCredentials(encodedCredentials) );
-      done();
-      return;
+    }
+    else {
+      dispatch( _authAct.autoSignIn.noDeviceCredentials() );
     }
 
-    fassets.deviceService.fetchCredentials()
-       .then( (encodedCredentials) => {
-         if (encodedCredentials) {
-           dispatch( _authAct.autoSignIn.haveDeviceCredentials(encodedCredentials) );
-         }
-         else {
-           dispatch( _authAct.autoSignIn.noDeviceCredentials() );
-         }
-         done();
-       })
-       .catch( err => {
-         // report unexpected error to user
-         // ... we add user context to this raw error
-         discloseError({err: err.defineAttemptingToMsg('fetch credentials stored on the device')});
-
-         // just manually signIn
-         dispatch( _authAct.autoSignIn.noDeviceCredentials() );
-
-         done();
-       });
+    done();
   },
 
 });
@@ -77,9 +58,7 @@ export const autoSignIn = createLogic({
   type: String(_authAct.autoSignIn.haveDeviceCredentials),
   
   process({getState, action, fassets}, dispatch, done) {
-    // ?? temporary: patch until we have some deviceService ... pretend we have credentials
-    const {email, pass} = {email: '??tempEmail', pass: '??tempPass'};
-    //? const {email, pass} = fassets.deviceService.decodeCredentials(action.encodedCredentials);
+    const {email, pass} = fassets.deviceService.decodeCredentials(action.encodedCredentials);
     dispatch( _authAct.signIn(email, pass) );
     done();
   },
@@ -138,14 +117,11 @@ export const signIn = createLogic({
            .then( user => { // user has successfully signed in
 
              // retain these credentials on our device (to streamline subsequent app launch)
-             // ?? temporary bypass TILL we have some deviceService
-             //? fassets.deviceService.storeCredentials(action.email, action.pass)
-             //?        .catch( (err) => { // unexpected error in a react-native API
-             //?          // ... nested errors in a promise are caught in the outer catch (see catch - below)
-             //?        });
+             fassets.deviceService.storeCredentials(action.email, action.pass);
 
              // communicate a new user is in town
              dispatch( _authAct.signIn.complete(user) );
+
              done();
            })
 
@@ -262,13 +238,7 @@ export const signOut = createLogic({
              discloseError({err});
            });
 
-    // ?? temporary bypass TILL we have some deviceService
-    //? fassets.deviceService.removeCredentials()
-    //?    .catch( (err) => {
-    //?      // report unexpected error to user
-    //?      // ... we add user context to this raw error
-    //?      discloseError({err: err.defineAttemptingToMsg('remove your credentials from the device')});
-    //?    });
+    fassets.deviceService.removeCredentials();
 
     done();
   },

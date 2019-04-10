@@ -1,6 +1,5 @@
 //? import {Location,
 //?         Permissions}   from 'expo';                   // ?? THERE IS NO expo
-//? import {AsyncStorage}  from 'react-native';           // ?? THERE IS NO react-native
 import featureFlags    from '../../../../featureFlags';
 import noOp            from '../../../../util/noOp';
 
@@ -30,7 +29,8 @@ class DeviceService {
   /**
    * Fetch the UI Theme stored on local device (if any).
    * 
-   * @return {string} the persisted UI Theme (null for none - suitable to be used as initial redux state (vs. undefined)).
+   * @return {string} the persisted UI Theme (null for none - suitable
+   * to be used as initial redux state (vs. undefined)).
    */
   fetchUITheme() {
     return deviceStorage.getItem('uiTheme') || null;
@@ -50,62 +50,72 @@ class DeviceService {
   /**
    * Fetch credentials stored on local device (if any).
    * 
-   * @return {promise} a promise resolving to encodedCredentials (use
-   * decodeCredentials() to decode), or null (when non-existent).
+   * @return {string} the encodedCredentials if any.  Use
+   * decodeCredentials() to decode (null for none -
+   * i.e. non-existent).
    */
   fetchCredentials() {
-    //? return AsyncStorage.getItem(credentialsKey);
+    return deviceStorage.getItem(credentialsKey) || null;
   }
 
 
   /**
-   * Store credentials on local device.
+   * Store credentials on local device in an encoded form.
    * 
-   * @return {promise} a promise strictly for error handling.
+   * @param {string} email the email (id) to store.
+   * @param {string} pass the password to store.
    */
   storeCredentials(email, pass) {
-    //? return AsyncStorage.setItem(credentialsKey, this.encodeCredentials(email, pass));
+    deviceStorage.setItem(credentialsKey, this.encodeCredentials(email, pass));
   }
 
 
   /**
    * Remove credentials on local device.
-   * 
-   * @return {promise} a promise strictly for error handling.
    */
   removeCredentials() {
-    //? return AsyncStorage.removeItem(credentialsKey);
+    deviceStorage.removeItem(credentialsKey);
   }
 
 
   /**
    * Encode the supplied email/pass into a string.
+   * 
+   * @param {string} email the email (id) to encode.
+   * @param {string} pass the password to encode.
+   * 
+   * @return {string} the encoded credentials.
    */
   encodeCredentials(email, pass) {
+    // TODO: ?? really encode this
     return email+credentialsSeparator+pass;
   }
 
 
   /**
-   * Decode the supplied encodedCredentials, resulting in:
-   *    {
-   *      email: string,
-   *      pass:  string
-   *    }
-   * -or-
-   *    null (if non-existent).
+   * Decode the supplied encodedCredentials.
+   * 
+   * @param {string} encodedCredentials the encoded credentials to
+   * decode (falsy for none).
+   * 
+   * @return {object} the decoded credentials as follows (null when
+   * encodedCredentials undefined):
+   *   {
+   *     email: string,
+   *     pass:  string
+   *   }
    */
   decodeCredentials(encodedCredentials) {
-    if (encodedCredentials) {
-      const parts = encodedCredentials.split(credentialsSeparator);
-      return {
-        email: parts[0],
-        pass:  parts[1],
-      };
-    }
-    else {
+    if (!encodedCredentials) {
       return null;
     }
+
+    // TODO: ?? really decode this
+    const [email, pass] = encodedCredentials.split(credentialsSeparator);
+    return {
+      email,
+      pass,
+    };
   }
 
 

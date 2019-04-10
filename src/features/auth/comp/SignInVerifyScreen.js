@@ -1,94 +1,131 @@
-import React         from 'react';
-import withState     from '../../../util/withState';
-import {Body,
-        Button,
-        Container,
-        Content,
-        Form,
-        Header,
-        Icon,
-        Text,
-        Title,
-        View}        from 'native-base';
-import PropTypes     from 'prop-types';
-import commonStyles  from '../../commonStyles';
-import _authAct      from '../actions';
-import * as _authSel from '../state';
+import React             from 'react';
 
+import withState         from '../../../util/withState';
+import {withStyles}      from '@material-ui/core/styles';
+
+import _authAct          from '../actions';
+import * as _authSel     from '../state';
+
+import Button            from '@material-ui/core/Button';
+import CheckIcon         from '@material-ui/icons/Check';
+import Dialog            from '@material-ui/core/Dialog';
+import DialogContent     from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle       from '@material-ui/core/DialogTitle';
+import Grid              from '@material-ui/core/Grid';
+import MailIcon          from '@material-ui/icons/Mail';
+import SignOutIcon       from '@material-ui/icons/ExitToApp';
+import Slide             from '@material-ui/core/Slide';
+import Typography        from '@material-ui/core/Typography';
+
+function Transition(props) {
+  return <Slide direction="left" timeout="1000" {...props} />;
+}
+
+const styles = theme => ({
+
+  titleBar: {
+    display:         'flex',
+    alignItems:      'center', // vertically align title text with close (X) to it's right (leave this even though we do NOT have a close in this dialog)
+    padding:         '10px 15px',
+    color:           theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+  },
+
+  title: {
+    flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  entry: {
+    margin:   '30px 0px',
+  },
+
+  icon: {
+    marginRight: theme.spacing.unit,
+  },
+  
+  inProgress: {
+    margin: theme.spacing.unit * 4,
+  },
+
+});
+
+function CenterItems({children}) {
+  return (
+    <Grid container direction="row" justify="center" alignItems="center">
+      {children}
+    </Grid>
+  );
+}
 
 /**
  * SignInVerifyScreen requesting email verification completion.
  */
-function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification, signOut}) {
-  const verticalSpacing = (spacing=10) => <View style={{paddingVertical: spacing}}/>;
+function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification, signOut, classes}) {
 
   return (
-    <Container style={commonStyles.container}>
-      <Header>
-        <Body>
-          <Title>Eatery Nod - Sign In Verification</Title>
-        </Body>
-      </Header>
-      <Content style={{padding: 10}}>
+    <Dialog open={true}
+            TransitionComponent={Transition}>
 
-        <Form>
+      <DialogTitle disableTypography className={classes.titleBar}>
+        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+          Eatery Nod - Sign In Verification
+        </Typography>
+      </DialogTitle>
 
-          {verticalSpacing()}
+      <DialogContent>
 
-          <Text>
-            Your account email has not yet been verified.
-          </Text>
+        <DialogContentText className={classes.entry}>
+          Your account email has not yet been verified.
+        </DialogContentText>
 
-          {verticalSpacing()}
+        <DialogContentText className={classes.entry}>
+          Please follow the instructions from the email sent to: {email}
+        </DialogContentText>
 
-          <Text>
-            Please follow the instructions from the email sent to: {email}
-          </Text>
-
-          {verticalSpacing()}
-
-          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-            <Text>Once completed ... </Text>
-            <Button transparent onPress={checkEmailVerified}>
-              <Icon name="done-all"/>
-              <Text>Continue</Text>
+        <div className={classes.entry}>
+          <CenterItems>
+            <Typography variant="body2" color="secondary">
+              Once completed ... &nbsp;&nbsp;
+            </Typography>
+            <Button variant="contained"
+                    color="secondary"
+                    onClick={checkEmailVerified}>
+              <CheckIcon className={classes.icon}/>
+              Continue
             </Button>
-          </View>
+          </CenterItems>
+        </div>
 
-          {verticalSpacing(40)}
-
-          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-            <Button transparent onPress={resendEmailVerification}>
-              <Icon name="mail"/>
-              <Text>Resend Email</Text>
+        <div className={classes.entry}>
+          <CenterItems>
+            <Button variant="contained"
+                    color="primary"
+                    onClick={resendEmailVerification}>
+              <MailIcon className={classes.icon}/>
+              Resend Email
             </Button>
-          </View>
+          </CenterItems>
+        </div>
 
-          {verticalSpacing(40)}
-
-          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-            <Button transparent onPress={signOut}>
-              <Icon name="log-out"/>
-              <Text>Sign Out</Text>
+        <div className={classes.entry}>
+          <CenterItems>
+            <Button variant="contained"
+                    color="primary"
+                    onClick={signOut}>
+              <SignOutIcon className={classes.icon}/>
+              Sign Out
             </Button>
-          </View>
+          </CenterItems>
+        </div>
 
-        </Form>
+      </DialogContent>
 
-      </Content>
-      
-    </Container>
+    </Dialog>
   );
 }
 
-SignInVerifyScreen.propTypes = {
-  email:                   PropTypes.string.isRequired,
-  checkEmailVerified:      PropTypes.func.isRequired,
-  resendEmailVerification: PropTypes.func.isRequired,
-  signOut:                 PropTypes.func.isRequired,
-};
-
-export default /* ?? SignInVerifyScreenWithState = */ withState({
+const SignInVerifyScreenWithState = withState({
   component: SignInVerifyScreen,
   mapStateToProps(appState) {
     return {
@@ -109,3 +146,5 @@ export default /* ?? SignInVerifyScreenWithState = */ withState({
     };
   },
 });
+
+export default /* SignInVerifyScreenWithStyles = */ withStyles(styles)(SignInVerifyScreenWithState);

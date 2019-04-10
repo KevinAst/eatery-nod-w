@@ -3,8 +3,8 @@ import * as _authSel       from './state';
 import {featureRoute, 
         PRIORITY}          from 'feature-router';
 
-//? import SignInVerifyScreen  from './comp/SignInVerifyScreen'; // ?? these components are NOT compilable yet
-//? import SignInScreen        from './comp/SignInScreen'; // ?? these components are NOT compilable yet
+import SignInVerifyScreen  from './comp/SignInVerifyScreen';
+import SignInScreen        from './comp/SignInScreen';
 import SplashScreen        from '../../util/SplashScreen';
 
 // ***
@@ -25,22 +25,23 @@ export default featureRoute({
       return null;
     }
 
-    //? // when user is signed in BUT unverified
-    //? // ... display email verification screen
-    //? if (user.isUserSignedInUnverified()) {
-    //?   return <SignInVerifyScreen/>;
-    //? }
+    // when user is signed in BUT unverified
+    // ... display email verification screen
+    if (user.isUserSignedInUnverified()) {
+      return <SignInVerifyScreen/>;
+    }
+
 
     // ***
-    // *** at this point we know user is unauthorized (either signed out, or in-transision)
+    // *** at this point we know user is unauthorized (either signed out, or in-transition)
     // ***
 
-    //? // display interactive SignIn, when form is active (accomplished by our logic)
-    //? if (_authSel.isSignInFormActive(appState)) {
-    //?   return <SignInScreen/>;
-    //? }
+    // display interactive SignIn, when form is active (accomplished by our logic)
+    if (_authSel.isSignInFormActive(appState)) {
+      return <SignInScreen/>;
+    }
 
-    // display interactive SignUp, when form is active (acomplished by our logic)
+    // display interactive SignUp, when form is active (accomplished by our logic)
     // TODO: check for signUpForm (WHEN SUPPORTED)
     
     // fallback: communicate route transition condition
