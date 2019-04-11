@@ -2,6 +2,7 @@
 //?         Permissions}   from 'expo';                   // ?? THERE IS NO expo
 import featureFlags    from '../../../../featureFlags';
 import noOp            from '../../../../util/noOp';
+import discloseError   from '../../../../util/discloseError';
 
 const credentialsKey       = 'eatery-nod:credentials';
 const credentialsSeparator = '/';
@@ -101,8 +102,18 @@ class DeviceService {
    * @private
    */
   encodeCredentials(email, pass) {
-    // TODO: ?? really encode this
-    return email+credentialsSeparator+pass;
+    // combine email/pass into single resource
+    var encoding = email+credentialsSeparator+pass;
+
+    // obfuscate the credentials using a simple base-64 encoding
+    // NOTE: This is NOT intended to be a full-blown security
+    //       encryption, rather simply prevent casual exposure to
+    //       sensitive data via browser dev tools.
+    if (window.btoa) {
+      encoding = window.btoa(encoding);
+    }
+
+    return encoding;
   }
 
 
@@ -122,12 +133,36 @@ class DeviceService {
    * @private
    */
   decodeCredentials(encodedCredentials) {
+    // no-op if NO encoding supplied
     if (!encodedCredentials) {
       return null;
     }
 
-    // TODO: ?? really decode this
-    const [email, pass] = encodedCredentials.split(credentialsSeparator);
+    // de-obfuscate the credentials using a simple base-64 encoding
+    // NOTE: This is NOT intended to be a full-blown security
+    //       encryption, rather simply prevent casual exposure to
+    //       sensitive data via browser dev tools.
+    var clearStr = encodedCredentials;
+    if (window.btoa) {
+      try {
+        clearStr = window.atob(encodedCredentials);
+      }
+      catch(err) {
+        // report unexpected error to user
+        // ... can receive error when stored credentials are not obfuscated
+        //     because of older software release
+        err.defineAttemptingToMsg('de-obfuscate stored credentials');
+        discloseError({err});
+
+        // simply no-op (pretending that credentials were never stored)
+        return null;
+      }
+    }
+
+    // extract email/pass from single resource
+    const [email, pass] = clearStr.split(credentialsSeparator);
+
+    // package result in credentials object
     return {
       email,
       pass,
