@@ -2,6 +2,7 @@ import React             from 'react';
 
 import withState         from '../../../util/withState';
 import {withStyles}      from '@material-ui/core/styles';
+import withMobileDialog  from '@material-ui/core/withMobileDialog';
 
 import signInFormMeta    from '../signInFormMeta';
 import ITextField        from '../../../util/iForms/comp/ITextField';
@@ -58,7 +59,7 @@ const styles = theme => ({
 /**
  * SignInScreen: gather user sign-in credentials.
  */
-function SignInScreen({iForm, classes}) {
+function SignInScreen({iForm, fullScreen, classes}) {
 
   const formLabel     = iForm.getLabel();
   const formInProcess = iForm.inProcess();
@@ -66,6 +67,7 @@ function SignInScreen({iForm, classes}) {
 
   return (
     <Dialog open={true}
+            fullScreen={fullScreen}
             TransitionComponent={TransitionZoom}>
 
       <DialogTitle disableTypography className={classes.titleBar}>
@@ -114,19 +116,19 @@ function SignInScreen({iForm, classes}) {
                </div>
              )}
 
-            <div className={classes.entry}>
-              <Grid container direction="row" justify="space-between" alignItems="center">
-                <Typography variant="body2" color="secondary">
-                  ... don't have an account?
-                </Typography>
-                <Button variant="contained"
-                        color="secondary"
-                        onClick={()=>toast.warn({ msg:'Sign Up has not yet been implemented.' })}>
-                  <SignInIcon className={classes.icon}/>
-                  Sign Up
-                </Button>
-              </Grid>
-            </div>
+      <div className={classes.entry}>
+        <Grid container direction="row" justify="space-between" alignItems="center">
+          <Typography variant="body2" color="secondary">
+            ... don't have an account?
+          </Typography>
+          <Button variant="contained"
+                  color="secondary"
+                  onClick={()=>toast.warn({ msg:'Sign Up has not yet been implemented.' })}>
+            <SignInIcon className={classes.icon}/>
+            Sign Up
+          </Button>
+        </Grid>
+      </div>
 
           </fieldset>
         </form>
@@ -148,12 +150,16 @@ const SignInScreenWithState = withState({
   mergeProps(stateProps, dispatchProps, ownProps) {
     return {
       ...ownProps,
-    //...stateProps,    // unneeded (in this case) ... wonder: does this impact connect() optimization?
-    //...dispatchProps, // ditto
+      //...stateProps,    // unneeded (in this case) ... wonder: does this impact connect() optimization?
+      //...dispatchProps, // ditto
       iForm: signInFormMeta.IForm(stateProps.formState, 
                                   dispatchProps.dispatch),
     };
   },
 });
 
-export default /* SignInScreenWithStyles = */ withStyles(styles)(SignInScreenWithState);
+const SignInScreenWithStyles = withStyles(styles)(SignInScreenWithState);
+
+// inject responsive `fullScreen` true/false prop based on screen size
+// ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
+export default withMobileDialog({breakpoint: 'sm'})(SignInScreenWithStyles);

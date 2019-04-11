@@ -2,6 +2,7 @@ import React             from 'react';
 
 import withState         from '../../../util/withState';
 import {withStyles}      from '@material-ui/core/styles';
+import withMobileDialog  from '@material-ui/core/withMobileDialog';
 
 import _authAct          from '../actions';
 import * as _authSel     from '../state';
@@ -57,10 +58,11 @@ function CenterItems({children}) {
 /**
  * SignInVerifyScreen requesting email verification completion.
  */
-function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification, signOut, classes}) {
+function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification, signOut, fullScreen, classes}) {
 
   return (
     <Dialog open={true}
+            fullScreen={fullScreen}
             TransitionComponent={TransitionZoom}>
 
       <DialogTitle disableTypography className={classes.titleBar}>
@@ -143,4 +145,8 @@ const SignInVerifyScreenWithState = withState({
   },
 });
 
-export default /* SignInVerifyScreenWithStyles = */ withStyles(styles)(SignInVerifyScreenWithState);
+const SignInVerifyScreenWithStyles = withStyles(styles)(SignInVerifyScreenWithState);
+
+// inject responsive `fullScreen` true/false prop based on screen size
+// ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
+export default withMobileDialog({breakpoint: 'sm'})(SignInVerifyScreenWithStyles);
