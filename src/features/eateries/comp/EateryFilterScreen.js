@@ -8,17 +8,18 @@ import eateryFilterFormMeta  from '../eateryFilterFormMeta';
 import ITextField            from '../../../util/iForms/comp/ITextField';
 import IRadioField           from '../../../util/iForms/comp/IRadioField';
 
+import Button                from '@material-ui/core/Button';
 import CloseIcon             from '@material-ui/icons/Close';
 import Dialog                from '@material-ui/core/Dialog';
-import DialogActions         from '@material-ui/core/DialogActions';
 import DialogContent         from '@material-ui/core/DialogContent';
 import DialogContentText     from '@material-ui/core/DialogContentText';
 import DialogTitle           from '@material-ui/core/DialogTitle';
-import Button                from '@material-ui/core/Button';
-import IconButton            from '@material-ui/core/IconButton';
-import Typography            from '@material-ui/core/Typography';
+import FilterIcon            from '@material-ui/icons/FilterList';
 import FormHelperText        from '@material-ui/core/FormHelperText';
+import Grid                  from '@material-ui/core/Grid';
+import IconButton            from '@material-ui/core/IconButton';
 import InProgress            from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
+import Typography            from '@material-ui/core/Typography';
 import {TransitionSlide}     from '../../../util/Transition';
 
 
@@ -40,11 +41,23 @@ const styles = theme => ({
     margin:   '30px 0px',
   },
 
+  icon: {
+    marginRight: theme.spacing.unit,
+  },
+
   inProgress: {
     margin: theme.spacing.unit * 4,
   },
 
 });
+
+function CenterItems({children}) {
+  return (
+    <Grid container direction="row" justify="center" alignItems="center">
+      {children}
+    </Grid>
+  );
+}
 
 
 /**
@@ -102,6 +115,17 @@ function EateryFilterScreen({iForm, fullScreen, classes}) {
             </IRadioField>
           </div>
 
+          <div className={classes.entry}>
+            <CenterItems>
+              <Button type="submit"
+                      variant="contained"
+                      color="primary">
+                <FilterIcon className={classes.icon}/>
+                Filter Pool
+              </Button>
+            </CenterItems>
+          </div>
+
           {formErrMsg && (
              <div className={classes.entry}>
                <FormHelperText error>{formErrMsg}</FormHelperText>
@@ -115,24 +139,6 @@ function EateryFilterScreen({iForm, fullScreen, classes}) {
            )}
 
         </DialogContent>
-
-        <DialogActions>
-
-          <Button type="submit"
-                  variant="contained"
-                  color="primary">
-            Filter Pool
-          </Button>
-
-          {/* Cancel button not used (in lieu of the X CloseIcon control)
-          <Button onClick={iForm.handleClose}
-                  variant="contained"
-                  color="primary">
-            Cancel
-          </Button>
-          */}
-
-        </DialogActions>
 
       </form>
 
