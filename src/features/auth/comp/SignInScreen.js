@@ -115,6 +115,8 @@ function SignInScreen({iForm, fullScreen, classes}) {
               <ITextField fieldName="email"
                           iForm={iForm}
                           autoFocus
+                          required
+                          fullWidth
                           type="email"
                           placeholder="jon.snow@gmail.com"
                           helperText="your email is your ID"/>
@@ -123,6 +125,8 @@ function SignInScreen({iForm, fullScreen, classes}) {
             <div className={classes.entry}>
               <ITextField fieldName="pass"
                           iForm={iForm}
+                          required
+                          fullWidth
                           type="password"/>
             </div>
 
