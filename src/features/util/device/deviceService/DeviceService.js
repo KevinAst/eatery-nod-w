@@ -26,6 +26,11 @@ class DeviceService {
   }
 
 
+
+  //****************************************************************************
+  //*** Persist UI Theme
+  //****************************************************************************
+
   /**
    * Fetch the UI Theme stored on local device (if any).
    * 
@@ -47,12 +52,23 @@ class DeviceService {
   }
 
 
+
+  //****************************************************************************
+  //*** Persist Authorization Credentials
+  //****************************************************************************
+
   /**
    * Fetch credentials stored on local device (if any).
    * 
-   * @return {string} the encodedCredentials if any.  Use
-   * decodeCredentials() to decode (null for none -
-   * i.e. non-existent).
+   * NOTE: This method exposes authorization credentials as an encoded
+   *       string.  The reason for this is it is common to package
+   *       this information in things like redux actions which can
+   *       easily be visualized by redux-dev-tools.  To utilize this
+   *       information, simply use the decodeCredentials() method (at
+   *       the last possible moment - to minimize exposure to dev
+   *       tools).
+   * 
+   * @return {string} the encodedCredentials if any (null for none).
    */
   fetchCredentials() {
     return deviceStorage.getItem(credentialsKey) || null;
@@ -71,7 +87,7 @@ class DeviceService {
 
 
   /**
-   * Remove credentials on local device.
+   * Remove credentials from local device.
    */
   removeCredentials() {
     deviceStorage.removeItem(credentialsKey);
@@ -118,6 +134,12 @@ class DeviceService {
     };
   }
 
+
+
+
+  //****************************************************************************
+  //*** Expose Device Location
+  //****************************************************************************
 
   /**
    * Return the current device location asynchronously (via a promise).
