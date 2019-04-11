@@ -83,13 +83,13 @@ function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification,
 
         <div className={classes.entry}>
           <CenterItems>
-            <Typography variant="body2" color="secondary">
+            <Typography variant="body2" color="primary">
               ... once completed:
             </Typography>
           </CenterItems>
           <CenterItems>
             <Button variant="contained"
-                    color="secondary"
+                    color="primary"
                     onClick={checkEmailVerified}>
               <CheckIcon className={classes.icon}/>
               Continue
@@ -100,7 +100,7 @@ function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification,
         <div className={classes.entry}>
           <CenterItems>
             <Button variant="contained"
-                    color="primary"
+                    color="secondary"
                     onClick={resendEmailVerification}>
               <MailIcon className={classes.icon}/>
               Resend Email
@@ -111,7 +111,7 @@ function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification,
         <div className={classes.entry}>
           <CenterItems>
             <Button variant="contained"
-                    color="primary"
+                    color="secondary"
                     onClick={signOut}>
               <SignOutIcon className={classes.icon}/>
               Sign Out
