@@ -84,8 +84,10 @@ function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification,
         <div className={classes.entry}>
           <CenterItems>
             <Typography variant="body2" color="secondary">
-              Once completed ... &nbsp;&nbsp;
+              ... once completed:
             </Typography>
+          </CenterItems>
+          <CenterItems>
             <Button variant="contained"
                     color="secondary"
                     onClick={checkEmailVerified}>

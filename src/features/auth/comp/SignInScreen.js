@@ -55,6 +55,14 @@ const styles = theme => ({
 
 });
 
+function CenterItems({children}) {
+  return (
+    <Grid container direction="row" justify="center" alignItems="center">
+      {children}
+    </Grid>
+  );
+}
+
 
 /**
  * SignInScreen: gather user sign-in credentials.
@@ -100,14 +108,14 @@ function SignInScreen({iForm, fullScreen, classes}) {
                           type="password"/>
             </div>
 
-            <Grid container direction="row" justify="flex-end" alignItems="center">
+            <CenterItems>
               <Button type="submit"
                       variant="contained"
                       color="primary">
                 <SignInIcon className={classes.icon}/>
                 {formLabel}
               </Button>
-            </Grid>
+            </CenterItems>
             <FormHelperText error>{formErrMsg}</FormHelperText>
 
             {formInProcess && (
@@ -116,19 +124,21 @@ function SignInScreen({iForm, fullScreen, classes}) {
                </div>
              )}
 
-      <div className={classes.entry}>
-        <Grid container direction="row" justify="space-between" alignItems="center">
-          <Typography variant="body2" color="secondary">
-            ... don't have an account?
-          </Typography>
-          <Button variant="contained"
-                  color="secondary"
-                  onClick={()=>toast.warn({ msg:'Sign Up has not yet been implemented.' })}>
-            <SignInIcon className={classes.icon}/>
-            Sign Up
-          </Button>
-        </Grid>
-      </div>
+            <div className={classes.entry}>
+              <CenterItems>
+                <Typography variant="body2" color="secondary">
+                  ... don't have an account?
+                </Typography>
+              </CenterItems>
+              <CenterItems>
+                <Button variant="contained"
+                        color="secondary"
+                        onClick={()=>toast.warn({ msg:'Sign Up has not yet been implemented.' })}>
+                  <SignInIcon className={classes.icon}/>
+                  Sign Up
+                </Button>
+              </CenterItems>
+            </div>
 
           </fieldset>
         </form>
