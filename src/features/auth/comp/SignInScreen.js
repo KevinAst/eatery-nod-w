@@ -16,12 +16,8 @@ import FormHelperText    from '@material-ui/core/FormHelperText';
 import Grid              from '@material-ui/core/Grid';
 import InProgress        from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
 import SignInIcon        from '@material-ui/icons/ExitToApp';
-import Slide             from '@material-ui/core/Slide';
 import Typography        from '@material-ui/core/Typography';
-
-function Transition(props) {
-  return <Slide direction="left" timeout="1000" {...props} />;
-}
+import {TransitionZoom}  from '../../../util/Transition';
 
 const styles = theme => ({
 
@@ -70,7 +66,7 @@ function SignInScreen({iForm, classes}) {
 
   return (
     <Dialog open={true}
-            TransitionComponent={Transition}>
+            TransitionComponent={TransitionZoom}>
 
       <DialogTitle disableTypography className={classes.titleBar}>
         <Typography className={classes.title} variant="h6" color="inherit" noWrap>

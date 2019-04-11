@@ -15,12 +15,8 @@ import DialogTitle       from '@material-ui/core/DialogTitle';
 import Grid              from '@material-ui/core/Grid';
 import MailIcon          from '@material-ui/icons/Mail';
 import SignOutIcon       from '@material-ui/icons/ExitToApp';
-import Slide             from '@material-ui/core/Slide';
 import Typography        from '@material-ui/core/Typography';
-
-function Transition(props) {
-  return <Slide direction="left" timeout="1000" {...props} />;
-}
+import {TransitionZoom}  from '../../../util/Transition';
 
 const styles = theme => ({
 
@@ -65,7 +61,7 @@ function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification,
 
   return (
     <Dialog open={true}
-            TransitionComponent={Transition}>
+            TransitionComponent={TransitionZoom}>
 
       <DialogTitle disableTypography className={classes.titleBar}>
         <Typography className={classes.title} variant="h6" color="inherit" noWrap>

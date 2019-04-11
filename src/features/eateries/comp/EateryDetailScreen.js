@@ -22,14 +22,9 @@ import ListItemIcon     from '@material-ui/core/ListItemIcon';
 import ListItemText     from '@material-ui/core/ListItemText';
 import NavigationIcon   from '@material-ui/icons/Navigation';
 import PhoneIcon        from '@material-ui/icons/Phone';
-import Slide            from '@material-ui/core/Slide';
 import SpinIcon         from '@material-ui/icons/SwapCalls';
 import Typography       from '@material-ui/core/Typography';
-
-
-function Transition(props) {
-  return <Slide direction="left" timeout="1000" {...props} />;
-}
+import {TransitionZoom} from '../../../util/Transition';
 
 const styles = theme => ({
   titleBar: {
@@ -60,7 +55,7 @@ function EateryDetailScreen({curUser, eatery, handleClose, handleSpin, fullScree
     <Dialog open={true}
             onClose={handleClose}
             fullScreen={fullScreen}
-            TransitionComponent={Transition}>
+            TransitionComponent={TransitionZoom}>
 
       <DialogTitle disableTypography className={classes.titleBar}>
         

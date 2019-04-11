@@ -6,12 +6,8 @@ import Progress         from '@material-ui/core/LinearProgress';  // -or- '@mate
 import Dialog           from '@material-ui/core/Dialog';
 import DialogContent    from '@material-ui/core/DialogContent';
 import DialogTitle      from '@material-ui/core/DialogTitle';
-import Slide            from '@material-ui/core/Slide';
 import Typography       from '@material-ui/core/Typography';
-
-function Transition(props) {
-  return <Slide direction="left" timeout="1000" {...props} />;
-}
+import {TransitionZoom} from './Transition';
 
 const styles = theme => ({
   title: {
@@ -48,7 +44,7 @@ function SplashScreen({msg, classes, fullScreen}) {
   return (
     <Dialog open={true}
             fullScreen={fullScreen}
-            TransitionComponent={Transition}>
+            TransitionComponent={TransitionZoom}>
 
       <DialogTitle className={classes.title}>
         <center className={classes.title}>Eatery Nod</center>

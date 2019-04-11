@@ -16,14 +16,11 @@ import DialogContentText     from '@material-ui/core/DialogContentText';
 import DialogTitle           from '@material-ui/core/DialogTitle';
 import Button                from '@material-ui/core/Button';
 import IconButton            from '@material-ui/core/IconButton';
-import Slide                 from '@material-ui/core/Slide';
 import Typography            from '@material-ui/core/Typography';
 import FormHelperText        from '@material-ui/core/FormHelperText';
 import InProgress            from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
+import {TransitionSlide}     from '../../../util/Transition';
 
-function Transition(props) {
-  return <Slide direction="left" timeout="1000" {...props} />;
-}
 
 const styles = theme => ({
 
@@ -69,7 +66,7 @@ function EateryFilterScreen({iForm, fullScreen, classes}) {
     <Dialog open={true}
             onClose={iForm.handleClose}
             fullScreen={fullScreen}
-            TransitionComponent={Transition}>
+            TransitionComponent={TransitionSlide}>
 
       <form onSubmit={iForm.handleProcess}>
 
