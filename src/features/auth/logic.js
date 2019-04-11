@@ -35,9 +35,9 @@ export const checkDeviceCredentials = createLogic({
 
   process({getState, action, fassets}, dispatch, done) {
 
-    const encodedCredentials = fassets.deviceService.fetchCredentials();
-    if (encodedCredentials) {
-      dispatch( _authAct.autoSignIn.haveDeviceCredentials(encodedCredentials) );
+    const credentials = fassets.deviceService.fetchCredentials();
+    if (credentials) {
+      dispatch( _authAct.autoSignIn.haveDeviceCredentials(credentials) );
     }
     else {
       dispatch( _authAct.autoSignIn.noDeviceCredentials() );
@@ -58,7 +58,7 @@ export const autoSignIn = createLogic({
   type: String(_authAct.autoSignIn.haveDeviceCredentials),
   
   process({getState, action, fassets}, dispatch, done) {
-    const {email, pass} = fassets.deviceService.decodeCredentials(action.encodedCredentials);
+    const {email, pass} = action.credentials;
     dispatch( _authAct.signIn(email, pass) );
     done();
   },

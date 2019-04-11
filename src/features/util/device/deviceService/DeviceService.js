@@ -60,18 +60,14 @@ class DeviceService {
   /**
    * Fetch credentials stored on local device (if any).
    * 
-   * NOTE: This method exposes authorization credentials as an encoded
-   *       string.  The reason for this is it is common to package
-   *       this information in things like redux actions which can
-   *       easily be visualized by redux-dev-tools.  To utilize this
-   *       information, simply use the decodeCredentials() method (at
-   *       the last possible moment - to minimize exposure to dev
-   *       tools).
-   * 
-   * @return {string} the encodedCredentials if any (null for none).
+   * @return {object} the credentials object if any (null for none):
+   *   {
+   *     email: string,
+   *     pass:  string
+   *   }
    */
   fetchCredentials() {
-    return deviceStorage.getItem(credentialsKey) || null;
+    return this.decodeCredentials( deviceStorage.getItem(credentialsKey) ) || null
   }
 
 
@@ -101,6 +97,8 @@ class DeviceService {
    * @param {string} pass the password to encode.
    * 
    * @return {string} the encoded credentials.
+   * 
+   * @private
    */
   encodeCredentials(email, pass) {
     // TODO: ?? really encode this
@@ -114,12 +112,14 @@ class DeviceService {
    * @param {string} encodedCredentials the encoded credentials to
    * decode (falsy for none).
    * 
-   * @return {object} the decoded credentials as follows (null when
+   * @return {object} the decoded credentials object (null when
    * encodedCredentials undefined):
    *   {
    *     email: string,
    *     pass:  string
    *   }
+   * 
+   * @private
    */
   decodeCredentials(encodedCredentials) {
     if (!encodedCredentials) {

@@ -15,14 +15,14 @@ fassets.actions.bootstrapComplete() ............................................
                                                    DISPATCH .autoSignIn()           
 
 auth                                             
-  .autoSignIn() .............................   ............................................................   - NONE
+  .autoSignIn() ............................................................................................   - NONE
                                                  checkDeviceCredentials:
                                                  ======================
                                                    fassets.deviceService.fetchCredentials() via localStorage() 
-                                                   - YES: DISPATCH .haveDeviceCredentials(encodedCredentials)  
+                                                   - YES: DISPATCH .haveDeviceCredentials(credentials)  
                                                    - NO:  DISPATCH .noDeviceCredentials()
 
-    .haveDeviceCredentials(encodedCredentials)   ............................................................   - NONE
+    .haveDeviceCredentials(credentials) ....................................................................   - NONE
                                                  autoSignIn:                                               
                                                  ==========
                                                    DISPATCH signIn(email, pass)

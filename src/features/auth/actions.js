@@ -9,10 +9,10 @@ export default generateActions.root({
                    // > autoSignIn our authorization process
                    actionMeta: {},
 
-      haveDeviceCredentials: {  // actions.autoSignIn.haveDeviceCredentials(encodedCredentials): Action
+      haveDeviceCredentials: {  // actions.autoSignIn.haveDeviceCredentials(credentials): Action
                                 // > credentials were stored on our device
                                 actionMeta: {
-                                  traits: ['encodedCredentials'],
+                                  traits: ['credentials'],
                                 },
       },
 
