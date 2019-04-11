@@ -7,6 +7,7 @@ import withMobileDialog  from '@material-ui/core/withMobileDialog';
 import _authAct          from '../actions';
 import * as _authSel     from '../state';
 
+import Avatar            from '@material-ui/core/Avatar';
 import Button            from '@material-ui/core/Button';
 import CheckIcon         from '@material-ui/icons/Check';
 import Dialog            from '@material-ui/core/Dialog';
@@ -14,6 +15,7 @@ import DialogContent     from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle       from '@material-ui/core/DialogTitle';
 import Grid              from '@material-ui/core/Grid';
+import LockIcon          from '@material-ui/icons/LockOpen';
 import MailIcon          from '@material-ui/icons/Mail';
 import SignOutIcon       from '@material-ui/icons/ExitToApp';
 import Typography        from '@material-ui/core/Typography';
@@ -31,6 +33,11 @@ const styles = theme => ({
 
   title: {
     flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  lockAvatar: {
+    margin:          theme.spacing.unit,
+    backgroundColor: theme.palette.primary.main,
   },
 
   entry: {
@@ -67,14 +74,25 @@ function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification,
 
       <DialogTitle disableTypography className={classes.titleBar}>
         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-          Eatery Nod - Sign In Verification
+          Eatery Nod
         </Typography>
       </DialogTitle>
 
       <DialogContent>
 
+        <CenterItems>
+          <Avatar className={classes.lockAvatar}>
+            <LockIcon/>
+          </Avatar>
+        </CenterItems>
+        <CenterItems>
+          <Typography variant="h6" noWrap>
+            Sign In Verification
+          </Typography>
+        </CenterItems>
+
         <DialogContentText className={classes.entry}>
-          Your account email has not yet been verified.
+          Your account email has not been verified.
         </DialogContentText>
 
         <DialogContentText className={classes.entry}>
@@ -83,7 +101,7 @@ function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification,
 
         <div className={classes.entry}>
           <CenterItems>
-            <Typography variant="body2" color="primary">
+            <Typography variant="body2">
               ... once completed:
             </Typography>
           </CenterItems>

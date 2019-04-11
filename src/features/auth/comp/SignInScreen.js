@@ -8,6 +8,7 @@ import signInFormMeta    from '../signInFormMeta';
 import ITextField        from '../../../util/iForms/comp/ITextField';
 import {toast}           from '../../../util/notify';
 
+import Avatar            from '@material-ui/core/Avatar';
 import Button            from '@material-ui/core/Button';
 import Dialog            from '@material-ui/core/Dialog';
 import DialogContent     from '@material-ui/core/DialogContent';
@@ -16,6 +17,7 @@ import DialogTitle       from '@material-ui/core/DialogTitle';
 import FormHelperText    from '@material-ui/core/FormHelperText';
 import Grid              from '@material-ui/core/Grid';
 import InProgress        from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
+import LockIcon          from '@material-ui/icons/LockOpen';
 import SignInIcon        from '@material-ui/icons/ExitToApp';
 import Typography        from '@material-ui/core/Typography';
 import {TransitionZoom}  from '../../../util/Transition';
@@ -32,6 +34,11 @@ const styles = theme => ({
 
   title: {
     flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  lockAvatar: {
+    margin:          theme.spacing.unit,
+    backgroundColor: theme.palette.primary.main,
   },
 
   entry: {
@@ -80,7 +87,7 @@ function SignInScreen({iForm, fullScreen, classes}) {
 
       <DialogTitle disableTypography className={classes.titleBar}>
         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-          Eatery Nod - {formLabel}
+          Eatery Nod
         </Typography>
       </DialogTitle>
 
@@ -88,6 +95,17 @@ function SignInScreen({iForm, fullScreen, classes}) {
 
         <form onSubmit={iForm.handleProcess}>
           <fieldset className={classes.invisible} disabled={formInProcess}>
+
+            <CenterItems>
+              <Avatar className={classes.lockAvatar}>
+                <LockIcon/>
+              </Avatar>
+            </CenterItems>
+            <CenterItems>
+              <Typography variant="h6" noWrap>
+                {formLabel}
+              </Typography>
+            </CenterItems>
 
             <DialogContentText className={classes.entry}>
               Welcome to Eatery Nod ... please {formLabel}!
