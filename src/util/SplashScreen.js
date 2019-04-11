@@ -80,4 +80,4 @@ const SplashScreen_withStyles = withStyles(styles)(SplashScreen);
 
 // inject responsive `fullScreen` true/false prop based on screen size
 // ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
-export default withMobileDialog({breakpoint: 'sm'})(SplashScreen_withStyles);
+export default withMobileDialog({breakpoint: 'xs'})(SplashScreen_withStyles);

@@ -176,4 +176,4 @@ const EateryDetailScreenWithStyles = withStyles(styles)(EateryDetailScreenWithFa
 
 // inject responsive `fullScreen` true/false prop based on screen size
 // ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
-export default withMobileDialog({breakpoint: 'sm'})(EateryDetailScreenWithStyles);
+export default withMobileDialog({breakpoint: 'xs'})(EateryDetailScreenWithStyles);

@@ -194,4 +194,4 @@ const SignInScreenWithStyles = withStyles(styles)(SignInScreenWithState);
 
 // inject responsive `fullScreen` true/false prop based on screen size
 // ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
-export default withMobileDialog({breakpoint: 'sm'})(SignInScreenWithStyles);
+export default withMobileDialog({breakpoint: 'xs'})(SignInScreenWithStyles);
