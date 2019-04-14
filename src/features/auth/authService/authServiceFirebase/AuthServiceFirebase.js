@@ -1,4 +1,7 @@
-import firebase       from 'firebase';
+import firebase       from 'firebase/app';
+// ?? think I need these too:
+//? import 'firebase/auth';
+//? import 'firebase/database';
 import AuthServiceAPI from '../AuthServiceAPI';
 import User           from '../User';
 

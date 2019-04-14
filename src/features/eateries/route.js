@@ -4,9 +4,7 @@ import {featureRoute,
         PRIORITY}          from 'feature-router';
 import featureName         from './featureName';
 import EateriesListScreen  from './comp/EateriesListScreen';
-//? import EateryDetailScreen  from './comp/EateryDetailScreen'; // ?? these components are NOT compilable yet
-import EateryFilterScreen  from './comp/EateryFilterScreen'; // ?? these components are NOT compilable yet
-import SplashScreen        from '../../util/SplashScreen';
+import EateryFilterScreen  from './comp/EateryFilterScreen';
 
 // ***
 // *** The routes for this feature.
@@ -38,21 +36,7 @@ export default [
       // *** at this point we know the active view is ours
       // ***
       
-      //?????????????????? NOW DONE IN EateriesListScreen
-      //? // display anotated SplashScreen, when the spin operation is active
-      //? const spinMsg = _eateriesSel.getSpinMsg(appState);
-      //? if (spinMsg) {
-      //?   return <SplashScreen msg={spinMsg}/>;
-      //? }
-      
-      //?????????????????? NOW DONE IN EateriesListScreen
-      //? // display an eatery detail, when one is selected
-      //? const selectedEatery = _eateriesSel.getSelectedEatery(appState);
-      //? if (selectedEatery) {
-      //?   return <EateryDetailScreen eatery={selectedEatery}/>;
-      //? }
-      
-      // fallback: display our EateriesListScreen
+      // display our EateriesListScreen
       return <EateriesListScreen/>;
     }
   }),

@@ -3,6 +3,8 @@ import IFormMeta     from '../../util/iForms/IFormMeta';
 import _authAct      from './actions';
 import * as _authSel from './state';
 
+/* eslint-disable no-whitespace-before-property */  // special case here (for readability)
+
 export default IFormMeta({
   formDesc:  'Sign In',
   formSchema: Yup.object().shape({
