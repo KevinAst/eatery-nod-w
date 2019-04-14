@@ -1,5 +1,3 @@
-//? import {Location,
-//?         Permissions}   from 'expo';                   // ?? THERE IS NO expo
 import featureFlags    from '../../../../featureFlags';
 import noOp            from '../../../../util/noOp';
 import discloseError   from '../../../../util/discloseError';
@@ -187,48 +185,50 @@ class DeviceService {
 
     return new Promise( (resolve, reject) => {
 
-      //?? need a real production implementation
-      //?Permissions.askAsync(Permissions.LOCATION)
-      //?           .then( ({status}) => {
-      //?
-      //?             // Device LOCATION permission denied
-      //?             if (status !== 'granted') {
-      //?               return reject(
-      //?                 new Error(`Device LOCATION permission denied, status: ${status}`)
-      //?                   .defineClientMsg('No access to device location')
-      //?                   .defineAttemptingToMsg('obtain current position')
-      //?               );
-      //?             }
-      //?
-      //?             // obtain device geo location
-      //?             Location.getCurrentPositionAsync({})
-      //?                     .then( (location) => {
-      //?                       // console.log(`xx Obtained Device Location: `, location);
-      //?                       // Obtained Device Location: {
-      //?                       //   "coords": {
-      //?                       //     "accuracy":   50,
-      //?                       //     "altitude":   0,
-      //?                       //     "heading":    0,
-      //?                       //     "latitude":   38.7657446, // of interest
-      //?                       //     "longitude": -89.9923039, // of interest
-      //?                       //     "speed":      0,
-      //?                       //   },
-      //?                       //   "mocked":    false,
-      //?                       //   "timestamp": 1507050033634,
-      //?                       // }
-      //?
-      //?                       // communicate device location
-      //?                       return resolve({lat: location.coords.latitude, 
-      //?                                       lng: location.coords.longitude});
-      //?                     })
-      //?                     .catch( err => {
-      //?                       return reject(err.defineClientMsg('Could not obtain device location'));
-      //?                     });
-      //?           })
-      //?
-      //?           .catch( err => {
-      //?             return reject(err.defineAttemptingToMsg('obtain current position'));
-      //?           });
+      // insure geolocation is available in this browser
+      if ( !('geolocation' in navigator)) {
+        // NOTE: reject() passes error into .catch(), throw does NOT
+        return reject(new Error('geolocation is NOT available in this browser'));
+      }
+
+      // issue the location requestion
+      navigator.geolocation.getCurrentPosition(
+
+        // success callback
+        (position) => {
+          // communicate device location
+          // console.log(`xx DeviceService.getCurPos() returning: (${position.coords.latitude}, ${position.coords.longitude}) ... full structure: `, position);
+          return resolve({lat: position.coords.latitude, 
+                          lng: position.coords.longitude});
+        },
+
+        // error callback
+        (geoErr) => {
+
+          // NOTE: this geoErr object is NOT a deriviation of JS Error
+          //       Therefore we throw our own error.
+          //       ... allowing downstream processes to do value-added adornment
+          //           via: util/ErrorExtensionPolyfill.js
+          //           ex:  err.defineAttemptingToMsg('...')
+          // console.log('xx DeviceService.getCurPos() geoErr: ', geoErr)
+          const err = new Error(geoErr.message);  // ex: "User denied Geolocation" -or- "Timeout expired" ... etc.
+
+          // hold onto the internals of geoErr (code -and- constants)
+          err.code                 = geoErr.code;
+          err.PERMISSION_DENIED    = geoErr.PERMISSION_DENIED;    // user denied the request for Geolocation
+          err.POSITION_UNAVAILABLE = geoErr.POSITION_UNAVAILABLE; // position information is unavailable
+          err.TIMEOUT              = geoErr.TIMEOUT;              // the geo location request timed out
+
+          // that's all we can do :-)
+          return reject(err);
+        },
+
+        // geolocation options
+        {
+          enableHighAccuracy: true, // obtain the best possible result      ... DEFAULT: false
+           //timeout:          5000, // timeout                              ... DEFAULT: wait FOREVER
+           //maximumAge:       0,    // acceptable age of cached loc (mills) ... DEFAULT: 0 - do NOT use cached position
+        });
     });
   }
 
@@ -247,7 +247,7 @@ function mock_getCurPos_asNeeded(deviceService) {
     deviceService.getCurPos = () => { // override method with our mock
       // console.log(`xx DeviceService.getCurPos() request ... mocked to: `, mockLoc);
       return new Promise( (resolve, reject) => {
-        //setTimeout(() => { // TEMPORARY: for testing delay just a bit
+        // setTimeout(() => { // TEMPORARY: for testing delay just a bit
 
         // TEMPORARY: for testing, simulate error condition
         //            ... NOTE: reject() passes error into .catch(), throw does NOT
@@ -255,7 +255,7 @@ function mock_getCurPos_asNeeded(deviceService) {
 
         // communicate device location
         return resolve(mockLoc);
-        //}, 10000); // TEMPORARY: for testing delay just a bit
+        // }, 10000); // TEMPORARY: for testing delay just a bit
       });
     };
   }

@@ -28,16 +28,18 @@ export default createFeature({
                                               ({dispatch, fassets}) => {
                                                 return fassets.deviceService.getCurPos()
                                                               .then( (location) => {
+                                                                // set the current location
                                                                 dispatch( _deviceAct.setLoc(location) );
                                                               })
                                                               .catch( (err) => {
-                                                                // perform the fallback location ... Glen Carbon IL
+                                                                // set a fallback location ... Glen Carbon IL
                                                                 dispatch( _deviceAct.setLoc({lat: 38.752209, lng: -89.986610}) );
-                                              
-                                                                // alter the error to be an expected condition (allowing the bootstrap to complete)
-                                                                throw err.defineUserMsg('A problem was encountered accessing GPS Location\n... falling back to our base location (Glen Carbon, IL)');
+                                                                
+                                                                // alter the error to be an expected condition
+                                                                // ... allowing the bootstrap to: complete -and- disclose to user
+                                                                //     NOTE: we also expose the real error (via err.message) so as to identify various conditions
+                                                                throw err.defineUserMsg(`Unable to get your GPS location (${err.message}) ... falling back to our base location (Glen Carbon)`);
                                                               })
-                                              
                                               }),
     },
 
