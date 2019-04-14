@@ -1,7 +1,6 @@
 import firebase       from 'firebase/app';
-// ?? think I need these too:
-//? import 'firebase/auth';
-//? import 'firebase/database';
+import                     'firebase/auth';
+import                     'firebase/database';
 import AuthServiceAPI from '../AuthServiceAPI';
 import User           from '../User';
 
@@ -44,7 +43,7 @@ export default class AuthServiceFirebase extends AuthServiceAPI {
                                  // same as: firebase.auth().currentUser
 
                 // supplement the signed-in fbUser with our app's DB userProfile
-                const dbRef = firebase.database().ref(`/userProfiles/${fbUser.uid}`);
+                const dbRef = firebase.database().ref(`/userProfiles/${fbUser.user.uid}`);
                 dbRef.once('value')
                      .then( snapshot => {
 
@@ -54,7 +53,7 @@ export default class AuthServiceFirebase extends AuthServiceAPI {
                        // communicate issue: missing userProfile in our DB
                        if (!userProfile) {
                          return reject(
-                           new Error(`***ERROR*** No userProfile exists for user: ${fbUser.email}`)
+                           new Error(`***ERROR*** No userProfile exists for user: ${fbUser.user.email}`)
                              .defineAttemptingToMsg('sign in to eatery-nod (your user profile does NOT exist)')
                          );
                        }
@@ -62,8 +61,8 @@ export default class AuthServiceFirebase extends AuthServiceAPI {
                        // retain/communicate our user object, populated from both the fbUser and userProfile
                        this.currentAppUser = new User({
                          name:          userProfile.name,
-                         email:         fbUser.email,
-                         emailVerified: fbUser.emailVerified,
+                         email:         fbUser.user.email,
+                         emailVerified: fbUser.user.emailVerified,
                          pool:          userProfile.pool,
                        });
                        // console.log(`xx MOCK RECORDING from AuthServiceFirebase.signIn(...): returning User: ${JSON.stringify(this.currentAppUser.toStruct())}`);
@@ -131,10 +130,10 @@ export default class AuthServiceFirebase extends AuthServiceAPI {
                 //     - just in case it is held directly in redux
                 //     - even though client SHOULD use user.toStruct()
                 this.currentAppUser = new User({
-                  name:          this.currentAppUser.name, // keep same (from our db profile)
-                  email:         fbUser.email,             // refresh   (from current firebase auth)
-                  emailVerified: fbUser.emailVerified,     // refresh   (from current firebase auth)
-                  pool:          this.currentAppUser.pool, // keep same (from our db profile)
+                  name:          this.currentAppUser.name,  // keep same (from our db profile)
+                  email:         fbUser.user.email,         // refresh   (from current firebase auth)
+                  emailVerified: fbUser.user.emailVerified, // refresh   (from current firebase auth)
+                  pool:          this.currentAppUser.pool,  // keep same (from our db profile)
                 });
 
                 // communicate our refreshed signed-in user

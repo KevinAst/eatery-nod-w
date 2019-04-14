@@ -17,7 +17,7 @@ import eateryServiceMock             from './eateries/eateryService/eateryServic
 //? import discoveryServiceMock          from './discovery/discoveryService/discoveryServiceMock/feature';
 
 import bootstrap                     from './util/bootstrap/feature';
-//? import firebaseInit              from './util/firebaseInit/feature';
+import firebaseInit                  from './util/firebaseInit/feature';
 import layout                        from './util/layout/feature';
 import pwa                           from './util/pwa/feature';
 
@@ -48,7 +48,7 @@ export default [
 
   // ... util
   bootstrap,
-  //? firebaseInit,
+  firebaseInit,
   layout,
   pwa,
 

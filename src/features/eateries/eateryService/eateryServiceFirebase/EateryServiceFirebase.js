@@ -1,7 +1,5 @@
 import firebase         from 'firebase/app';
-// ?? think I need these too:
-//? import 'firebase/database';
-
+import                       'firebase/database';
 import geodist          from 'geodist';
 import EateryServiceAPI from '../EateryServiceAPI';
 
