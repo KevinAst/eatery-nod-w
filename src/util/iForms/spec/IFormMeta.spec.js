@@ -1,4 +1,4 @@
-import Yup               from 'yup';
+import * as Yup          from 'yup';
 import {generateActions} from 'action-u';
 import IFormMeta         from '../IFormMeta'; // module under test
 

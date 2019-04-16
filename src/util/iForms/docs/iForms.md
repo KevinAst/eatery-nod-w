@@ -112,7 +112,7 @@ We simply do the following:
 
    **[src/logic/iForms/signInFormMeta.js](../../../../src/logic/iForms/signInFormMeta.js)**
    ```js
-   import Yup        from 'yup';
+   import * as Yup   from 'yup';
    import IFormMeta  from '../../util/iForms/IFormMeta';
    import actions    from '../../actions';
 

@@ -16,7 +16,7 @@ import ListItemText        from '@material-ui/core/ListItemText';
 import EateryDetailScreen  from './EateryDetailScreen';
 import SplashScreen        from '../../../util/SplashScreen';
 
-const listStyles = (theme) => ({ // ? NOT currently used ... a big fat no-op
+const listStyles = (theme) => ({ // ?? NOT currently used ... a big fat no-op
   list: {
   },
 });
@@ -116,11 +116,11 @@ const EateriesListScreenWithState = withState({
   },
 });
 
-const EateriesListScreenWithStyles = withStyles(listStyles)(EateriesListScreenWithState);
-
-export default /* EateriesListScreenWithFassets = */ withFassets({
-  component: EateriesListScreenWithStyles,
+const EateriesListScreenWithFassets =  withFassets({
+  component: EateriesListScreenWithState,
   mapFassetsToProps: {
     fassets: '.', // introduce fassets into props via the '.' keyword
   }
 });
+
+export default /* EateriesListScreenWithStyles = */ withStyles(listStyles)(EateriesListScreenWithFassets);

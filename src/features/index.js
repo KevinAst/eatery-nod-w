@@ -11,10 +11,10 @@ import eateryService                 from './eateries/eateryService/feature';
 import eateryServiceFirebase         from './eateries/eateryService/eateryServiceFirebase/feature';
 import eateryServiceMock             from './eateries/eateryService/eateryServiceMock/feature';
 
-//? import discovery                     from './discovery/feature';
-//? import discoveryService              from './discovery/discoveryService/feature';
-//? import discoveryServiceGooglePlaces  from './discovery/discoveryService/discoveryServiceGooglePlaces/feature';
-//? import discoveryServiceMock          from './discovery/discoveryService/discoveryServiceMock/feature';
+import discovery                     from './discovery/feature';
+import discoveryService              from './discovery/discoveryService/feature';
+import discoveryServiceGooglePlaces  from './discovery/discoveryService/discoveryServiceGooglePlaces/feature';
+import discoveryServiceMock          from './discovery/discoveryService/discoveryServiceMock/feature';
 
 import bootstrap                     from './util/bootstrap/feature';
 import firebaseInit                  from './util/firebaseInit/feature';
@@ -41,10 +41,10 @@ export default [
   eateryServiceFirebase,
   eateryServiceMock,
 
-  //? discovery,
-  //? discoveryService,
-  //? discoveryServiceGooglePlaces,
-  //? discoveryServiceMock,
+  discovery,
+  discoveryService,
+  discoveryServiceGooglePlaces,
+  discoveryServiceMock,
 
   // ... util
   bootstrap,

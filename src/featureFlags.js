@@ -4,9 +4,9 @@
 
 export default {
 
-  useWIFI: true,  // should app use WIFI? ... regulates various services: real/mocked
+  useWIFI: false, // should app use WIFI? ... regulates various services: real/mocked
 
-  mockGPS: false, // ?? {lat: 30.010479, lng: -90.119414},
+  mockGPS: {lat: 30.010479, lng: -90.119414},
                   // should app mock GPS? ... regulates DeviceService.getCurPos():  real/mocked
                   // false: use real device location
                   // true:  mock device location (default to GlenCarbon IL)

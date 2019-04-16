@@ -13,6 +13,7 @@ import ListItemSecondaryAction  from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText             from '@material-ui/core/ListItemText';
 import PoolIcon                 from '@material-ui/icons/RestaurantMenu'; // possibilities: Restaurant RestaurantMenu Star StarRate Stars BlurOn AllOut DragIndicator GroupWork Reorder Apps Whatshot
 import SettingsIcon             from '@material-ui/icons/Tune';           // possibilities: Tune PermDataSetting Settings PhonelinkSetup FilterList Filter
+import IconButton               from '@material-ui/core/IconButton';
 
 /**
  * EateryLeftNavItem: our Eatery entry into the LeftNav.
@@ -27,7 +28,7 @@ function EateryLeftNavItem({classes, changeView, handleFilter}) {
         <ListItemIcon className={classes.major}><PoolIcon/></ListItemIcon>
         <ListItemText primaryTypographyProps={{className:classes.major}} primary="Pool"/>
         <ListItemSecondaryAction onClick={handleFilter}>
-          <ListItemIcon className={classes.minor}><SettingsIcon/></ListItemIcon>
+          <ListItemIcon><IconButton className={classes.minor}><SettingsIcon/></IconButton></ListItemIcon>
         </ListItemSecondaryAction>
       </ListItem>
       <Divider/>
@@ -58,10 +59,10 @@ const EateryLeftNavItemWithFassets = withFassets({
 
 const styles = (theme) => ({
   major: {
-    color: theme.palette.secondary.main, // redish
+    color: theme.palette.grey.A200, // light grey (or redish: theme.palette.secondary.main
   },
   minor:{
-    color: theme.palette.primary.main,   // bluish
+    color: theme.palette.primary.dark,   // bluish
   },
 });
 
