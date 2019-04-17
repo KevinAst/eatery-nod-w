@@ -4,6 +4,7 @@ import _discoveryAct           from './actions';
 import _discovery              from './featureName';
 import * as _discoverySel      from './state';
 import {expandWithFassets}     from 'feature-u';
+import discloseError           from '../../util/discloseError';
 
 /**
  * Initially retrieve discoveries, on 'discovery' view change.
@@ -98,8 +99,11 @@ export const retrieve = createLogic({
          done();
        })
        .catch(err => {
-         console.log(`*** ERROR *** googlePlacesAPI nearBySearch ... ${''+err}`);
          dispatch( _discoveryAct.retrieve.fail(err) );
+
+         // report unexpected error to user
+         discloseError({err: err.defineAttemptingToMsg('DiscoveryService.searchDiscoveries()')});
+
          done();
        });
   },
@@ -126,8 +130,11 @@ export const nextPage = createLogic({
          done();
        })
        .catch(err => {
-         console.log(`*** ERROR *** googlePlacesAPI nearBySearch ... ${''+err}`);
          dispatch( _discoveryAct.nextPage.fail(err) );
+
+         // report unexpected error to user
+         discloseError({err: err.defineAttemptingToMsg('DiscoveryService.searchDiscoveriesNextPage()')});
+
          done();
        });
   },

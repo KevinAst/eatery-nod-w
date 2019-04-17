@@ -1,32 +1,68 @@
-import React        from 'react';
-import withState    from '../../../util/withState';
-import PropTypes    from 'prop-types';
-import {Body,
-        Button,
-        Container,
-        Content,
-        Form,
-        Icon,
-        Header,
-        Left,
-        Right,
-        Spinner,
-        Text,
-        Title,
-        View}                  from 'native-base';
-import commonStyles            from '../../commonStyles';
+import React                   from 'react';
+
+import withState               from '../../../util/withState';
+import {withStyles}            from '@material-ui/core/styles';
+import withMobileDialog        from '@material-ui/core/withMobileDialog';
+
 import discoveryFilterFormMeta from '../discoveryFilterFormMeta';
 import ITextField              from '../../../util/iForms/comp/ITextField';
 import IRadioField             from '../../../util/iForms/comp/IRadioField';
 
+import Button                from '@material-ui/core/Button';
+import CloseIcon             from '@material-ui/icons/Close';
+import Dialog                from '@material-ui/core/Dialog';
+import DialogContent         from '@material-ui/core/DialogContent';
+import DialogContentText     from '@material-ui/core/DialogContentText';
+import DialogTitle           from '@material-ui/core/DialogTitle';
+import FilterIcon            from '@material-ui/icons/FilterList';
+import FormHelperText        from '@material-ui/core/FormHelperText';
+import Grid                  from '@material-ui/core/Grid';
+import IconButton            from '@material-ui/core/IconButton';
+import InProgress            from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
+import Typography            from '@material-ui/core/Typography';
+import {TransitionSlide}     from '../../../util/Transition';
+
+const styles = theme => ({
+
+  titleBar: {
+    display:         'flex',
+    alignItems:      'center', // vertically align title text with close (X) to it's right
+    padding:         '10px 15px',
+    color:           theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+  },
+
+  title: {
+    flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  entry: {
+    margin:   '30px 0px',
+  },
+
+  icon: {
+    marginRight: theme.spacing.unit,
+  },
+
+  inProgress: {
+    margin: theme.spacing.unit * 4,
+  },
+
+});
+
+function CenterItems({children}) {
+  return (
+    <Grid container direction="row" justify="center" alignItems="center">
+      {children}
+    </Grid>
+  );
+}
 
 /**
  * DiscoveryFilterScreen: gather filter information (selection criteria) 
  * for a discovery retrieval.
  */
-function DiscoveryFilterScreen({iForm}) {
-
-  const verticalSpacing = <View style={{paddingVertical: 10}}/>;
+function DiscoveryFilterScreen({iForm, fullScreen, classes}) {
 
   const formLabel       = iForm.getLabel();
   const formInProcess   = iForm.inProcess();
@@ -35,89 +71,90 @@ function DiscoveryFilterScreen({iForm}) {
     iForm,
   };
 
+  const formErrMsg = iForm.getMsg();
+
   return (
-    <Container style={commonStyles.container}>
-      <Header>
-        <Left>
-          <Button transparent onPress={iForm.handleClose}>
-            <Icon name="close"/>
-          </Button>
-        </Left>
-        <Body>
-          <Title>{formLabel}</Title>
-        </Body>
-        <Right>
-          <Button transparent onPress={iForm.handleProcess} disabled={formInProcess}>
-            <Icon name="paper-plane"/>
-          </Button>
-        </Right>
-      </Header>
 
+    <Dialog open={true}
+            onClose={iForm.handleClose}
+            fullScreen={fullScreen}
+            TransitionComponent={TransitionSlide}>
 
-      <Content keyboardShouldPersistTaps="handled">
-        <Form>
+      <form onSubmit={iForm.handleProcess}>
 
-          {verticalSpacing}
+        <DialogTitle disableTypography className={classes.titleBar}>
+          <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            {formLabel}
+          </Typography>
+          <IconButton color="inherit" onClick={iForm.handleClose}>
+            <CloseIcon/>
+          </IconButton>
+        </DialogTitle>
 
-          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10}}>
-            <Text style={{fontStyle: 'italic'}}>filter your discovery with these settings ...</Text>
-          </View>
+        <DialogContent>
 
-          {verticalSpacing}
+          <DialogContentText className={classes.entry}>
+            filter your discovery with these settings ...
+          </DialogContentText>
 
-          <ITextField fieldName="searchText"
-                      iForm={iForm}
-                      placeholder="... restaurant or town"
-                      keyboardType="default"/>
-          <Note>   ... optional - suggest a restaurant or town</Note>
+          <div className={classes.entry}>
+            <ITextField fieldName="searchText"
+                        iForm={iForm}
+                        autoFocus
+                        type="string"
+                        helperText="... suggest a restaurant or town (optional)"/>
+          </div>
 
-          <ITextField fieldName="distance"
-                      iForm={iForm}
-                      placeholder="... enter 1-30"
-                      keyboardType="numeric"/>
-          <Note>   ... enter 1-30</Note>
+          <div className={classes.entry}>
+            <ITextField fieldName="distance"
+                        iForm={iForm}
+                        placeholder="... enter 1-30"
+                        type="number"
+                        helperText="... the maximum search distance (1-30)"/>
+          </div>
 
-          {verticalSpacing}
+          <div className={classes.entry}>
+            <IRadioField {...priceRadioProps}
+                         row
+                         helperText="... most affordable to most expensive">
+              <IRadioField.Op value="0" label="1" {...priceRadioProps}/>
+              <IRadioField.Op value="1" label="2" {...priceRadioProps}/>
+              <IRadioField.Op value="2" label="3" {...priceRadioProps}/>
+              <IRadioField.Op value="3" label="4" {...priceRadioProps}/>
+              <IRadioField.Op value="4" label="5" {...priceRadioProps}/>
+            </IRadioField>
+          </div>
 
-          <IRadioField {...priceRadioProps}>
-            <IRadioField.Op value="0" label="0" {...priceRadioProps}/>
-            <IRadioField.Op value="1" label="1" {...priceRadioProps}/>
-            <IRadioField.Op value="2" label="2" {...priceRadioProps}/>
-            <IRadioField.Op value="3" label="3" {...priceRadioProps}/>
-            <IRadioField.Op value="4" label="4" {...priceRadioProps}/>
-          </IRadioField>
-          <Note>   ... most affordable to most expensive</Note>
+          <div className={classes.entry}>
+            <CenterItems>
+              <Button type="submit"
+                      variant="contained"
+                      color="primary">
+                <FilterIcon className={classes.icon}/>
+                Filter Discoveries
+              </Button>
+            </CenterItems>
+          </div>
 
-          {verticalSpacing}
+          {formErrMsg && (
+            <div className={classes.entry}>
+              <FormHelperText error>{formErrMsg}</FormHelperText>
+            </div>
+          )}
+          
+          {formInProcess && (
+            <div className={classes.entry}>
+              <InProgress className={classes.inProgress} color="secondary"/>
+            </div>
+          )}
 
-          {/* form msg  */}
-          <Text style={{color:'red'}}>{iForm.getMsg()}</Text>
-
-          {verticalSpacing}
-
-          {/* inProcess spinner  */}
-          {formInProcess && <Spinner color="blue"/>}
-
-        </Form>
-      </Content>
-    </Container>
+        </DialogContent>
+      </form>
+    </Dialog>
   );
 }
 
-// convenience Note component (internal usage)
-function Note({children}) {
-  return (
-    <Text note style={{paddingRight: 20, paddingLeft: 20}}>
-      {children}
-    </Text>
-  );
-}
-
-DiscoveryFilterScreen.propTypes = {
-  iForm: PropTypes.object.isRequired,
-};
-
-export default DiscoveryFilterScreenWithState = withState({
+const DiscoveryFilterScreenWithState = withState({
   component: DiscoveryFilterScreen,
   mapStateToProps(appState) {
     return {
@@ -134,3 +171,9 @@ export default DiscoveryFilterScreenWithState = withState({
     };
   },
 });
+
+const DiscoveryFilterScreenWithStyles = withStyles(styles)(DiscoveryFilterScreenWithState);
+
+// inject responsive `fullScreen` true/false prop based on screen size
+// ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
+export default withMobileDialog({breakpoint: 'xs'})(DiscoveryFilterScreenWithStyles);
