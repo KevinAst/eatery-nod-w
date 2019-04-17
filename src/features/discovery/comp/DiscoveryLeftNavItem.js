@@ -6,24 +6,14 @@ import {withFassets}   from 'feature-u';
 import withState       from '../../../util/withState';
 import withStyles      from '@material-ui/core/styles/withStyles';
 
-//?? check imports
+import DiscoveryIcon            from '@material-ui/icons/CloudDone';
 import Divider                  from '@material-ui/core/Divider';
+import IconButton               from '@material-ui/core/IconButton';
 import ListItem                 from '@material-ui/core/ListItem';
 import ListItemIcon             from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction  from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText             from '@material-ui/core/ListItemText';
-import DiscoveryIcon            from '@material-ui/icons/CloudDone';
 import SettingsIcon             from '@material-ui/icons/Tune';           // possibilities: Tune PermDataSetting Settings PhonelinkSetup FilterList Filter
-import IconButton               from '@material-ui/core/IconButton';
-
-// ?? TRASH
-//? import {Body,
-//?         Button,
-//?         Icon,
-//?         Left,
-//?         ListItem,
-//?         Right,
-//?         Text}       from 'native-base';
 
 /**
  * DiscoveryLeftNavItem: our Discovery entry into the LeftNav.
@@ -31,7 +21,6 @@ import IconButton               from '@material-ui/core/IconButton';
 function DiscoveryLeftNavItem({classes, changeView, handleFilter}) {
 
   // render our menu item
-  // ?? L8TR: HOW to make color green (or something)
   return (
     <>
       <ListItem button

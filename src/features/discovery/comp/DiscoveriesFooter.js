@@ -1,6 +1,6 @@
-import React             from 'react';
-import Typography        from '@material-ui/core/Typography';
-import CheckedIcon        from '@material-ui/icons/CheckCircle';
+import React        from 'react';
+import Typography   from '@material-ui/core/Typography';
+import CheckedIcon  from '@material-ui/icons/CheckCircle';
 
 /**
  * DiscoveriesFooter displaying the spin control
