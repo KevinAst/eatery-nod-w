@@ -1,6 +1,6 @@
 import {createFeature}       from 'feature-u';
 import _discovery            from './featureName';
-import _discoveryAct         from './actions'; // TODO: QUIRKINESS of IFormMeta (aggravated by feature-u) ... actions MUST be expanded BEFORE IFormMeta instance (discoveryFilterFormMeta)
+import                            './actions'; // _discoveryAct TODO: QUIRKINESS of IFormMeta (aggravated by feature-u) ... actions MUST be expanded BEFORE IFormMeta instance (discoveryFilterFormMeta)
 import reducer               from './state';
 import logic                 from './logic';
 import route                 from './route';
