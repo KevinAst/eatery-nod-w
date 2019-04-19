@@ -205,7 +205,7 @@ class DeviceService {
         // error callback
         (geoErr) => {
 
-          // NOTE: this geoErr object is NOT a deriviation of JS Error
+          // NOTE: this geoErr object is NOT a derivation of JS Error
           //       Therefore we throw our own error.
           //       ... allowing downstream processes to do value-added adornment
           //           via: util/ErrorExtensionPolyfill.js
