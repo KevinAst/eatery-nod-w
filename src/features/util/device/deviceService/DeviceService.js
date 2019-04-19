@@ -101,7 +101,7 @@ class DeviceService {
    */
   encodeCredentials(email, pass) {
     // combine email/pass into single resource
-    var encoding = email+credentialsSeparator+pass;
+    let encoding = email+credentialsSeparator+pass;
 
     // obfuscate the credentials using a simple base-64 encoding
     // NOTE: This is NOT intended to be a full-blown security
@@ -140,7 +140,7 @@ class DeviceService {
     // NOTE: This is NOT intended to be a full-blown security
     //       encryption, rather simply prevent casual exposure to
     //       sensitive data via browser dev tools.
-    var clearStr = encodedCredentials;
+    let clearStr = encodedCredentials;
     if (window.btoa) {
       try {
         clearStr = window.atob(encodedCredentials);
@@ -281,10 +281,10 @@ export default new DeviceService();
 //           see: https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#Feature-detecting_localStorage
 const _localStorageAvailable = storageAvailable('localStorage');
 function storageAvailable(type) {
-  var storage;
+  let storage;
   try {
     storage = window[type];
-    var x = '__storage_test__';
+    let x = '__storage_test__';
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
