@@ -1,5 +1,6 @@
 import firebase          from 'firebase/app';
 import firebaseAppConfig from './config/firebaseAppConfig';
+import {decodeContent}   from '../../../util/safeguardContent';
 
 // keep track of invocation
 let previouslyInvoked = false;
@@ -20,7 +21,8 @@ export default function initFireBase() {
   previouslyInvoked = true;
 
   // initialize firebase using the eatery-nod configuration
-  firebase.initializeApp(firebaseAppConfig);
+  const clearFirebaseAppConfig = decodeContent(firebaseAppConfig);
+  firebase.initializeApp(clearFirebaseAppConfig);
 
   // temp work-around to long timer android warning (using firebase)
   // TODO: check back for ultimate solution: https://github.com/facebook/react-native/issues/12981

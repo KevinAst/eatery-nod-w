@@ -191,7 +191,7 @@ class DeviceService {
         return reject(new Error('geolocation is NOT available in this browser'));
       }
 
-      // issue the location requestion
+      // issue the location request
       navigator.geolocation.getCurrentPosition(
 
         // success callback
