@@ -1,23 +1,7 @@
 import DiscoveryServiceAPI from '../DiscoveryServiceAPI';
-import apiKey              from './config/googlePlacesApiKey';
 import verify              from '../../../../util/verify';
 import isString            from 'lodash.isstring';
 
-// ***
-// *** INTERNAL NOTE: sample Google Places search:
-// ***
-//     - Near By Place Search:
-//       https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=38.752209,-89.986610&radius=8000&type=restaurant&key=YOUR_API_KEY
-//     - Place Details:
-//       https://maps.googleapis.com/maps/api/place/details/json?placeid=xxx&key=YOUR_API_KEY
-
-
-// ***
-// *** Various Internal Constants
-// ***
-
-const googlePlacesBaseUrl = 'https://maps.googleapis.com/maps/api/place';
-const esc                 = encodeURIComponent; // alias of standard JS function
 
 /**
  * DiscoveryServiceGooglePlaces is the **real** DiscoveryServiceAPI
@@ -87,7 +71,6 @@ export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
                      searchText='',
                      distance=5,
                      minprice='1',
-                     pagetoken=null, // internal (private/hidden) argument used by searchDiscoveriesNextPage()
                      ...unknownArgs}={}) {
     
     // ***
@@ -96,103 +79,82 @@ export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
 
     const check = verify.prefix('DiscoveryServiceGooglePlaces.searchDiscoveries() parameter violation: ');
 
-    if (!pagetoken) { // when NOT a searchDiscoveriesNextPage() service request, validate parameters
-      check(loc,                            'loc is required ... [lat,lng]'); // TODO: verify loc is array of two numbers
+    check(loc,                            'loc is required ... [lat,lng]'); // TODO: verify loc is array of two numbers
       
-      check(isString(searchText),           `supplied searchText (${searchText}) must be a string`);
+    check(isString(searchText),           `supplied searchText (${searchText}) must be a string`);
       
-      check(distance,                       'distance is required ... (1-31) miles');
-      check(distance>=1 && distance<=31,    `supplied distance (${distance}) must be between 1-31 miles`);
+    check(distance,                       'distance is required ... (1-31) miles');
+    check(distance>=1 && distance<=31,    `supplied distance (${distance}) must be between 1-31 miles`);
       
-      check(minprice,                       'minprice is required ... (0-4)');
-      check(minprice>='0' && minprice<='4', `supplied minprice (${minprice}) must be between 0-4`);
+    check(minprice,                       'minprice is required ... (0-4)');
+    check(minprice>='0' && minprice<='4', `supplied minprice (${minprice}) must be between 0-4`);
       
-      const unknownArgKeys = Object.keys(unknownArgs);
-      check(unknownArgKeys.length===0,      `unrecognized named parameter(s): ${unknownArgKeys}`);
-    }
+    const unknownArgKeys = Object.keys(unknownArgs);
+    check(unknownArgKeys.length===0,      `unrecognized named parameter(s): ${unknownArgKeys}`);
 
 
     // ***
     // *** define the selection criteria used in our GooglePlaces retrieval
     // ***
 
-    let selCrit = null;
+    // a PlaceSearchRequest
+    const selCrit = {
+      // ... supplied by client (via params)
+      location:      {lat: loc[0], lng: loc[1]},
+      radius:        miles2meters(distance),
+      minPriceLevel: minprice,
 
-    if (pagetoken) { // next-page requests ... from searchDiscoveriesNextPage()
-      selCrit = {
-        pagetoken,
-        key: apiKey
-      };
+      // ... hard coded by our "eatery" requirements
+      type:     'restaurant',
+    };
+
+    // ... searchText is optional
+    if (searchText) {
+      selCrit.keyword = searchText;
     }
-    else {
-      selCrit = {
-        // ... supplied by client (via params)
-        location: loc,
-        radius:   miles2meters(distance),
-        minprice,
 
-        // ... hard coded by our "eatery" requirements
-        type:     'restaurant',
-        key:      apiKey
-      };
 
-      // ... searchText is optional
-      if (searchText) {
-        selCrit.keyword = searchText;
+    // ***
+    // *** issue the Google PlacesService request
+    // ***
+
+    return new Promise( (resolve, reject) => {
+
+      // retain _resolve/_reject in an outer scope 
+      // ... because the SAME callback function instance is used on pagination
+      // ... kinda hoaky (may be a better way)
+      _resolve = resolve;
+      _reject  = reject;
+
+      try {
+        googlePlacesService().nearbySearch(
+          selCrit,
+          (places, status, pagination) => {
+            // places:     PlaceResult[]
+            // status:     PlacesServiceStatus
+            // pagination: PlaceSearchPagination ... hasNextPage(): true/false ... nextPage() with same callback
+
+            const err = checkResponseStatus(status);
+            if (err) {
+              return _reject(err);
+            }
+
+            // retain pagination for subsequent requests
+            _pagination = pagination.hasNextPage ? pagination : null;
+
+            // process results
+            const discoveriesJson = gp2discoveries(places, pagination);
+            // console.log(`xx process discovery results: `, discoveriesJson);
+            return _resolve(discoveriesJson);
+          }
+        );
       }
-    }
+      catch(err) { // catch/expose internal errors in Google PlacesService
+        // console.log('xx searchDiscoveries: ... caught unexpected error in in Google PlacesService: ', err);
+        return _reject(err);
+      }
 
-    // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.searchEateries.input.selCrit.js
-    // console.log(`xx sample.searchEateries.input.selCrit: `, selCrit);
-
-
-    // ***
-    // *** define our URL, injecting the selCrit as a queryStr
-    // ***
-
-    const queryStr  = Object.keys(selCrit).map( k => `${esc(k)}=${esc(selCrit[k])}` ).join('&');
-    const searchUrl = `${googlePlacesBaseUrl}/nearbysearch/json?${queryStr}`;
-
-    // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.searchEateries.input.queryStr.txt
-    // console.log(`xx sample.searchEateries.input.queryStr: `, queryStr);
-
-    // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.searchEateries.input.searchUrl.txt
-    // console.log(`xx sample.searchEateries.input.searchUrl: `, searchUrl);
-
-
-    // ***
-    // *** issue our network retrieval, returning our promise
-    // ***
-
-    return fetch(searchUrl)
-      .then( checkHttpResponseStatus ) // validate the http response status
-      .then( validResp => {
-        // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.searchEateries.output.validResp.txt
-        // console.log(`xx sample.searchEateries.output.validResp: `, validResp);
-
-        // convert payload to JSON
-        // ... this is a promise (hence the usage of an additional .then())
-        return validResp.json();
-      })
-      .then( payloadJson => {
-        // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.searchEateries.output.payloadJson.js
-        // console.log(`xx sample.searchEateries.output.payloadJson: `, JSON.stringify(payloadJson));
-
-        // insure the GooglePlaces status field is acceptable
-        if (payloadJson.status !== 'OK' && payloadJson.status !== 'ZERO_RESULTS') {
-          const errMsg = payloadJson.error_message ? ` - ${payloadJson.error_message}` : '';
-          // console.log(`xx *** ERROR-BY-GooglePlaces-STATUS *** GooglePlaces searchEateries: `, JSON.stringify(payloadJson));
-          throw new Error(`*** ERROR-BY-GooglePlaces-STATUS *** payloadJson.status: ${payloadJson.status}${errMsg}`);
-        }
-
-        // convert to discoveries
-        const discoveriesJson = gp2discoveries(payloadJson);
-        // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.searchEateries.output.eateryResultsJson.js
-        // console.log(`xx DiscoveryServiceGooglePlaces.searchDiscoveries() -and- MOCK RECORDING (N/A) ... returning discoveries: ${JSON.stringify(discoveriesJson)}`);
-
-        return discoveriesJson;
-      });
-
+    });
   }
 
 
@@ -215,13 +177,27 @@ export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
     check(pagetoken, 'pagetoken is required');
     check(isString(pagetoken), `supplied pagetoken (${pagetoken}) must be a string`);
     
-    // pass request through to searchDiscoveries()
-    return this.searchDiscoveries({pagetoken});
+    // process any pagetoken requests
+    if (_pagination) {
+      return new Promise( (resolve, reject) => {
+
+        // retain _resolve/_reject in an outer scope 
+        // ... because the SAME callback function instance is used on pagination
+        // ... kinda hoaky (may be a better way)
+        _resolve = resolve;
+        _reject  = reject;
+
+        _pagination.nextPage(); // NOTE: this uses the SAME callback in the original search (kinda weird)
+      });
+    }
+    else {
+      throw new Error('*** ERROR *** DiscoveryServiceGooglePlaces - Next page requested, when there are NO additional pages');
+    }
   }
 
 
   /**
-   * Fetch (i.e. retreive) the details of a fully populated eatery using the
+   * Fetch (i.e. retrieve) the details of a fully populated eatery using the
    * supplied eateryId.
    * 
    * @param {string} eateryId the id for the detailed entry to retrieve
@@ -231,90 +207,99 @@ export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
    */
   fetchEateryDetail(eateryId) {
 
-    // ***
-    // *** define the parameters used in our GooglePlaces retrieval
-    // ***
+    return new Promise( (resolve, reject) => {
 
-    const params = {
-      // ... supplied by client (via params)
-      placeid: eateryId,
+      try {
+        googlePlacesService().getDetails(
+          {
+            fields: [
+              'place_id',
+              'name',
+              'formatted_phone_number',
+              'geometry',
+              'formatted_address',
+              'url',
+              'website',
+            ],
+            placeId: eateryId,
+          },
+          (place, status) => {
+            // place:   PlaceResult
+            // status:  PlacesServiceStatus
 
-      // ... hard coded
-      key:      apiKey
-    };
+            const err = checkResponseStatus(status);
+            if (err) {
+              return reject(err);
+            }
 
-    // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.getEateryDetail.input.params.js
-    // console.log(`xx sample.getEateryDetail.input.params: `, params);
+            // process results
+            const eatery = gp2eatery(place);
+            // console.log(`xx fetchEateryDetail: eatery result: `, eatery);
+            return resolve(eatery);
+          }
+        );
+      }
+      catch(err) { // catch/expose internal errors in Google PlacesService
+        // console.log('xx fetchEateryDetail: ... caught unexpected error in in Google PlacesService: ', err);
+        return reject(err);
+      }
 
-
-    // ***
-    // *** define our URL, injecting the params as a queryStr
-    // ***
-
-    const queryStr  = Object.keys(params).map( k => `${esc(k)}=${esc(params[k])}` ).join('&');
-    const url = `${googlePlacesBaseUrl}/details/json?${queryStr}`;
-
-    // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.getEateryDetail.input.queryStr.txt
-    // console.log(`xx sample.getEateryDetail.input.queryStr: `, queryStr);
-
-    // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.getEateryDetail.input.url.txt
-    // console.log(`xx sample.getEateryDetail.input.url: `, url);
-
-
-    // ***
-    // *** issue our network retrieval, returning our promise
-    // ***
-
-    return fetch(url)
-      .then( checkHttpResponseStatus ) // validate the http response status
-      .then( validResp => {
-        // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.getEateryDetail.output.validResp.txt
-        // console.log(`xx sample.getEateryDetail.output.validResp: `, validResp);
-
-        // convert payload to JSON
-        // ... this is a promise (hence the usage of an additional .then())
-        return validResp.json();
-      })
-      .then( payloadJson => {
-
-        // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.getEateryDetail.output.payloadJson.js
-        // console.log(`xx sample.getEateryDetail.output.payloadJson: `, JSON.stringify(payloadJson));
-
-        // interpret GooglePlaces status error conditions
-        if (payloadJson.status !== 'OK') {
-          const errMsg = payloadJson.error_message ? ` - ${payloadJson.error_message}` : '';
-          // console.log(`xx *** ERROR-BY-GooglePlaces-STATUS *** GooglePlaces getEateryDetail: `, JSON.stringify(payloadJson));
-          throw new Error(`*** ERROR-BY-GooglePlaces-STATUS *** payloadJson.status: ${payloadJson.status}${errMsg}`);
-        }
-
-        // convert to eatery
-        const eatery = gp2eatery(payloadJson.result);
-        // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.getEateryDetail.output.eatery.js
-        // console.log(`xx sample.getEateryDetail.output.eatery: `, JSON.stringify(eatery));
-
-        return eatery;
-      });
-
+    });
   }
 
 } // end of ... DiscoveryServiceGooglePlaces class definition
 
 
+// ***
+// *** Retained pagination controls for subsequent page requests
+// ***
 
+let _pagination = null; // type: PlaceSearchPagination (null for none)
+let _resolve    = null; // active promise resolution ... kinda hoaky, but pagination callback uses SAME function instance :-(
+let _reject     = null; // ditto
+
+
+
+let _googlePlacesService = null; // lazily loaded
+
+/**
+ * Return the Google PlacesService object.
+ */
+function googlePlacesService() {
+
+  // use previously obtained object (if any)
+  if (_googlePlacesService) {
+    return _googlePlacesService;
+  }
+
+  // otherwise ... lazy load
+  
+  // NOTE: we must reference windows.google, to prevent babel "not defined" compiler error
+  const google = window.google;
+
+  if (!google) {
+    throw new Error('*** ERROR *** DiscoveryServiceGooglePlaces - NO google object has been defined from our initialization');
+  }
+
+  // create/return our service
+  // NOTE: we swallow visual results (intended for maps) using a dummy div (i.e. no map for me)
+  return _googlePlacesService = new google.maps.places.PlacesService(document.createElement('div'));
+}
 
 
 /**
  * Convert GooglePlaces response to a list of discoveries.
  * 
- * @param {Object} gpResp the raw GooglePlaces response from
- * searchDiscoveries().
+ * @param {PlaceResult[]} places the GooglePlaces response.
+ * 
+ * @param {PlaceSearchPagination} pagination the GooglePlaces response.
  * 
  * @return {Object} eatery-nod data structure containing discoveries.
  */
-function gp2discoveries(gpResp) {
+function gp2discoveries(places, pagination) {
   return {
-    pagetoken:   gpResp.next_page_token || null, // non-exist if NO additional pages (i.e. undefined)
-    discoveries: gpResp.results.map( result => gp2eatery(result) )
+    pagetoken:   pagination.hasNextPage ? 'giveMeTheNextPagePlease' : null, // null for NO additional pages
+    discoveries: places.map( place => gp2eatery(place) )
   };
 }
 
@@ -323,20 +308,20 @@ function gp2discoveries(gpResp) {
  * Convert GooglePlaces response to either an eatery or discovery
  * object (controlled by gpResp).
  * 
- * @param {Object} gpResp the GooglePlaces response from either
+ * @param {PlaceResult} place the GooglePlaces response from either
  * searchDiscoveries() or fetchEateryDetail().
  * 
  * @return {Discovery|Eatery} either a Discovery or Eatery object.
  */
-function gp2eatery(gpResult) {
+function gp2eatery(place) {
   return {
-    id:      gpResult.place_id,
-    name:    gpResult.name,
-    phone:   gpResult.formatted_phone_number || 'not-in-search',
-    loc:     gpResult.geometry.location,
-    addr:    gpResult.formatted_address || gpResult.vicinity, // eatery (i.e. detail) vs. discovery (i.e. search index)
-    navUrl:  gpResult.url     || 'not-in-search',
-    website: gpResult.website || 'not-in-search',
+    id:      place.place_id,
+    name:    place.name,
+    phone:   place.formatted_phone_number || 'not-in-search',
+    loc:     {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()},
+    addr:    place.formatted_address || place.vicinity, // eatery (i.e. detail) vs. discovery (i.e. search index)
+    navUrl:  place.url     || 'not-in-search',
+    website: place.website || 'not-in-search',
   };
 }
 
@@ -350,21 +335,14 @@ function miles2meters(miles) {
 
 
 /**
- * Validate http response status.
+ * Validate response status.
  */
-function checkHttpResponseStatus(resp) {
-
-  // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.searchEateries.output.resp.txt
-  // DETAIL_SAMPLE: sandbox/GooglePlaces/discovery/sample.getEateryDetail.output.resp.txt
-  // console.log(`xx sample.searchEateries.output.resp: `, resp);
-
-  if (resp.status >= 200 && resp.status < 300) {
-    return resp; // valid
-  } 
-  else { // invalid
-    const errMsg = resp.statusText ? ` - ${resp.statusText}` : '';
-    let   err    = new Error(`*** ERROR-BY-HTTP-STATUS *** HTTP Fetch Status: ${resp.status}${errMsg}`);
-    err.response = resp;
-    throw err;
+function checkResponseStatus(status) {
+  // success
+  if (status === 'OK' || status === 'ZERO_RESULTS') {
+  }
+  // error
+  else {
+    return new Error(`*** ERROR *** DiscoveryServiceGooglePlaces - Google Places ERROR STATUS: '${status}'`);
   }
 }

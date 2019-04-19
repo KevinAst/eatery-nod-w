@@ -1,5 +1,6 @@
 import {createFeature}  from 'feature-u';
 import featureFlags     from '../../../../featureFlags';
+import initGooglePlaces from './config/initGooglePlaces';
 import DiscoveryServiceGooglePlaces from './DiscoveryServiceGooglePlaces';
 
 // feature: discoveryServiceGooglePlaces
@@ -16,6 +17,10 @@ export default createFeature({
     defineUse: {
       'discoveryService': new DiscoveryServiceGooglePlaces(),
     },
+  },
+
+  appWillStart({fassets, curRootAppElm}) { // initialize Google Places API (required by this service)
+    initGooglePlaces(fassets.deviceService);
   },
 
 });

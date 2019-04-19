@@ -18,7 +18,6 @@ export default class DiscoveryServiceMock extends DiscoveryServiceAPI {
                      searchText='',
                      distance=5,
                      minprice='1',
-                     pagetoken=null, // internal (private/hidden) argument used by searchDiscoveriesNextPage()
                      ...unknownArgs}={}) {
     
     // ***
@@ -28,25 +27,22 @@ export default class DiscoveryServiceMock extends DiscoveryServiceAPI {
     // NOTE: same as production
     const check = verify.prefix('DiscoveryServiceMock.searchDiscoveries() parameter violation: ');
 
-    if (!pagetoken) { // when NOT a searchDiscoveriesNextPage() service request, validate parameters
-      check(loc,                            'loc is required ... [lat,lng]'); // TODO: verify loc is array of two numbers
+    check(loc,                            'loc is required ... [lat,lng]'); // TODO: verify loc is array of two numbers
       
-      check(isString(searchText),           `supplied searchText (${searchText}) must be a string`);
+    check(isString(searchText),           `supplied searchText (${searchText}) must be a string`);
       
-      check(distance,                       'distance is required ... (1-31) miles');
-      check(distance>=1 && distance<=31,    `supplied distance (${distance}) must be between 1-31 miles`);
+    check(distance,                       'distance is required ... (1-31) miles');
+    check(distance>=1 && distance<=31,    `supplied distance (${distance}) must be between 1-31 miles`);
       
-      check(minprice,                       'minprice is required ... (0-4)');
-      check(minprice>='0' && minprice<='4', `supplied minprice (${minprice}) must be between 0-4`);
+    check(minprice,                       'minprice is required ... (0-4)');
+    check(minprice>='0' && minprice<='4', `supplied minprice (${minprice}) must be between 0-4`);
       
-      const unknownArgKeys = Object.keys(unknownArgs);
-      check(unknownArgKeys.length===0,      `unrecognized named parameter(s): ${unknownArgKeys}`);
-    }
+    const unknownArgKeys = Object.keys(unknownArgs);
+    check(unknownArgKeys.length===0,      `unrecognized named parameter(s): ${unknownArgKeys}`);
 
     return new Promise( (resolve, reject) => {
-      const discoverySearch = !pagetoken ? discoverySearchPage1 : discoverySearchPage2;
-      // console.log(`xx RETURNING following discoverySearch: `, discoverySearch);
-      return resolve(discoverySearch);
+      // console.log(`xx RETURNING following discoverySearch: `, discoverySearchPage1);
+      return resolve(discoverySearchPage1);
     });
 
   }
@@ -58,9 +54,11 @@ export default class DiscoveryServiceMock extends DiscoveryServiceAPI {
     const check = verify.prefix('DiscoveryServiceMock.searchDiscoveriesNextPage() parameter violation: ');
     check(pagetoken, 'pagetoken is required');
     check(isString(pagetoken), `supplied pagetoken (${pagetoken}) must be a string`);
-    
-    // pass request through to searchDiscoveries()
-    return this.searchDiscoveries({pagetoken});
+
+    return new Promise( (resolve, reject) => {
+      // console.log(`xx RETURNING following discoverySearch: `, discoverySearchPage2);
+      return resolve(discoverySearchPage2);
+    });
   }
 
 

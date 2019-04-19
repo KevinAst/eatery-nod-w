@@ -67,7 +67,6 @@ export default class DiscoveryServiceAPI {
                      searchText='',
                      distance=5,
                      minprice='1',
-                     pagetoken=null, // internal (private/hidden) argument used by searchDiscoveriesNextPage()
                      ...unknownArgs}={}) {
     throw new Error(`***ERROR*** ${this.constructor.name}.searchDiscoveries() is a required service method that has NOT been implemented`);
   }
