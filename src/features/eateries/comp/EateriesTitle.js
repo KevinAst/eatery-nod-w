@@ -3,30 +3,35 @@ import {withFassets}     from 'feature-u';
 import withState         from '../../../util/withState';
 import * as _eateriesSel from '../state';
 import Typography        from '@material-ui/core/Typography';
+import Tooltip           from '@material-ui/core/Tooltip';
+import Grid              from '@material-ui/core/Grid';
 
 /**
  * EateriesTitle displaying the eateries pool title
  */
 function EateriesTitle({curUser, filter}) {
   return (
-    <Typography variant="h6"
-                color="inherit"
-                noWrap>
-      Pool
-
-      <Typography color="inherit"
-                  inline={true}
+    <Grid container direction="row" justify="flex-start" alignItems="center">
+      <Typography variant="h6"
+                  color="inherit"
                   noWrap>
-        &nbsp;({curUser.pool})
+        Pool
+        <Typography color="inherit"
+                    inline={true}
+                    noWrap>
+          &nbsp;({curUser.pool})
+        </Typography>
+
+        {filter.distance && 
+         <Typography color="inherit"
+                     noWrap>
+           ... within {filter.distance} mile{filter.distance===1?'':'s'}
+         </Typography>}
       </Typography>
-
-      {filter.distance && 
-       <Typography color="inherit"
-                   noWrap>
-         ... within {filter.distance} mile{filter.distance===1?'':'s'}
-       </Typography>}
-
-    </Typography>
+      <Tooltip title="powered by Firebase">
+        <img width="50px" src="/firebaseLogo.png" alt=""/>
+      </Tooltip>
+    </Grid>
   );
 }
 

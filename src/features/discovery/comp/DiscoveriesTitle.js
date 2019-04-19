@@ -2,24 +2,29 @@ import React             from 'react';
 import {withFassets}     from 'feature-u';
 import withState         from '../../../util/withState';
 import Typography        from '@material-ui/core/Typography';
+import Tooltip           from '@material-ui/core/Tooltip';
+import Grid              from '@material-ui/core/Grid';
 
 /**
  * DiscoveriesTitle displaying the discoveries title
  */
 function DiscoveriesTitle({curUser}) {
   return (
-    <Typography variant="h6"
-                color="inherit"
-                noWrap>
-      Discovery
-
-      <Typography color="inherit"
-                  inline={true}
+    <Grid container direction="row" justify="flex-start" alignItems="center">
+      <Typography variant="h6"
+                  color="inherit"
                   noWrap>
-        &nbsp;({curUser.pool})
+        Discovery
+        <Typography color="inherit"
+                    inline={true}
+                    noWrap>
+          &nbsp;({curUser.pool})
+        </Typography>
       </Typography>
-
-    </Typography>
+      <Tooltip title="powered by Google Places">
+        <img width="30px" src="/googleLogo.png" alt=""/>
+      </Tooltip>
+    </Grid>
   );
 }
 
