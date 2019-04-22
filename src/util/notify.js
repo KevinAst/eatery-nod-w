@@ -1,5 +1,5 @@
 import React              from 'react';
-import verify             from './verify';
+import verify             from 'util/verify';
 import {SnackbarProvider,
         withSnackbar}     from 'notistack';
 import {withStyles}       from '@material-ui/core/styles';

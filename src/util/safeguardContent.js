@@ -1,4 +1,4 @@
-import verify         from './verify';
+import verify         from 'util/verify';
 import isString       from 'lodash.isstring';
 import isPlainObject  from 'lodash.isplainobject';
 

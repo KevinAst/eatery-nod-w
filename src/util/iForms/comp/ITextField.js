@@ -1,7 +1,7 @@
 import React        from 'react';
 import TextField    from '@material-ui/core/TextField';
 import PropTypes    from 'prop-types';
-import verify       from '../../verify';
+import verify       from 'util/verify';
 
 /**
  * An IForm text input element that:

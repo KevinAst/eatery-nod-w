@@ -1,12 +1,12 @@
 import React             from 'react';
 
-import withState         from '../../../util/withState';
+import withState         from 'util/withState';
 import {withStyles}      from '@material-ui/core/styles';
 import withMobileDialog  from '@material-ui/core/withMobileDialog';
 
 import signInFormMeta    from '../signInFormMeta';
-import ITextField        from '../../../util/iForms/comp/ITextField';
-import {toast}           from '../../../util/notify';
+import ITextField        from 'util/iForms/comp/ITextField';
+import {toast}           from 'util/notify';
 
 import Avatar            from '@material-ui/core/Avatar';
 import Button            from '@material-ui/core/Button';
@@ -20,7 +20,7 @@ import InProgress        from '@material-ui/core/LinearProgress';  // -or- '@mat
 import LockIcon          from '@material-ui/icons/LockOpen';
 import SignInIcon        from '@material-ui/icons/ExitToApp';
 import Typography        from '@material-ui/core/Typography';
-import {TransitionZoom}  from '../../../util/Transition';
+import {TransitionZoom}  from 'util/Transition';
 
 const styles = theme => ({
 

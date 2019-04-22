@@ -3,7 +3,7 @@ import _discovery      from '../featureName';
 import _discoveryAct   from '../actions';
 
 import {withFassets}   from 'feature-u';
-import withState       from '../../../util/withState';
+import withState       from 'util/withState';
 import withStyles      from '@material-ui/core/styles/withStyles';
 
 import DiscoveryIcon            from '@material-ui/icons/CloudDone';

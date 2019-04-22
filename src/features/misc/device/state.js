@@ -3,7 +3,7 @@ import {reducerHash}      from 'astx-redux-util';
 import {slicedReducer}    from 'feature-redux';
 import _device            from './featureName';
 import _deviceAct         from './actions';
-import deviceService      from './deviceService/DeviceService'; // NOTE: Special Case - need deviceService early (import it vs. fassets.deviceService)
+import deviceService      from 'features/misc/device/deviceService/DeviceService'; // NOTE: Special Case - need deviceService early (import it vs. fassets.deviceService)
 
 // ***
 // *** Our feature reducer, managing state for our device.

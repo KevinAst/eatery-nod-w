@@ -1,5 +1,5 @@
 import DiscoveryServiceAPI from '../DiscoveryServiceAPI';
-import verify              from '../../../../util/verify';
+import verify              from 'util/verify';
 import isString            from 'lodash.isstring';
 
 import {discoverySearchPage1,   // NOTE: tight coupling with EateryServiceMock (IT's OK ... were a MOCK :-)

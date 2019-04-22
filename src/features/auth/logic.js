@@ -3,8 +3,8 @@ import {expandWithFassets}  from 'feature-u';
 import _auth                from './featureName';
 import _authAct             from './actions';
 import signInFormMeta       from './signInFormMeta';
-import discloseError        from '../../util/discloseError';
-import {toast}              from '../../util/notify';
+import discloseError        from 'util/discloseError';
+import {toast}              from 'util/notify';
 
 /**
  * Start our authorization process, once the bootstrap initialization process is complete.

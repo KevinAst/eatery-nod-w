@@ -1,5 +1,5 @@
-import {toast, alert} from './notify';
-import verify         from './verify';
+import {toast, alert} from 'util/notify';
+import verify         from 'util/verify';
 
 const DYNAMIC_DEFAULT = 'DYNAMIC_DEFAULT';
 

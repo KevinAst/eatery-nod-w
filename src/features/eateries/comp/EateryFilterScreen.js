@@ -1,12 +1,12 @@
 import React                 from 'react';
 
-import withState             from '../../../util/withState';
+import withState             from 'util/withState';
 import {withStyles}          from '@material-ui/core/styles';
 import withMobileDialog      from '@material-ui/core/withMobileDialog';
 
 import eateryFilterFormMeta  from '../eateryFilterFormMeta';
-import ITextField            from '../../../util/iForms/comp/ITextField';
-import IRadioField           from '../../../util/iForms/comp/IRadioField';
+import ITextField            from 'util/iForms/comp/ITextField';
+import IRadioField           from 'util/iForms/comp/IRadioField';
 
 import Button                from '@material-ui/core/Button';
 import CloseIcon             from '@material-ui/icons/Close';
@@ -20,7 +20,7 @@ import Grid                  from '@material-ui/core/Grid';
 import IconButton            from '@material-ui/core/IconButton';
 import InProgress            from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
 import Typography            from '@material-ui/core/Typography';
-import {TransitionSlide}     from '../../../util/Transition';
+import {TransitionSlide}     from 'util/Transition';
 
 
 const styles = theme => ({

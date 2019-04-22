@@ -1,9 +1,9 @@
 import React             from 'react';
-import withState         from '../../../util/withState';
+import withState         from 'util/withState';
 import _eateriesAct      from '../actions';
 import Typography        from '@material-ui/core/Typography';
-import IconButton        from  '@material-ui/core/IconButton';
-import SpinIcon          from  '@material-ui/icons/SwapCalls'; // ... ??  loop, swap_vert, vertical_align_center, done, playlist_add_check, check_box, check, swap_calls, present_to_all 
+import IconButton        from '@material-ui/core/IconButton';
+import SpinIcon          from '@material-ui/icons/SwapCalls'; // ... -OR-  loop, swap_vert, vertical_align_center, done, playlist_add_check, check_box, check, swap_calls, present_to_all 
 
 
 /**

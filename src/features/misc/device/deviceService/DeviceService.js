@@ -1,6 +1,6 @@
-import featureFlags    from '../../../../featureFlags';
-import noOp            from '../../../../util/noOp';
-import discloseError   from '../../../../util/discloseError';
+import featureFlags    from 'featureFlags';
+import noOp            from 'util/noOp';
+import discloseError   from 'util/discloseError';
 
 const credentialsKey       = 'eatery-nod:credentials';
 const credentialsSeparator = '/';

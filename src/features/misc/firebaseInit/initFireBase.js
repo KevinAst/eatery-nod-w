@@ -1,6 +1,6 @@
 import firebase          from 'firebase/app';
 import firebaseAppConfig from './config/firebaseAppConfig';
-import {decodeContent}   from '../../../util/safeguardContent';
+import {decodeContent}   from 'util/safeguardContent';
 
 // keep track of invocation
 let previouslyInvoked = false;

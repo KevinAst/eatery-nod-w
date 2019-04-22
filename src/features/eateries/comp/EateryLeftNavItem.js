@@ -4,7 +4,7 @@ import _eateriesAct  from '../actions';
 
 import withStyles    from '@material-ui/core/styles/withStyles';
 import {withFassets} from 'feature-u';
-import withState     from '../../../util/withState';
+import withState     from 'util/withState';
 
 import Divider                  from '@material-ui/core/Divider';
 import ListItem                 from '@material-ui/core/ListItem';

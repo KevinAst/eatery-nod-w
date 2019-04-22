@@ -1,7 +1,7 @@
 import {createFeature}  from 'feature-u';
 import _logActions      from './featureName';
 import logic            from './logic';
-import featureFlags     from '../../../../featureFlags';
+import featureFlags     from 'featureFlags';
 
 // feature: logActions
 //          log all dispatched actions and resulting state (full details in README)

@@ -4,7 +4,7 @@ import _discoveryAct           from './actions';
 import _discovery              from './featureName';
 import * as _discoverySel      from './state';
 import {expandWithFassets}     from 'feature-u';
-import discloseError           from '../../util/discloseError';
+import discloseError           from 'util/discloseError';
 
 /**
  * Initially retrieve discoveries, on 'discovery' view change.

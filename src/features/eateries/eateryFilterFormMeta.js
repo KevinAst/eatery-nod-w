@@ -1,5 +1,5 @@
 import * as Yup          from 'yup';
-import IFormMeta         from '../../util/iForms/IFormMeta';
+import IFormMeta         from 'util/iForms/IFormMeta';
 import _eateriesAct      from './actions';
 import * as _eateriesSel from './state';
 

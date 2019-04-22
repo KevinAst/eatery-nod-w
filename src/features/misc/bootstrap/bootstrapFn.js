@@ -1,6 +1,6 @@
 import isFunction  from 'lodash.isfunction';
 import isString    from 'lodash.isstring';
-import verify      from '../../../util/verify';
+import verify      from 'util/verify';
 
 /**
  * Embellish the supplied function with a `bootstrapWhat` property -

@@ -3,7 +3,7 @@ import {createLogic}  from 'redux-logic';
 import isEqual        from 'lodash.isequal';
 import isString       from 'lodash.isstring';
 import isFunction     from 'lodash.isfunction';
-import verify         from '../verify';
+import verify         from 'util/verify';
 
 /**
  * Define the characteristics of an Intelligent Form - a reusable forms

@@ -1,9 +1,9 @@
 import React        from 'react';
-import withState    from '../../../util/withState';
-import UserMenuItem from '../../misc/layout/comp/UserMenuItem';
+import withState    from 'util/withState';
+import UserMenuItem from 'features/misc/layout/comp/UserMenuItem';
 import _authAct     from '../actions';
 import {toast,
-        confirm}    from '../../../util/notify';
+        confirm}    from 'util/notify';
 
 /**
  * AuthUserMenu: our user-profile menu items (in the App Header)

@@ -7,7 +7,7 @@ import Dialog           from '@material-ui/core/Dialog';
 import DialogContent    from '@material-ui/core/DialogContent';
 import DialogTitle      from '@material-ui/core/DialogTitle';
 import Typography       from '@material-ui/core/Typography';
-import {TransitionZoom} from './Transition';
+import {TransitionZoom} from 'util/Transition';
 
 const styles = theme => ({
   title: {

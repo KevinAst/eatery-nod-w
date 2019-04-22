@@ -1,6 +1,6 @@
 import {createLogic}      from 'redux-logic';
 import _logActions        from './featureName';
-import featureFlags       from '../../../../featureFlags';
+import featureFlags       from 'featureFlags';
 
 let lastState = null;
 

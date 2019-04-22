@@ -1,5 +1,5 @@
 import apiKey          from './googlePlacesApiKey';
-import {decodeContent} from '../../../../../util/safeguardContent';
+import {decodeContent} from 'util/safeguardContent';
 
 export default function initGooglePlaces(deviceService) {
 

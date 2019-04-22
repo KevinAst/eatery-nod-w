@@ -1,5 +1,5 @@
 import * as Yup            from 'yup';
-import IFormMeta           from '../../util/iForms/IFormMeta';
+import IFormMeta           from 'util/iForms/IFormMeta';
 import _discoveryAct       from './actions';
 import * as _discoverySel  from './state';
 

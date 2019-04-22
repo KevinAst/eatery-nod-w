@@ -1,4 +1,4 @@
-import noOp from './noOp';
+import noOp from 'util/noOp';
 
 /**
  * A set of diagnostic conditional functions:

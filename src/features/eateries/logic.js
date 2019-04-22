@@ -4,7 +4,7 @@ import _eateries            from './featureName';
 import * as _eateriesSel    from './state';
 import _eateriesAct         from './actions';
 import {expandWithFassets}  from 'feature-u';
-import discloseError        from '../../util/discloseError';
+import discloseError        from 'util/discloseError';
 
 /**
  * Our persistent monitor that manages various aspects of a given pool.

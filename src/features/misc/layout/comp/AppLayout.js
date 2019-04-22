@@ -2,7 +2,7 @@ import React          from 'react';
 import PropTypes      from 'prop-types';
 import withStyles     from '@material-ui/core/styles/withStyles';
 import {withFassets}  from 'feature-u';
-import withState      from '../../../../util/withState';
+import withState      from 'util/withState';
 
 import LeftNav        from './LeftNav';
 import {openLeftNav}  from './LeftNav';

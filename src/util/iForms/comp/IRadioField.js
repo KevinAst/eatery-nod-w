@@ -8,7 +8,7 @@ import FormControl       from '@material-ui/core/FormControl';
 import FormLabel         from '@material-ui/core/FormLabel';
 
 import PropTypes         from 'prop-types';
-import verify            from '../../verify';
+import verify            from 'util/verify';
 
 /**
  * An IForm radio container input element that:

@@ -3,7 +3,7 @@ import {isBootstrapComplete,
         getBootstrapStatusMsg} from './state';
 import {featureRoute, 
         PRIORITY}              from 'feature-router';
-import SplashScreen            from '../../../util/SplashScreen';
+import SplashScreen            from 'util/SplashScreen';
 
 
 // ***

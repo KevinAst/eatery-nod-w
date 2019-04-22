@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import verify    from './verify';
+import verify    from 'util/verify';
 
 /**
  * Promotes a "wrapped" Component (an HoC - Higher-order Component)

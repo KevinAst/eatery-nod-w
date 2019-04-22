@@ -1,6 +1,6 @@
 import React             from 'react';
 import {withFassets}     from 'feature-u';
-import withState         from '../../../util/withState';
+import withState         from 'util/withState';
 import * as _eateriesSel from '../state';
 import Typography        from '@material-ui/core/Typography';
 import Tooltip           from '@material-ui/core/Tooltip';

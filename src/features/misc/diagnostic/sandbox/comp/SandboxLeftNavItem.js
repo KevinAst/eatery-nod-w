@@ -3,7 +3,7 @@ import React         from 'react';
 import {notify,
         toast,
         alert,
-        confirm}     from '../../../../../util/notify';
+        confirm}     from 'util/notify';
 
 import Divider       from '@material-ui/core/Divider';
 import ListItem      from '@material-ui/core/ListItem';

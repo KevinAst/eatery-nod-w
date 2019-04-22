@@ -1,13 +1,13 @@
 import React              from 'react';
 import PropTypes          from 'prop-types';
-import withState          from '../../../../util/withState';
+import withState          from 'util/withState';
 import {withFassets}      from 'feature-u';
 import withStyles         from '@material-ui/core/styles/withStyles';
 import {MuiThemeProvider,      // NOTE: MuiThemeProvider **SHOULD** be at the root of ALL visible components
         createMuiTheme}   from '@material-ui/core/styles';
 import CssBaseline        from '@material-ui/core/CssBaseline';
 import AppLayout          from './AppLayout';
-import Notify             from '../../../../util/notify';
+import Notify             from 'util/notify';
 
 /**
  * ?? rework description

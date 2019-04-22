@@ -1,5 +1,5 @@
 import {createFeature}      from 'feature-u';
-import featureFlags         from '../../../../featureFlags';
+import featureFlags         from 'featureFlags';
 import DiscoveryServiceMock from './DiscoveryServiceMock';
 
 // feature: discoveryServiceMock

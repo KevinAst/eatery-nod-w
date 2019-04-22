@@ -1,6 +1,6 @@
 import React               from 'react';
 import {withFassets}       from 'feature-u';
-import withState           from '../../../util/withState';
+import withState           from 'util/withState';
 import withStyles          from '@material-ui/core/styles/withStyles';
 
 import _eateriesAct        from '../actions';
@@ -14,7 +14,7 @@ import ListItem            from '@material-ui/core/ListItem';
 import ListItemText        from '@material-ui/core/ListItemText';
 
 import EateryDetailScreen  from './EateryDetailScreen';
-import SplashScreen        from '../../../util/SplashScreen';
+import SplashScreen        from 'util/SplashScreen';
 
 const listStyles = (theme) => ({ // ?? NOT currently used ... a big fat no-op
   list: {

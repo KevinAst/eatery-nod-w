@@ -3,7 +3,7 @@ import PropTypes        from 'prop-types';
 
 import {withFassets}    from 'feature-u';
 import {withStyles}     from '@material-ui/core/styles';
-import withState        from '../../../util/withState';
+import withState        from 'util/withState';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 import _eateriesAct     from '../actions';
@@ -24,7 +24,7 @@ import NavigationIcon   from '@material-ui/icons/Navigation';
 import PhoneIcon        from '@material-ui/icons/Phone';
 import SpinIcon         from '@material-ui/icons/SwapCalls';
 import Typography       from '@material-ui/core/Typography';
-import {TransitionZoom} from '../../../util/Transition';
+import {TransitionZoom} from 'util/Transition';
 
 const styles = theme => ({
   titleBar: {

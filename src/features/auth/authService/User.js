@@ -1,4 +1,4 @@
-import verify from '../../../util/verify';
+import verify from 'util/verify';
 
 /**
  * The User object representing the active user within an application,

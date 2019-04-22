@@ -1,6 +1,6 @@
 import React             from 'react';
 
-import withState         from '../../../util/withState';
+import withState         from 'util/withState';
 import {withStyles}      from '@material-ui/core/styles';
 import withMobileDialog  from '@material-ui/core/withMobileDialog';
 
@@ -19,7 +19,7 @@ import LockIcon          from '@material-ui/icons/LockOpen';
 import MailIcon          from '@material-ui/icons/Mail';
 import SignOutIcon       from '@material-ui/icons/ExitToApp';
 import Typography        from '@material-ui/core/Typography';
-import {TransitionZoom}  from '../../../util/Transition';
+import {TransitionZoom}  from 'util/Transition';
 
 const styles = theme => ({
 

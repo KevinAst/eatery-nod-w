@@ -1,5 +1,5 @@
 import {createFeature}  from 'feature-u';
-import featureFlags     from '../../../../featureFlags'
+import featureFlags     from 'featureFlags'
 import SandboxLeftNavItem  from './comp/SandboxLeftNavItem';
 
 // feature: sandbox

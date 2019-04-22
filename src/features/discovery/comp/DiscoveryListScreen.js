@@ -1,7 +1,7 @@
 import React         from 'react';
 
 import {withFassets} from 'feature-u';
-import withState     from '../../../util/withState';
+import withState     from 'util/withState';
 import withStyles    from '@material-ui/core/styles/withStyles';
 
 import _discoveryAct      from '../actions';
