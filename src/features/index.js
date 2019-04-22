@@ -1,3 +1,5 @@
+import layout                        from './layout/feature';
+
 import device                        from './misc/device/feature';
 import deviceService                 from './misc/device/deviceService/feature';
 
@@ -18,7 +20,6 @@ import discoveryServiceMock          from './discovery/discoveryService/discover
 
 import bootstrap                     from './misc/bootstrap/feature';
 import firebaseInit                  from './misc/firebaseInit/feature';
-import layout                        from './misc/layout/feature';
 import pwa                           from './misc/pwa/feature';
 
 import logActions                    from './misc/diagnostic/logActions/feature';
@@ -27,6 +28,8 @@ import sandbox                       from './misc/diagnostic/sandbox/feature';
 // accumulate ALL features
 // ... see README.md for details
 export default [
+
+  layout,
 
   device,
   deviceService,
@@ -49,7 +52,6 @@ export default [
   // ... misc
   bootstrap,
   firebaseInit,
-  layout,
   pwa,
 
   // ... diagnostic

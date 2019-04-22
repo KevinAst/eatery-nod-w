@@ -8,7 +8,7 @@ import _deviceAct    from '../actions';
 import Chip          from '@material-ui/core/Chip';
 import MoonIcon      from '@material-ui/icons/Brightness3';
 import SunIcon       from '@material-ui/icons/WbSunny';
-import UserMenuItem  from 'features/misc/layout/comp/UserMenuItem';
+import UserMenuItem  from 'features/layout/comp/UserMenuItem';
 
 
 /**
