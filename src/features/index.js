@@ -1,5 +1,5 @@
-import device                        from './util/device/feature';
-import deviceService                 from './util/device/deviceService/feature';
+import device                        from './misc/device/feature';
+import deviceService                 from './misc/device/deviceService/feature';
 
 import auth                          from './auth/feature';
 import authService                   from './auth/authService/feature';
@@ -16,13 +16,13 @@ import discoveryService              from './discovery/discoveryService/feature'
 import discoveryServiceGooglePlaces  from './discovery/discoveryService/discoveryServiceGooglePlaces/feature';
 import discoveryServiceMock          from './discovery/discoveryService/discoveryServiceMock/feature';
 
-import bootstrap                     from './util/bootstrap/feature';
-import firebaseInit                  from './util/firebaseInit/feature';
-import layout                        from './util/layout/feature';
-import pwa                           from './util/pwa/feature';
+import bootstrap                     from './misc/bootstrap/feature';
+import firebaseInit                  from './misc/firebaseInit/feature';
+import layout                        from './misc/layout/feature';
+import pwa                           from './misc/pwa/feature';
 
-import logActions                    from './util/diagnostic/logActions/feature';
-import sandbox                       from './util/diagnostic/sandbox/feature';
+import logActions                    from './misc/diagnostic/logActions/feature';
+import sandbox                       from './misc/diagnostic/sandbox/feature';
 
 // accumulate ALL features
 // ... see README.md for details
@@ -46,7 +46,7 @@ export default [
   discoveryServiceGooglePlaces,
   discoveryServiceMock,
 
-  // ... util
+  // ... misc
   bootstrap,
   firebaseInit,
   layout,
