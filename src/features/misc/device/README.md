@@ -1,23 +1,18 @@
 # device feature
 
-The **device** feature initializes the device for use by the app.
+?? TRASH THIS EVENTUALLY
 
-In general, this initialization represents critical-path items that
+??TRASH: In general, this initialization represents critical-path items that
 must be completed before the app can run.
 
 It accomplishes the following:
 
+ > ?? WILL BE MOVED OUT OF HERE
  - Initializes the following critical-path resources through the
    `'bootstrap.*'` use contract:
 
-   - `'bootstrap.fonts'` ... loads the fonts required by the native-base GUI lib
-     
+   > ?? WILL BE MOVED OUT OF HERE
    - `'bootstrap.location'` ... initializes the device GPS location
-
- - performs device-specific initialization (iOS/Android) through
-   the platformSetup() function **(appWillStart)**
-
- - injects the notify utility in the root DOM **(appWillStart)**
 
 
 ## State Transition

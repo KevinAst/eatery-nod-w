@@ -1,12 +1,9 @@
 import {createFeature}     from 'feature-u';
 import _device             from './featureName';
 import {createBootstrapFn} from 'features/misc/bootstrap/bootstrapFn';
-import ToggleUITheme       from './comp/ToggleUITheme';
 import _deviceAct          from './actions';
 import reducer,
-       {getUITheme,
-        getDeviceLoc}      from './state';
-import logic               from './logic';
+       {getDeviceLoc}      from './state';
 
 // feature: device
 //          initialize the device for use by the app (full details in README)
@@ -14,16 +11,11 @@ export default createFeature({
   name: _device,
 
   reducer,
-  logic,
 
   // our public face ...
   fassets: {
 
-    // various 'bootstrap.*' resources to initialize
     defineUse: {
-      // inject our user-profile menu item to toggle UI Theme ('light'/'dark')
-      'AppLayout.UserMenuItem.UIThemeToggle': ToggleUITheme,
-
       'bootstrap.location': createBootstrapFn('Waiting for Device Location',
                                               ({dispatch, fassets}) => {
                                                 return fassets.deviceService.getCurPos()
@@ -47,10 +39,6 @@ export default createFeature({
     define: {
 
       //*** public selectors ***
-
-                          // UI Theme: 'light'/'dark'
-      'sel.getUITheme':   getUITheme,
-
                           // device location {lat, lng}
       'sel.getDeviceLoc': getDeviceLoc,
 

@@ -7,7 +7,15 @@ together to maintain this feature's state (a text document is used to
 accommodate the wide free-format content).
 
 
-Actions (see: actions.js)  Logic (NONE)  Reducer (see: state.js)
-=========================  ============  ===============================
+Actions (see: actions.js)                        Logic (see: logic.js)                                          Reducer (see: state.js)
+==============================================   ============================================================   ===============================
 layout
-  .changeView(viewName) ...............  - set currentView FROM action payload
+
+ .changeView(viewName) .......................................................................................  - set currentView FROM action payload
+
+
+  > toggle the UI Theme ('light'/'dark') ?? NEWLY MIGRATED from device feature
+ .toggleUITheme() ......................................................................................../...  - device.uiTheme = 'light'/'dark'
+                                                 persistUITheme:
+                                                 ==============
+                                                   deviceService.storeUITheme(...fromCurState)

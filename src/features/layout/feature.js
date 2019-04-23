@@ -6,8 +6,10 @@ import _layout              from './featureName';
 import _layoutAct           from './actions';
 import reducer              from './state';
 import * as _layoutSel      from './state';
+import logic                from './logic';
 
 import MainLayout           from './comp/MainLayout';
+import ToggleUITheme        from './comp/ToggleUITheme';
 
 // feature: layout
 //          ?? retrofit description -and- update README.md
@@ -26,9 +28,16 @@ export default createFeature({
     define: {
       'actions.changeView': _layoutAct.changeView, // changeView(viewName)
       'sel.getView':        _layoutSel.getView,    // getView(appState): string
+      'sel.getUITheme':     _layoutSel.getUITheme, // UI Theme: 'light'/'dark'
+    },
+
+    defineUse: {
+      // inject our user-profile menu item to toggle UI Theme ('light'/'dark')
+      'AppLayout.UserMenuItem.UIThemeToggle': ToggleUITheme,
     },
 
     use: [
+
       // 'AppLayout.UserMenuItem.*': ... component entries of the user-profile menu
       //                                 EXPECTING: <UserMenuItem/>
       ['AppLayout.UserMenuItem.*', {required: true, type: fassetValidations.comp}],
@@ -50,6 +59,7 @@ export default createFeature({
   },
 
   reducer,
+  logic,
 
   // inject our various layout components into the root of our app
   appWillStart({fassets, curRootAppElm}) {

@@ -10,12 +10,6 @@ Actions (see: actions.js)                        Logic (see: logic.js)          
 ==============================================   ============================================================   ===============================
 device
 
-  > toggle the UI Theme ('light'/'dark')
- .toggleUITheme() ...........................................................................................  - device.uiTheme = 'light'/'dark'
-                                                 persistUITheme:
-                                                 ==============
-                                                   deviceService.storeUITheme(...fromCurState)
-
   > set device GPS location
     ... dispatched via the 'bootstrap.location' use contract
  .setLoc(loc) ................................................................................................  - device.loc = action.loc

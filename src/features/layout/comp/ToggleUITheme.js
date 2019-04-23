@@ -3,7 +3,7 @@ import React         from 'react';
 import withState     from 'util/withState';
 import {withFassets} from 'feature-u';
 
-import _deviceAct    from '../actions';
+import _layoutAct    from '../actions';
 
 import Chip          from '@material-ui/core/Chip';
 import MoonIcon      from '@material-ui/icons/Brightness3';
@@ -35,7 +35,7 @@ const ToggleUIThemeWithState = withState({
   mapDispatchToProps(dispatch) {
     return {
       toggleUITheme() {
-        dispatch( _deviceAct.toggleUITheme() );
+        dispatch( _layoutAct.toggleUITheme() );
       },
     };
   },

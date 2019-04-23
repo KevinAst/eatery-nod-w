@@ -1,4 +1,4 @@
-# leftNav feature ?? retrofit to be layout feature
+# leftNav feature ?? THIS IS NOW THE layout feature
 
 The **leftNav** feature promotes the app-specific Drawer/SideBar
 on the app's left side.
@@ -6,6 +6,14 @@ on the app's left side.
 This feature is app-neutral, as it pulls in it's menu items from
 external features using the fassets.use 'leftNavItem.*' contract.
 
+?? retrofit docs to include
+   - ? injects the notify utility in the root DOM **(appWillStart)**
+   - ? uiTheme  ... <<< integrate this directly into the layout feature
+                  bootstraped (from perstance via service),
+                  persisted (to local storage via service),
+                  state management (via reducer)
+                  promoted (via selector)
+                  UI-control injection (via fassets use contract)
 
 ## Screen Flow
 

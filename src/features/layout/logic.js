@@ -1,6 +1,6 @@
 import {createLogic}        from 'redux-logic';
-import _device              from './featureName';
-import _deviceAct           from './actions';
+import _layout              from './featureName';
+import _layoutAct           from './actions';
 import {expandWithFassets}  from 'feature-u';
 
 /**
@@ -8,8 +8,8 @@ import {expandWithFassets}  from 'feature-u';
  */
 export const persistUITheme = expandWithFassets( (fassets) => createLogic({
 
-  name: `${_device}.persistUITheme`,
-  type: String(_deviceAct.toggleUITheme),
+  name: `${_layout}.persistUITheme`,
+  type: String(_layoutAct.toggleUITheme),
 
   process({getState, action, fassets}, dispatch, done) {
     fassets.deviceService.storeUITheme( fassets.sel.getUITheme(getState()) );
