@@ -59,7 +59,7 @@ export const monitorDbPool = expandWithFassets( (fassets) => createLogic({
     // register our real-time DB listener for the set of eateries in our pool
     fassets.eateryService.monitorDbEateryPool(
       action.user.pool,
-      fassets.sel.getDeviceLoc(getState()),
+      fassets.sel.getLocation(getState()),
       (eateries) => {
 
         // broadcast a notification of a change in our eateries (or the initial population)

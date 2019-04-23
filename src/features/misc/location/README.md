@@ -1,18 +1,15 @@
-# device feature
+# location feature
 
-?? TRASH THIS EVENTUALLY
+Initialize the GPS location for use by the app.
 
-??TRASH: In general, this initialization represents critical-path items that
-must be completed before the app can run.
+?? review
 
 It accomplishes the following:
 
- > ?? WILL BE MOVED OUT OF HERE
  - Initializes the following critical-path resources through the
    `'bootstrap.*'` use contract:
 
-   > ?? WILL BE MOVED OUT OF HERE
-   - `'bootstrap.location'` ... initializes the device GPS location
+   - `'bootstrap.location'` ... initializes the GPS location
 
 
 ## State Transition

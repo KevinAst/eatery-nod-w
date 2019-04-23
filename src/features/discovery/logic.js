@@ -22,9 +22,9 @@ export const initialRetrieve = expandWithFassets( (fassets) => createLogic({
         _discoverySel.getDiscoveries(appState) === null        && // ... discoveries in initial state
         !_discoverySel.getInProgress(appState)) {                 // ... no discovery retrieval is in-progress
       // initial retrieval using default filter (located in our app state)
-      const deviceLoc = fassets.sel.getDeviceLoc(appState);
+      const location = fassets.sel.getLocation(appState);
       dispatch( _discoveryAct.retrieve({..._discoverySel.getFilter(appState),
-                                        loc: [deviceLoc.lat, deviceLoc.lng]}) );
+                                        loc: [location.lat, location.lng]}) );
     }
 
     done();
@@ -65,9 +65,9 @@ export const processFilter = createLogic({
     // retrieve using new filter from form
     const appState  = getState();
     const filter    = action.domain;
-    const deviceLoc = fassets.sel.getDeviceLoc(appState);
+    const location = fassets.sel.getLocation(appState);
     dispatch( _discoveryAct.retrieve({...filter, 
-                                loc: [deviceLoc.lat, deviceLoc.lng]}) );
+                                      loc: [location.lat, location.lng]}) );
     
     // show our view view
     dispatch( fassets.actions.changeView(_discovery) );

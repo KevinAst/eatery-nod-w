@@ -8,8 +8,8 @@ accommodate the wide free-format content).
 
 Actions (see: actions.js)                        Logic (see: logic.js)                                          Reducer (see: state.js)
 ==============================================   ============================================================   ===============================
-device
+location
 
-  > set device GPS location
+  > set current GPS location
     ... dispatched via the 'bootstrap.location' use contract
- .setLoc(loc) ................................................................................................  - device.loc = action.loc
+ .setLocation(loc) ...........................................................................................  - location.loc = action.loc

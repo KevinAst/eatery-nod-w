@@ -1,14 +1,14 @@
 import {createFeature}     from 'feature-u';
-import _device             from './featureName';
 import {createBootstrapFn} from 'features/misc/bootstrap/bootstrapFn';
-import _deviceAct          from './actions';
+import _location           from './featureName';
+import _locationAct        from './actions';
 import reducer,
-       {getDeviceLoc}      from './state';
+       {getLocation}       from './state';
 
-// feature: device
-//          initialize the device for use by the app (full details in README)
+// feature: location
+//          initialize the GPS location for use by the app (full details in README)
 export default createFeature({
-  name: _device,
+  name: _location,
 
   reducer,
 
@@ -16,16 +16,16 @@ export default createFeature({
   fassets: {
 
     defineUse: {
-      'bootstrap.location': createBootstrapFn('Waiting for Device Location',
+      'bootstrap.location': createBootstrapFn('Waiting for GPS Location',
                                               ({dispatch, fassets}) => {
                                                 return fassets.deviceService.getCurPos()
                                                               .then( (location) => {
                                                                 // set the current location
-                                                                dispatch( _deviceAct.setLoc(location) );
+                                                                dispatch( _locationAct.setLocation(location) );
                                                               })
                                                               .catch( (err) => {
                                                                 // set a fallback location ... Glen Carbon IL
-                                                                dispatch( _deviceAct.setLoc({lat: 38.752209, lng: -89.986610}) );
+                                                                dispatch( _locationAct.setLocation({lat: 38.752209, lng: -89.986610}) );
                                                                 
                                                                 // alter the error to be an expected condition
                                                                 // ... allowing the bootstrap to: complete -and- disclose to user
@@ -39,8 +39,8 @@ export default createFeature({
     define: {
 
       //*** public selectors ***
-                          // device location {lat, lng}
-      'sel.getDeviceLoc': getDeviceLoc,
+                          // GPS location {lat, lng}
+      'sel.getLocation': getLocation,
 
     }
   },

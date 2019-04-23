@@ -94,7 +94,7 @@ eateries
                                            =============
                                              > real-time monitor of eateries DB:
                                              fassets.eateryService.monitorDbEateryPool(action.user.pool,
-                                                                                       fassets.sel.getDeviceLoc(getState()),
+                                                                                       fassets.sel.getLocation(getState()),
                                                                                        monitorCB)
                                              > monitorCB: broadcast changes in our eateries (or the initial population)
                                              DISPATCH actions.dbPool.changed(eateries)

@@ -25,9 +25,9 @@ bootstrap()  ...................................................................
 
                                                    - various client-supplied bootstraps:
 
-                                                     ... example (from 'device' feature):
+                                                     ... example (from 'location feature):
                                                          * 'bootstrap.location'
-                                                           - dispatch setLoc(location)
+                                                           - dispatch setLocation(location)
 
 
   > set bootstrap status (e.g. 'Waiting for bla bla bla' -or- 'COMPLETE'
