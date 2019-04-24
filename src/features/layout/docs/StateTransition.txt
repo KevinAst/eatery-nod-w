@@ -18,4 +18,4 @@ layout
  .toggleUITheme() ......................................................................................../...  - device.uiTheme = 'light'/'dark'
                                                  persistUITheme:
                                                  ==============
-                                                   deviceService.storeUITheme(...fromCurState)
+                                                   storeUITheme(...fromCurState)

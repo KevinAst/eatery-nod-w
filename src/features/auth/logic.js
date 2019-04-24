@@ -5,6 +5,9 @@ import _authAct             from './actions';
 import signInFormMeta       from './signInFormMeta';
 import discloseError        from 'util/discloseError';
 import {toast}              from 'util/notify';
+import {fetchCredentials,
+        storeCredentials,
+        removeCredentials}  from './credentialsStorage';
 
 /**
  * Start our authorization process, once the bootstrap initialization process is complete.
@@ -35,7 +38,7 @@ export const checkDeviceCredentials = createLogic({
 
   process({getState, action, fassets}, dispatch, done) {
 
-    const credentials = fassets.deviceService.fetchCredentials();
+    const credentials = fetchCredentials();
     if (credentials) {
       dispatch( _authAct.autoSignIn.haveDeviceCredentials(credentials) );
     }
@@ -117,7 +120,7 @@ export const signIn = createLogic({
            .then( user => { // user has successfully signed in
 
              // retain these credentials on our device (to streamline subsequent app launch)
-             fassets.deviceService.storeCredentials(action.email, action.pass);
+             storeCredentials(action.email, action.pass);
 
              // communicate a new user is in town
              dispatch( _authAct.signIn.complete(user) );
@@ -238,7 +241,7 @@ export const signOut = createLogic({
              discloseError({err});
            });
 
-    fassets.deviceService.removeCredentials();
+    removeCredentials();
 
     done();
   },

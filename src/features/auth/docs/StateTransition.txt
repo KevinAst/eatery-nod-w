@@ -18,7 +18,7 @@ auth
   .autoSignIn() ............................................................................................   - NONE
                                                  checkDeviceCredentials:
                                                  ======================
-                                                   fassets.deviceService.fetchCredentials() via localStorage() 
+                                                   fetchCredentials() from localStorage
                                                    - YES: DISPATCH .haveDeviceCredentials(credentials)  
                                                    - NO:  DISPATCH .noDeviceCredentials()
 
@@ -36,7 +36,7 @@ auth
                                                  signIn:
                                                  ======
                                                    async: fassets.authService.signIn(action.email, action.pass)
-                                                          - SUCCESS: fassets.deviceService.storeCredentials(action.email, action.pass)
+                                                          - SUCCESS: storeCredentials(action.email, action.pass)
                                                                      DISPATCH .complete(user)
                                                           - FAIL:    discloseError(err)
                                                                      DISPATCH signIn.open(action, msg) .. display signin sreen
@@ -90,7 +90,7 @@ auth
                                                  =======
                                                    async: fassets.authService.signOut()
                                                           - ERR: discloseError(err)
-                                                   fassets.deviceService.removeCredentials()
+                                                   removeCredentials()
 
 
   > ALSO: this action is monitored by 'other' features (ex: 'eateries')

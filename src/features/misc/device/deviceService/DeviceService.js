@@ -36,6 +36,7 @@ class DeviceService {
    * @return {string} the persisted UI Theme (null for none - suitable
    * to be used as initial redux state (vs. undefined)).
    */
+  // ? DONE: NOW PART OF: util/deviceStorage.js via: layout/uiThemeStorage.js
   fetchUITheme() {
     return deviceStorage.getItem('uiTheme') || null;
   }
@@ -46,6 +47,7 @@ class DeviceService {
    * 
    * @param {string} uiTheme the UI Theme to store.
    */
+  // ? DONE: NOW PART OF: util/deviceStorage.js via: layout/uiThemeStorage.js
   storeUITheme(uiTheme) {
     deviceStorage.setItem('uiTheme', uiTheme);
   }
@@ -65,6 +67,7 @@ class DeviceService {
    *     pass:  string
    *   }
    */
+  // ? DONE: NOW PART OF: util/deviceStorage.js via: auth/credentialsStorage.js
   fetchCredentials() {
     return this.decodeCredentials( deviceStorage.getItem(credentialsKey) ) || null
   }
@@ -76,6 +79,7 @@ class DeviceService {
    * @param {string} email the email (id) to store.
    * @param {string} pass the password to store.
    */
+  // ? DONE: NOW PART OF: util/deviceStorage.js via: auth/credentialsStorage.js
   storeCredentials(email, pass) {
     deviceStorage.setItem(credentialsKey, this.encodeCredentials(email, pass));
   }
@@ -84,6 +88,7 @@ class DeviceService {
   /**
    * Remove credentials from local device.
    */
+  // ?DONE: NOW PART OF: util/deviceStorage.js via: auth/credentialsStorage.js
   removeCredentials() {
     deviceStorage.removeItem(credentialsKey);
   }
@@ -99,6 +104,7 @@ class DeviceService {
    * 
    * @private
    */
+  // ? DONE: TRASH: handled directly by: util/deviceStorage.js
   encodeCredentials(email, pass) {
     // combine email/pass into single resource
     let encoding = email+credentialsSeparator+pass;
@@ -130,6 +136,7 @@ class DeviceService {
    * 
    * @private
    */
+  // ? DONE TRASH: handled directly by: util/deviceStorage.js
   decodeCredentials(encodedCredentials) {
     // no-op if NO encoding supplied
     if (!encodedCredentials) {
@@ -268,6 +275,8 @@ function mock_getCurPos_asNeeded(deviceService) {
 //     (ex: src/features/device/state.js)
 export default new DeviceService();
 
+
+// ? DONE: NOW PART OF: util/deviceStorage.js
 
 //***
 //*** Abstract the Web Storage API (gracefully no-oping for unsupported browsers)

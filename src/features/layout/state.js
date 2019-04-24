@@ -3,7 +3,8 @@ import {reducerHash}      from 'astx-redux-util';
 import {slicedReducer}    from 'feature-redux';
 import _layout            from './featureName';
 import _layoutAct         from './actions';
-import deviceService      from 'features/misc/device/deviceService/DeviceService'; // NOTE: Special Case - need deviceService early (import it vs. fassets.deviceService)
+import {fetchUITheme}     from './uiThemeStorage';
+
 
 // ***
 // *** Our feature reducer, managing the currentView state.
@@ -14,7 +15,7 @@ const reducer = slicedReducer(_layout, combineReducers({
   // uiTheme: 'light'/'dark'
   uiTheme: reducerHash({
     [_layoutAct.toggleUITheme]: (state, action) => state==='dark' ? 'light' : 'dark',
-  }, deviceService.fetchUITheme() ), // initialState (default to a persistent state)
+  }, fetchUITheme() ), // initialState (default to a persistent state)
 
   // loc: {lat, lng} ... device GPS location
   currentView: reducerHash({
