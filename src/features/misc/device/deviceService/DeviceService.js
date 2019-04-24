@@ -21,6 +21,7 @@ class DeviceService {
    */
   constructor() {
     // conditionally mock various service methods, as directed by featureFlags
+    // ?DONE retrofit this
     mock_getCurPos_asNeeded(this);
   }
 
@@ -181,6 +182,7 @@ class DeviceService {
   //*** Expose Device Location
   //****************************************************************************
 
+  // ?DONE RETROFIT THIS
   /**
    * Return the current device location asynchronously (via a promise).
    * 
@@ -242,6 +244,7 @@ class DeviceService {
 }
 
 
+// ?DONE retrofit this
 // conditionally mock getCurPos(), as directed by featureFlags
 function mock_getCurPos_asNeeded(deviceService) {
 
