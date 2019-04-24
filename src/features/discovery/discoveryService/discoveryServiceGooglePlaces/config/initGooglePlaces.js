@@ -1,9 +1,9 @@
-import apiKey          from './googlePlacesApiKey';
-import {decodeContent} from 'util/safeguardContent';
+import apiKey    from './googlePlacesApiKey';
+import {decode}  from 'util/encoder';
 
 export default function initGooglePlaces(deviceService) {
 
-  const clearApiKey = decodeContent(apiKey);
+  const clearApiKey = decode(apiKey);
 
   // bootstrap the script tag required by Google Places API
   const scriptTag = document.createElement('script');

@@ -1,6 +1,6 @@
 import firebase          from 'firebase/app';
 import firebaseAppConfig from './config/firebaseAppConfig';
-import {decodeContent}   from 'util/safeguardContent';
+import {decode}          from 'util/encoder';
 
 // keep track of invocation
 let previouslyInvoked = false;
@@ -21,7 +21,7 @@ export default function initFireBase() {
   previouslyInvoked = true;
 
   // initialize firebase using the eatery-nod configuration
-  const clearFirebaseAppConfig = decodeContent(firebaseAppConfig);
+  const clearFirebaseAppConfig = decode(firebaseAppConfig);
   firebase.initializeApp(clearFirebaseAppConfig);
 
   // temp work-around to long timer android warning (using firebase)
