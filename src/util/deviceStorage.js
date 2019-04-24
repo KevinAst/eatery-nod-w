@@ -135,7 +135,7 @@ function storageAvailable(type) {
 
 // log warning when deviceStorage is NOT in affect
 if (!_localStorageAvailable) {
-  console.warn('***WARNING*** DeviceService feature ... localStorage (Web Storage API) is NOT available in this browser ... all deviceStorage usage will silently no-op!!');
+  console.warn('***WARNING*** deviceStorage module ... localStorage (Web Storage API) is NOT available in this browser ... all deviceStorage usage will silently no-op!!');
 }
 
 // our localStorage pass-through that gracefully no-ops for unsupported browsers

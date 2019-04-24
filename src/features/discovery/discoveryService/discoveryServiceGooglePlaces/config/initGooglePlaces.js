@@ -1,7 +1,7 @@
 import apiKey    from './googlePlacesApiKey';
 import {decode}  from 'util/encoder';
 
-export default function initGooglePlaces(deviceService) {
+export default function initGooglePlaces() {
 
   const clearApiKey = decode(apiKey);
 

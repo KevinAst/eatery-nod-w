@@ -20,7 +20,7 @@ export default createFeature({
   },
 
   appWillStart({fassets, curRootAppElm}) { // initialize Google Places API (required by this service)
-    initGooglePlaces(fassets.deviceService);
+    initGooglePlaces();
   },
 
 });

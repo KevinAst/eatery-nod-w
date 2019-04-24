@@ -1,7 +1,6 @@
 import layout                        from './layout/feature';
 
 import location                      from './misc/location/feature';
-import deviceService                 from './misc/device/deviceService/feature';
 
 import auth                          from './auth/feature';
 import authService                   from './auth/authService/feature';
@@ -32,7 +31,6 @@ export default [
   layout,
 
   location,
-  deviceService,
 
   auth,
   authService,

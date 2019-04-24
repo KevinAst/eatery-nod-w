@@ -30,7 +30,7 @@ function getCurPos_real() {
       // success callback
       (position) => {
         // communicate device location
-        // console.log(`xx DeviceService.getCurPos() returning: (${position.coords.latitude}, ${position.coords.longitude}) ... full structure: `, position);
+        // console.log(`xx getCurPos_real() returning: (${position.coords.latitude}, ${position.coords.longitude}) ... full structure: `, position);
         return resolve({lat: position.coords.latitude, 
                         lng: position.coords.longitude});
       },
@@ -43,7 +43,7 @@ function getCurPos_real() {
         //       ... allowing downstream processes to do value-added adornment
         //           via: util/ErrorExtensionPolyfill.js
         //           ex:  err.defineAttemptingToMsg('...')
-        // console.log('xx DeviceService.getCurPos() geoErr: ', geoErr)
+        // console.log('xx getCurPos_real() geoErr: ', geoErr)
         const err = new Error(geoErr.message);  // ex: "User denied Geolocation" -or- "Timeout expired" ... etc.
 
         // hold onto the internals of geoErr (code -and- constants)
@@ -77,7 +77,7 @@ function getCurPos_mock() {
   const defaultLoc   = GlenCarbonIL;
   const mockLoc      = featureFlags.mockGPS.lat ? featureFlags.mockGPS : defaultLoc;
 
-  // console.log(`xx DeviceService.getCurPos() request ... mocked to: `, mockLoc);
+  // console.log(`xx getCurPos_mock() request ... mocked to: `, mockLoc);
   return new Promise( (resolve, reject) => {
     // setTimeout(() => { // TEMPORARY: for testing delay just a bit
 

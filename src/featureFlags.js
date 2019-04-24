@@ -8,7 +8,7 @@ export default {
 
   mockGPS: false, // should app mock GPS? ... regulates util/deviceLocation.js getCurPos():  real/mocked
                   // false: use real device location
-                  // true:  mock device location (default to GlenCarbon IL)
+                  // true:  mock device location (default to Glen Carbon IL)
                   // {lat, lng}: specify mocked location, example:
                   //             {lat: 40.48643,  lng: -86.1336}   ... Kokomo IN
                   //             {lat: 42.60559,  lng: -83.14993}  ... Troy MI
