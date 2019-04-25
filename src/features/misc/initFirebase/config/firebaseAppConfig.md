@@ -5,6 +5,9 @@ access from github check-in.
 
 You should supply this file, with **your** firebase app credentials:
 
+It is also recommended that you encode this resource (optionally) to minimize
+exposure to your deployment the site!
+
 ```js
 /**
  * Promote the FireBase App Configuration in a git ignored resource

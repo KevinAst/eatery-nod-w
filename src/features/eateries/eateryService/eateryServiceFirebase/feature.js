@@ -18,8 +18,4 @@ export default createFeature({
     },
   },
 
-  appWillStart({fassets, curRootAppElm}) { // initialize FireBase (required by this service)
-    fassets.initFireBase();
-  },
-
 });
