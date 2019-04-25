@@ -28,7 +28,6 @@ export default createFeature({
     define: {
       'actions.changeView': _layoutAct.changeView, // changeView(viewName)
       'sel.getView':        _layoutSel.getView,    // getView(appState): string
-      'sel.getUITheme':     _layoutSel.getUITheme, // UI Theme: 'light'/'dark'
     },
 
     defineUse: {

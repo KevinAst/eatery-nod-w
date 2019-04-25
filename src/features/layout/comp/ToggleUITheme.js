@@ -1,9 +1,9 @@
 import React         from 'react';
 
 import withState     from 'util/withState';
-import {withFassets} from 'feature-u';
 
 import _layoutAct    from '../actions';
+import {getUITheme}  from '../state';
 
 import Chip          from '@material-ui/core/Chip';
 import MoonIcon      from '@material-ui/icons/Brightness3';
@@ -25,11 +25,11 @@ function ToggleUITheme({uiTheme, toggleUITheme}) {
   );
 }
 
-const ToggleUIThemeWithState = withState({
+export default /* ToggleUIThemeWithState = */ withState({
   component: ToggleUITheme,
-  mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
+  mapStateToProps(appState) {
     return {
-      uiTheme: fassets.sel.getUITheme(appState),
+      uiTheme: getUITheme(appState),
     };
   },
   mapDispatchToProps(dispatch) {
@@ -39,11 +39,4 @@ const ToggleUIThemeWithState = withState({
       },
     };
   },
-});
-
-export default /* ToggleUIThemeWithFassets = */ withFassets({
-  component: ToggleUIThemeWithState,
-  mapFassetsToProps: {
-    fassets: '.', // introduce fassets into props via the '.' keyword
-  }
 });

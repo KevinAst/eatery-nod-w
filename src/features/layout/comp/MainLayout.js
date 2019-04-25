@@ -8,6 +8,8 @@ import {MuiThemeProvider,      // NOTE: MuiThemeProvider **SHOULD** be at the ro
 import CssBaseline        from '@material-ui/core/CssBaseline';
 import AppLayout          from './AppLayout';
 import Notify             from 'util/notify';
+import {getUITheme}       from '../state';
+
 
 /**
  * ?? rework description
@@ -108,7 +110,7 @@ const MainLayoutWithState = withState({
   component: MainLayout,
   mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
     return {
-      uiTheme: fassets.sel.getUITheme(appState),
+      uiTheme: getUITheme(appState),
       curUser: fassets.sel.curUser(appState),
     };
   },
