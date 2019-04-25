@@ -6,7 +6,7 @@ import {createSelector}     from 'reselect';
 import _auth                from './featureName';
 import signInFormMeta       from './signInFormMeta';
 import _authAct             from './actions';
-import User                 from './authService/User';
+import User                 from './subFeatures/authService/User';
 
 // ***
 // *** Our feature reducer, managing state for our authorization process.

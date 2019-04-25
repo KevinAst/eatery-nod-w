@@ -1,4 +1,4 @@
-import DiscoveryServiceAPI from '../DiscoveryServiceAPI';
+import DiscoveryServiceAPI from '../discoveryService/DiscoveryServiceAPI';
 import verify              from 'util/verify';
 import isString            from 'lodash.isstring';
 

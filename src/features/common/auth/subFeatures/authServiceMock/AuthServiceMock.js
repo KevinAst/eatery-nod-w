@@ -1,5 +1,5 @@
-import AuthServiceAPI from '../AuthServiceAPI';
-import User           from '../User';
+import AuthServiceAPI from '../authService/AuthServiceAPI';
+import User           from '../authService/User';
 
 /**
  * AuthServiceMock is the **mock** AuthServiceAPI derivation.

@@ -1,10 +1,10 @@
-import DiscoveryServiceAPI from '../DiscoveryServiceAPI';
+import DiscoveryServiceAPI from '../discoveryService/DiscoveryServiceAPI';
 import verify              from 'util/verify';
 import isString            from 'lodash.isstring';
 
 import {discoverySearchPage1,   // NOTE: tight coupling with EateryServiceMock (IT's OK ... were a MOCK :-)
         discoverySearchPage2,
-        eateriesMockDB}    from '../../../eateries/eateryService/eateryServiceMock/EateryServiceMock';
+        eateriesMockDB}    from '../../../eateries/subFeatures/eateryServiceMock/EateryServiceMock';
 
 /**
  * DiscoveryServiceMock is the **mock** DiscoveryServiceAPI

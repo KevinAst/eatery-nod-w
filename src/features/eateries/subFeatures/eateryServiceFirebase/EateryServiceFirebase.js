@@ -1,7 +1,7 @@
 import firebase         from 'firebase/app';
 import                       'firebase/database';
 import geodist          from 'geodist';
-import EateryServiceAPI from '../EateryServiceAPI';
+import EateryServiceAPI from '../eateryService/EateryServiceAPI';
 
 /**
  * EateryServiceFirebase is the **real** EateryServiceAPI derivation

@@ -1,8 +1,8 @@
 import firebase       from 'firebase/app';
 import                     'firebase/auth';
 import                     'firebase/database';
-import AuthServiceAPI from '../AuthServiceAPI';
-import User           from '../User';
+import AuthServiceAPI from '../authService/AuthServiceAPI';
+import User           from '../authService/User';
 
 /**
  * AuthServiceFirebase is the **real** AuthServiceAPI derivation

@@ -1,5 +1,5 @@
 import geodist          from 'geodist';
-import EateryServiceAPI from '../EateryServiceAPI';
+import EateryServiceAPI from '../eateryService/EateryServiceAPI';
 
 /**
  * EateryServiceMock is the **mock** EateryServiceAPI derivation.
