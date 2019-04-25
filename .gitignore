@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 src/features/misc/initFirebase/config/firebaseAppConfig.js
-src/features/discovery/discoveryService/discoveryServiceGooglePlaces/config/googlePlacesApiKey.js
+src/features/misc/initGooglePlaces/config/googlePlacesApiKey.js

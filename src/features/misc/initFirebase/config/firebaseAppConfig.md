@@ -3,11 +3,12 @@
 The `firebaseAppConfig.js` is gitignored, preventing unauthorized
 access from github check-in.
 
-You should supply this file, with **your** firebase app credentials:
+You should supply this file, with **your** firebase app credentials.
 
 It is also recommended that you encode this resource (optionally) to minimize
 exposure to your deployment the site!
 
+**firebaseAppConfig.js**
 ```js
 /**
  * Promote the FireBase App Configuration in a git ignored resource

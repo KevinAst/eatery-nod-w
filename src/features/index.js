@@ -19,6 +19,7 @@ import discoveryServiceMock          from './discovery/discoveryService/discover
 
 import bootstrap                     from './misc/bootstrap/feature';
 import initFirebase                  from './misc/initFirebase/feature';
+import initGooglePlaces              from './misc/initGooglePlaces/feature';
 import pwa                           from './misc/pwa/feature';
 
 import logActions                    from './misc/diagnostic/logActions/feature';
@@ -50,6 +51,7 @@ export default [
   // ... misc
   bootstrap,
   initFirebase,
+  initGooglePlaces,
   pwa,
 
   // ... diagnostic

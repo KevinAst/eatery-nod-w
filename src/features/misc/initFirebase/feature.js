@@ -12,7 +12,7 @@ export default createFeature({
   // firebase is only required when we are using real services (i.e. when WIFI enabled)
   enabled: featureFlags.useWIFI,
 
-  // initialize firebase using eatery-not's embedded configuration
+  // initialize firebase using eatery-nod's embedded configuration
   appWillStart({fassets, curRootAppElm}) {
     const appConfig = decode(firebaseAppConfig);
     firebase.initializeApp(appConfig);
