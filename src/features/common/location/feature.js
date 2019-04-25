@@ -1,5 +1,5 @@
 import {createFeature}     from 'feature-u';
-import {createBootstrapFn} from 'features/misc/bootstrap/bootstrapFn';
+import {createBootstrapFn} from 'features/common/bootstrap/bootstrapFn';
 import _location           from './featureName';
 import _locationAct        from './actions';
 import reducer,

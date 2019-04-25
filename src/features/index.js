@@ -1,7 +1,5 @@
 import layout                        from './layout/feature';
 
-import location                      from './misc/location/feature';
-
 import auth                          from './auth/feature';
 import authService                   from './auth/authService/feature';
 import authServiceFirebase           from './auth/authService/authServiceFirebase/feature';
@@ -17,21 +15,20 @@ import discoveryService              from './discovery/discoveryService/feature'
 import discoveryServiceGooglePlaces  from './discovery/discoveryService/discoveryServiceGooglePlaces/feature';
 import discoveryServiceMock          from './discovery/discoveryService/discoveryServiceMock/feature';
 
-import bootstrap                     from './misc/bootstrap/feature';
-import initFirebase                  from './misc/initFirebase/feature';
-import initGooglePlaces              from './misc/initGooglePlaces/feature';
-import pwa                           from './misc/pwa/feature';
+import bootstrap                     from './common/bootstrap/feature';
+import initFirebase                  from './common/initFirebase/feature';
+import initGooglePlaces              from './common/initGooglePlaces/feature';
+import location                      from './common/location/feature';
+import pwa                           from './common/pwa/feature';
 
-import logActions                    from './misc/diagnostic/logActions/feature';
-import sandbox                       from './misc/diagnostic/sandbox/feature';
+import logActions                    from './common/diagnostic/logActions/feature';
+import sandbox                       from './common/diagnostic/sandbox/feature';
 
 // accumulate ALL features
 // ... see README.md for details
 export default [
 
   layout,
-
-  location,
 
   auth,
   authService,
@@ -48,10 +45,11 @@ export default [
   discoveryServiceGooglePlaces,
   discoveryServiceMock,
 
-  // ... misc
+  // ... common
   bootstrap,
   initFirebase,
   initGooglePlaces,
+  location,
   pwa,
 
   // ... diagnostic

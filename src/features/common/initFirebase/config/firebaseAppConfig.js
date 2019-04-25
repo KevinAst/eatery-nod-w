@@ -1,0 +1,3 @@
+// The eatery-nod FireBase App Configuration (a PRIVATE RESOURCE in a gitignored resource)
+// NOTE: We encode sensitive credential keys to alleviate exposure on deployment site!
+export default 'afesab2JqMnN0cjp7ImFwaUtleSI6IkFJemFTeUNmak8xc29QMUE5OEtWeWxDYnJELXUzZE5UbHVlZ2EzRSIsImF1dGhEb21haW4iOiJlYXRlcnktbm9kLmZpcmViYXNlYXBwLmNvbSIsImRhdGFiYXNlVVJMIjoiaHR0cHM6Ly9lYXRlcnktbm9kLmZpcmViYXNlaW8uY29tIiwicHJvamVjdElkIjoiZWF0ZXJ5LW5vZCIsInN0b3JhZ2VCdWNrZXQiOiJlYXRlcnktbm9kLmFwcHNwb3QuY29tIiwibWVzc2FnaW5nU2VuZGVySWQiOiIxMjM2ODc4NDM3MzYifQ==';
