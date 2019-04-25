@@ -8,7 +8,7 @@ import {getUITheme}  from '../state';
 import Chip          from '@material-ui/core/Chip';
 import MoonIcon      from '@material-ui/icons/Brightness3';
 import SunIcon       from '@material-ui/icons/WbSunny';
-import UserMenuItem  from 'features/layout/comp/UserMenuItem';
+import UserMenuItem  from 'features/common/layout/comp/UserMenuItem';
 
 
 /**
