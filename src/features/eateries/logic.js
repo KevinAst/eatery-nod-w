@@ -33,7 +33,7 @@ export const monitorDbPool = expandWithFassets( (fassets) => createLogic({
 
   validate({getState, action, fassets}, allow, reject) {
 
-    // no-op if we are alreay monitoring this same pool
+    // no-op if we are already monitoring this same pool
     if (action.user.pool === curPoolMonitor.pool) {
       reject(action); // other-logic/middleware/reducers: YES, self's process(): NO
       return;
