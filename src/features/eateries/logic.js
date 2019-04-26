@@ -147,7 +147,7 @@ export const spin = createLogic({
       const appState = getState();
       const filteredEateries  = _eateriesSel.getFilteredEateries(appState);
 
-      // algorighm from MDN ... https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+      // algorithm from MDN ... https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
       const min      = Math.ceil(0);                        // min is inclusive (in usage below)
       const max      = Math.floor(filteredEateries.length); // max is exclusive (in usage below)
       const randIndx = Math.floor(Math.random() * (max - min)) + min;
