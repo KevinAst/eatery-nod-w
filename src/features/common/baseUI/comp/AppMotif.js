@@ -80,7 +80,17 @@ const appStyles = (theme) => ({
 
 });
 
-function AppMotif({curView, viewAuxiliaryContent, classes, children}) {
+function AppMotif({curUser, curView, viewAuxiliaryContent, classes, children}) {
+
+  // no-op when no user is signed-in
+  if (!curUser.isUserSignedIn()) {
+    return (
+      <>
+        {children}
+      </>
+    );
+  }
+  
 
   // define our auxiliary view content
   const curViewAuxiliaryContent = resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent);
@@ -145,7 +155,8 @@ const AppMotifWithState = withState({
   component: AppMotif,
   mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
     return {
-      curView:  fassets.sel.getView(appState),
+      curUser: fassets.sel.curUser(appState),
+      curView: fassets.sel.getView(appState),
     };
   },
 });

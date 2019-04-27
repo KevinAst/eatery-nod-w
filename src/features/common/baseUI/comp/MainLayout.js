@@ -1,7 +1,6 @@
 import React              from 'react';
 import PropTypes          from 'prop-types';
 import withState          from 'util/withState';
-import {withFassets}      from 'feature-u';
 import withStyles         from '@material-ui/core/styles/withStyles';
 import {MuiThemeProvider,      // NOTE: MuiThemeProvider **SHOULD** be at the root of ALL visible components
         createMuiTheme}   from '@material-ui/core/styles';
@@ -77,26 +76,17 @@ const mainStyles = (theme) => ({
   },
 });
 
-function MainLayout({uiTheme, curUser, classes, children}) {
+function MainLayout({uiTheme, classes, children}) {
   const themeInUse = uiTheme==='dark' ? darkTheme : lightTheme;
-  
-  // conditionally inject AppMotif when user is signed-in
-  const theRestOfTheStory = curUser.isUserSignedIn() ? (
-    <AppMotif>
-      {children}
-    </AppMotif>
-  ) : (
-    <>
-      {children}
-    </>
-  );
 
   return (
     <MuiThemeProvider theme={themeInUse}>
       <CssBaseline/>
       <Notify/>
       <main className={classes.main}>
-        {theRestOfTheStory}
+        <AppMotif>
+          {children}
+        </AppMotif>
       </main>
     </MuiThemeProvider>
   );
@@ -109,19 +99,11 @@ MainLayout.propTypes = {
 
 const MainLayoutWithState = withState({
   component: MainLayout,
-  mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
+  mapStateToProps(appState) {
     return {
       uiTheme: getUITheme(appState),
-      curUser: fassets.sel.curUser(appState),
     };
   },
 });
 
-const MainLayoutWithFassets = withFassets({
-  component: MainLayoutWithState,
-  mapFassetsToProps: {
-    fassets: '.', // introduce fassets into props via the '.' keyword
-  }
-});
-
-export default /* MainLayoutWithStyles = */ withStyles(mainStyles)(MainLayoutWithFassets);
+export default /* MainLayoutWithStyles = */ withStyles(mainStyles)(MainLayoutWithState);
