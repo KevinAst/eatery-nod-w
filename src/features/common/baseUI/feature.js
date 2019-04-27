@@ -2,10 +2,10 @@ import React                from 'react';
 import {createFeature,
         fassetValidations}  from 'feature-u';
 
-import _layout              from './featureName';
-import _layoutAct           from './actions';
+import _baseUI              from './featureName';
+import _baseUIAct           from './actions';
 import reducer              from './state';
-import * as _layoutSel      from './state';
+import * as _baseUISel      from './state';
 import logic                from './logic';
 
 import MainLayout           from './comp/MainLayout';
@@ -20,14 +20,14 @@ import ToggleUITheme        from './comp/ToggleUITheme';
 //          ? menu items from external features using the
 //          ? 'leftNavItem.*' use contract (full details in README)
 export default createFeature({
-  name: _layout,
+  name: _baseUI,
 
   // our public face ...
   fassets: {
 
     define: {
-      'actions.changeView': _layoutAct.changeView, // changeView(viewName)
-      'sel.getView':        _layoutSel.getView,    // getView(appState): string
+      'actions.changeView': _baseUIAct.changeView, // changeView(viewName)
+      'sel.getView':        _baseUISel.getView,    // getView(appState): string
     },
 
     defineUse: {

@@ -1,8 +1,8 @@
 import {generateActions} from 'action-u';
-import _layout           from './featureName';
+import _baseUI           from './featureName';
 
 export default generateActions.root({
-  [_layout]: { // prefix all actions with our feature name, guaranteeing they unique app-wide!
+  [_baseUI]: { // prefix all actions with our feature name, guaranteeing they unique app-wide!
 
     toggleUITheme: { // actions.toggleUITheme(): Action
                      // > toggle the UI Theme ('light'/'dark')

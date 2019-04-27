@@ -1,6 +1,6 @@
 import React        from 'react';
 import withState    from 'util/withState';
-import UserMenuItem from 'features/common/layout/comp/UserMenuItem';
+import UserMenuItem from 'features/common/baseUI/comp/UserMenuItem';
 import _authAct     from '../actions';
 import {toast,
         confirm}    from 'util/notify';

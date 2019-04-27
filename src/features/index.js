@@ -13,7 +13,7 @@ import eateryServiceFirebase         from './eateries/subFeatures/eateryServiceF
 import eateryServiceMock             from './eateries/subFeatures/eateryServiceMock/feature';
 import initFirebase                  from './common/initFirebase/feature';
 import initGooglePlaces              from './common/initGooglePlaces/feature';
-import layout                        from './common/layout/feature';
+import baseUI                        from './common/baseUI/feature';
 import location                      from './common/location/feature';
 import logActions                    from './common/diagnostic/logActions/feature';
 import pwa                           from './common/pwa/feature';
@@ -42,7 +42,7 @@ export default [
   //*** common app-neutral features
   //***
 
-  layout, // ... ORDER: before `auth` feature to promote UITheme user-menu FIRST
+  baseUI, // ... ORDER: before `auth` feature to promote UITheme user-menu FIRST
   
   auth,
   authService,

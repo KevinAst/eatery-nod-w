@@ -1,8 +1,8 @@
 import {combineReducers}  from 'redux';
 import {reducerHash}      from 'astx-redux-util';
 import {slicedReducer}    from 'feature-redux';
-import _layout            from './featureName';
-import _layoutAct         from './actions';
+import _baseUI            from './featureName';
+import _baseUIAct         from './actions';
 import {fetchUITheme}     from './uiThemeStorage';
 
 
@@ -10,16 +10,16 @@ import {fetchUITheme}     from './uiThemeStorage';
 // *** Our feature reducer, managing the currentView state.
 // ***
 
-const reducer = slicedReducer(_layout, combineReducers({
+const reducer = slicedReducer(_baseUI, combineReducers({
 
   // uiTheme: 'light'/'dark'
   uiTheme: reducerHash({
-    [_layoutAct.toggleUITheme]: (state, action) => state==='dark' ? 'light' : 'dark',
+    [_baseUIAct.toggleUITheme]: (state, action) => state==='dark' ? 'light' : 'dark',
   }, fetchUITheme() ), // initialState (default to a persistent state)
 
   // loc: {lat, lng} ... device GPS location
   currentView: reducerHash({
-    [_layoutAct.changeView]: (state, action) => action.viewName,
+    [_baseUIAct.changeView]: (state, action) => action.viewName,
   }, 'uninitialized'), // initialState
 
 }) );

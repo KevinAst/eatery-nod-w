@@ -2,13 +2,13 @@ import React         from 'react';
 
 import withState     from 'util/withState';
 
-import _layoutAct    from '../actions';
+import _baseUIAct    from '../actions';
 import {getUITheme}  from '../state';
 
 import Chip          from '@material-ui/core/Chip';
 import MoonIcon      from '@material-ui/icons/Brightness3';
 import SunIcon       from '@material-ui/icons/WbSunny';
-import UserMenuItem  from 'features/common/layout/comp/UserMenuItem';
+import UserMenuItem  from 'features/common/baseUI/comp/UserMenuItem';
 
 
 /**
@@ -35,7 +35,7 @@ export default /* ToggleUIThemeWithState = */ withState({
   mapDispatchToProps(dispatch) {
     return {
       toggleUITheme() {
-        dispatch( _layoutAct.toggleUITheme() );
+        dispatch( _baseUIAct.toggleUITheme() );
       },
     };
   },

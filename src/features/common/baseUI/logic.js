@@ -1,6 +1,6 @@
 import {createLogic}        from 'redux-logic';
-import _layout              from './featureName';
-import _layoutAct           from './actions';
+import _baseUI              from './featureName';
+import _baseUIAct           from './actions';
 import {getUITheme}         from './state';
 import {storeUITheme}       from './uiThemeStorage';
 
@@ -9,8 +9,8 @@ import {storeUITheme}       from './uiThemeStorage';
  */
 export const persistUITheme = createLogic({
 
-  name: `${_layout}.persistUITheme`,
-  type: String(_layoutAct.toggleUITheme),
+  name: `${_baseUI}.persistUITheme`,
+  type: String(_baseUIAct.toggleUITheme),
 
   process({getState, action, fassets}, dispatch, done) {
     storeUITheme( getUITheme(getState()) );
