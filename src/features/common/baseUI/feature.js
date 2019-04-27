@@ -37,23 +37,23 @@ export default createFeature({
 
     use: [
 
-      // 'AppMotif.UserMenuItem.*': ... component entries of the user-profile menu
-      //                                EXPECTING: <UserMenuItem/>
+      // 'AppMotif.UserMenuItem.*': ..... component entries of the user-profile menu
+      //                                  EXPECTING: <UserMenuItem/>
       ['AppMotif.UserMenuItem.*', {required: true, type: fassetValidations.comp}],
 
-      // 'AppMotif.LeftNavItem.*': .... component entries of the left-nav bar
-      //                                EXPECTING: <ListItem/>
+      // 'AppMotif.LeftNavItem.*': ...... component entries of the left-nav bar
+      //                                  EXPECTING: <ListItem/>
       ['AppMotif.LeftNavItem.*', {required: true, type: fassetValidations.comp}],
 
-      // 'AppMotif.view.*': ........... auxiliary view content that varies per view
-      //                                (the wildcard ('*') is indexed by `curView`)
-      //   ViewAuxiliaryContent: {      EXPECTING: ViewAuxiliaryContent object
-      //     TitleComp: () => ......... a component defining the header title
-      //                                DEFAULT: rendering of 'Eatery Nod'
-      //     FooterComp: () => ........ a component defining the entire footer content
-      //                                DEFAULT: no footer
+      // 'AppMotif.auxViewContent.*': ... auxiliary view content that varies per view
+      //                                  (the wildcard ('*') is indexed by `curView`)
+      //   ViewAuxiliaryContent: {        EXPECTING: ViewAuxiliaryContent object
+      //     TitleComp: () => ........... a component defining the header title
+      //                                  DEFAULT: rendering of 'App Motif'
+      //     FooterComp: () => .......... a component defining the entire footer content
+      //                                  DEFAULT: no footer
       //   }
-      ['AppMotif.view.*', {required: false, type: fassetValidations.any}],
+      ['AppMotif.auxViewContent.*', {required: false, type: fassetValidations.any}],
     ],
   },
 

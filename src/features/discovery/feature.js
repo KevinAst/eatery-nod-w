@@ -22,7 +22,7 @@ export default createFeature({
       [`AppMotif.LeftNavItem.${_discovery}`]: DiscoveryLeftNavItem, // inject our entry into the leftNav
 
       // auxiliary view content for the discoveries view
-      [`AppMotif.view.${_discovery}`]: {
+      [`AppMotif.auxViewContent.${_discovery}`]: {
         TitleComp:  DiscoveriesTitle,
         FooterComp: DiscoveriesFooter,
       },

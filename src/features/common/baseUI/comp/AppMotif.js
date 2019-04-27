@@ -165,7 +165,7 @@ const AppMotifWithFassets = withFassets({
   component: AppMotifWithState,
   mapFassetsToProps: {
     fassets:              '.', // introduce fassets into props via the '.' keyword
-    viewAuxiliaryContent: 'AppMotif.view.*@withKeys',
+    viewAuxiliaryContent: 'AppMotif.auxViewContent.*@withKeys',
   }
 });
 
@@ -175,17 +175,17 @@ export default /* AppMotifWithStyles = */ withStyles(appStyles)(AppMotifWithFass
 
 
 function resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent) {
-  const matchKey = `AppMotif.view.${curView}`;
+  const matchKey = `AppMotif.auxViewContent.${curView}`;
   const [, curViewAuxiliaryContent] = viewAuxiliaryContent.find( ([key]) => key === matchKey ) || fallbackViewAuxiliaryContent;
   return curViewAuxiliaryContent;
 }
 
-const fallbackViewAuxiliaryContent = ['AppMotif.view.FALLBACK', {
+const fallbackViewAuxiliaryContent = ['AppMotif.auxViewContent.FALLBACK', {
   TitleComp: () => (
     <Typography variant="h6"
                 color="inherit"
                 noWrap>
-      Eatery Nod
+      App Motif
     </Typography>
   ),
 }];

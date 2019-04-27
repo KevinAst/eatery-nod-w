@@ -32,7 +32,7 @@ export default createFeature({
       [`AppMotif.LeftNavItem.${_eateries}`]: EateryLeftNavItem, // inject our entry into the leftNav
 
       // auxiliary view content for the eateries view
-      [`AppMotif.view.${_eateries}`]: {
+      [`AppMotif.auxViewContent.${_eateries}`]: {
         TitleComp:  EateriesTitle,
         FooterComp: EateriesFooter,
       },
