@@ -19,20 +19,20 @@ external features using the fassets.use 'leftNavItem.*' contract.
 
 ![Screen Flow](docs/ScreenFlow.png)
 
-# INCORPORATE currentView docs HERE (eliminate any 'currentView' feature name ????????????????????????????????
+# INCORPORATE curView docs HERE (eliminate any 'curView' feature name ????????????????????????????????
 
-# currentView feature
+# curView feature
 
-The **currentView** feature maintains the currentView state (as a string).
+The **curView** feature maintains the curView state (as a string).
 
 This is a **very simple process**.  It merely provides a
 cross-communication mechanism to:
 
- 1. set the currentView ... `fassets.actions.changeView(viewName)`
- 2. get the currentView ... `fassets.sel.getView(appState)`
+ 1. set the curView ... `fassets.actions.changeView(viewName)`
+ 2. get the curView ... `fassets.sel.curView(appState)`
 
 It is up to the various view-specific features to set/interpret.  A
-**best practice** would be to maintain the currentView value
+**best practice** would be to maintain the curView value
 (`viewName`) using the active feature name.
 
 ## State Transition

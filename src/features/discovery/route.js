@@ -29,7 +29,7 @@ export default [
     content({fassets, appState}) {
 
       // allow other down-stream features to route, when the active view is NOT ours
-      if (fassets.sel.getView(appState) !== featureName) {
+      if (fassets.sel.curView(appState) !== featureName) {
         return null;
       }
 

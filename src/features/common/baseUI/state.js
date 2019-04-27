@@ -7,7 +7,7 @@ import {fetchUITheme}     from './uiThemeStorage';
 
 
 // ***
-// *** Our feature reducer, managing the currentView state.
+// *** Our feature reducer, managing our state.
 // ***
 
 const reducer = slicedReducer(_baseUI, combineReducers({
@@ -18,7 +18,7 @@ const reducer = slicedReducer(_baseUI, combineReducers({
   }, fetchUITheme() ), // initialState (default to a persistent state)
 
   // loc: {lat, lng} ... device GPS location
-  currentView: reducerHash({
+  curView: reducerHash({
     [_baseUIAct.changeView]: (state, action) => action.viewName,
   }, 'uninitialized'), // initialState
 
@@ -39,4 +39,4 @@ const gfs = getFeatureState;      // ... concise alias (used internally)
 export const getUITheme         = (appState) => gfs(appState).uiTheme || 'light'; // default to 'light' (on first occurrence -or- deviceStorage() NOT supported)
 
                                   /** current view (ex: 'eateries') */
-export const getView            = (appState) => gfs(appState).currentView;
+export const curView            = (appState) => gfs(appState).curView;

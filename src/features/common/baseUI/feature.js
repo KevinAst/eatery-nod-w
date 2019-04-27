@@ -13,7 +13,7 @@ import ToggleUITheme        from './comp/ToggleUITheme';
 
 // feature: layout
 //          ?? retrofit description -and- update README.md
-//          ?? also maintain the currentView state as a string (full details in README)
+//          ?? also maintain the curView state as a string (full details in README)
 //          ?? OLD TRASH:
 //          ? promote the app-specific Drawer/SideBar on the app's left
 //          ? side.  This feature is app-neutral, as it pulls in it's
@@ -27,7 +27,7 @@ export default createFeature({
 
     define: {
       'actions.changeView': _baseUIAct.changeView, // changeView(viewName)
-      'sel.getView':        _baseUISel.getView,    // getView(appState): string
+      'sel.curView':        _baseUISel.curView,    // curView(appState): string
     },
 
     defineUse: {
@@ -46,7 +46,7 @@ export default createFeature({
       ['AppMotif.LeftNavItem.*', {required: true, type: fassetValidations.comp}],
 
       // 'AppMotif.view.*': ........... auxiliary view content that varies per view
-      //                                (the wildcard ('*') is indexed by `currentView`)
+      //                                (the wildcard ('*') is indexed by `curView`)
       //   ViewAuxiliaryContent: {      EXPECTING: ViewAuxiliaryContent object
       //     TitleComp: () => ......... a component defining the header title
       //                                DEFAULT: rendering of 'Eatery Nod'

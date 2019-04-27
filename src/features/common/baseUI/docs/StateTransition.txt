@@ -11,7 +11,7 @@ Actions (see: actions.js)                        Logic (see: logic.js)          
 ==============================================   ============================================================   ===============================
 layout
 
- .changeView(viewName) .......................................................................................  - set currentView FROM action payload
+ .changeView(viewName) .......................................................................................  - set curView FROM action payload
 
 
   > toggle the UI Theme ('light'/'dark') ?? NEWLY MIGRATED from device feature

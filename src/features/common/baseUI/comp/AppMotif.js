@@ -156,7 +156,7 @@ const AppMotifWithState = withState({
   mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
     return {
       curUser: fassets.sel.curUser(appState),
-      curView: fassets.sel.getView(appState),
+      curView: fassets.sel.curView(appState),
     };
   },
 });
