@@ -18,7 +18,7 @@ import Typography     from '@material-ui/core/Typography';
 /**
  * ?? rework description
  * 
- * AppLayout is a re-usable top-level layout component that
+ * AppMotif is a re-usable top-level layout component that
  * establishes the application characteristics like Tool Bar, Left
  * Nav, etc.
  * 
@@ -27,9 +27,9 @@ import Typography     from '@material-ui/core/Typography';
  *
  * USAGE:
  * ```
- *   <AppLayout>
+ *   <AppMotif>
  *     ... page content here
- *   </AppLayout>
+ *   </AppMotif>
  * ```
  */
 
@@ -80,7 +80,7 @@ const appStyles = (theme) => ({
 
 });
 
-function AppLayout({curView, viewAuxiliaryContent, classes, children}) {
+function AppMotif({curView, viewAuxiliaryContent, classes, children}) {
 
   // define our auxiliary view content
   const curViewAuxiliaryContent = resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent);
@@ -136,13 +136,13 @@ function AppLayout({curView, viewAuxiliaryContent, classes, children}) {
   );
 }
 
-AppLayout.propTypes = {
+AppMotif.propTypes = {
   children: PropTypes.node.isRequired, // main page content (like eateries and discovery)
 };
 
 
-const AppLayoutWithState = withState({
-  component: AppLayout,
+const AppMotifWithState = withState({
+  component: AppMotif,
   mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
     return {
       curView:  fassets.sel.getView(appState),
@@ -150,26 +150,26 @@ const AppLayoutWithState = withState({
   },
 });
 
-const AppLayoutWithFassets = withFassets({
-  component: AppLayoutWithState,
+const AppMotifWithFassets = withFassets({
+  component: AppMotifWithState,
   mapFassetsToProps: {
     fassets:              '.', // introduce fassets into props via the '.' keyword
-    viewAuxiliaryContent: 'AppLayout.view.*@withKeys',
+    viewAuxiliaryContent: 'AppMotif.view.*@withKeys',
   }
 });
 
-export default /* AppLayoutWithStyles = */ withStyles(appStyles)(AppLayoutWithFassets);
+export default /* AppMotifWithStyles = */ withStyles(appStyles)(AppMotifWithFassets);
 
 
 
 
 function resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent) {
-  const matchKey = `AppLayout.view.${curView}`;
+  const matchKey = `AppMotif.view.${curView}`;
   const [, curViewAuxiliaryContent] = viewAuxiliaryContent.find( ([key]) => key === matchKey ) || fallbackViewAuxiliaryContent;
   return curViewAuxiliaryContent;
 }
 
-const fallbackViewAuxiliaryContent = ['AppLayout.view.FALLBACK', {
+const fallbackViewAuxiliaryContent = ['AppMotif.view.FALLBACK', {
   TitleComp: () => (
     <Typography variant="h6"
                 color="inherit"

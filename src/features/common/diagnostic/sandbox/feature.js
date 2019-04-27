@@ -11,7 +11,7 @@ export default createFeature({
 
   fassets: {
     defineUse: {
-      'AppLayout.LeftNavItem.sandbox': SandboxLeftNavItem, // inject our entries into the LeftNav
+      'AppMotif.LeftNavItem.sandbox': SandboxLeftNavItem, // inject our entries into the LeftNav
     },
   },
 });

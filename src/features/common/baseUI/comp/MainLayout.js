@@ -6,7 +6,7 @@ import withStyles         from '@material-ui/core/styles/withStyles';
 import {MuiThemeProvider,      // NOTE: MuiThemeProvider **SHOULD** be at the root of ALL visible components
         createMuiTheme}   from '@material-ui/core/styles';
 import CssBaseline        from '@material-ui/core/CssBaseline';
-import AppLayout          from './AppLayout';
+import AppMotif           from './AppMotif';
 import Notify             from 'util/notify';
 import {getUITheme}       from '../state';
 
@@ -17,8 +17,9 @@ import {getUITheme}       from '../state';
  * MainLayout is a re-usable top-level component that promotes the
  * proper Material-UI (MUI) theming/styling WITH a reactive layout.
  *
- * Typically, this is used implicitly through AppLayout, however some
- * components that are NOT part of AppLayout (like SignIn) will use
+ * ?? rethink this comment:
+ * Typically, this is used implicitly through AppMotif, however some
+ * components that are NOT part of AppMotif (like SignIn) will use
  * MainLayout explicitly.
  * 
  * USAGE:
@@ -64,7 +65,7 @@ const mainStyles = (theme) => ({
   main: {
     width:        'auto',
     display:      'block', // Fix IE 11 issue.
-    //marginLeft:   theme.spacing.unit * 3, // KJB: bad news for my AppLayout content container
+    //marginLeft:   theme.spacing.unit * 3, // KJB: ?? bad news for the overall layout
     //marginRight:  theme.spacing.unit * 3,
 
     // reactive design ?? KJB: better understand // KJB: ?? THIS IS CAUSING HAVOC on my main content container overall width
@@ -79,11 +80,11 @@ const mainStyles = (theme) => ({
 function MainLayout({uiTheme, curUser, classes, children}) {
   const themeInUse = uiTheme==='dark' ? darkTheme : lightTheme;
   
-  // conditionally inject AppLayout when user is signed-in
+  // conditionally inject AppMotif when user is signed-in
   const theRestOfTheStory = curUser.isUserSignedIn() ? (
-    <AppLayout>
+    <AppMotif>
       {children}
-    </AppLayout>
+    </AppMotif>
   ) : (
     <>
       {children}
@@ -123,4 +124,4 @@ const MainLayoutWithFassets = withFassets({
   }
 });
 
-export default /* AppLayoutWithStyles = */ withStyles(mainStyles)(MainLayoutWithFassets);
+export default /* MainLayoutWithStyles = */ withStyles(mainStyles)(MainLayoutWithFassets);

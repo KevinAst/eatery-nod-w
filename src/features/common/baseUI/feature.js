@@ -32,28 +32,28 @@ export default createFeature({
 
     defineUse: {
       // inject our user-profile menu item to toggle UI Theme ('light'/'dark')
-      'AppLayout.UserMenuItem.UIThemeToggle': ToggleUITheme,
+      'AppMotif.UserMenuItem.UIThemeToggle': ToggleUITheme,
     },
 
     use: [
 
-      // 'AppLayout.UserMenuItem.*': ... component entries of the user-profile menu
-      //                                 EXPECTING: <UserMenuItem/>
-      ['AppLayout.UserMenuItem.*', {required: true, type: fassetValidations.comp}],
+      // 'AppMotif.UserMenuItem.*': ... component entries of the user-profile menu
+      //                                EXPECTING: <UserMenuItem/>
+      ['AppMotif.UserMenuItem.*', {required: true, type: fassetValidations.comp}],
 
-      // 'AppLayout.LeftNavItem.*': .... component entries of the left-nav bar
-      //                                 EXPECTING: <ListItem/>
-      ['AppLayout.LeftNavItem.*', {required: true, type: fassetValidations.comp}],
+      // 'AppMotif.LeftNavItem.*': .... component entries of the left-nav bar
+      //                                EXPECTING: <ListItem/>
+      ['AppMotif.LeftNavItem.*', {required: true, type: fassetValidations.comp}],
 
-      // 'AppLayout.view.*': ........... auxiliary view content that varies per view
-      //                                 (the wildcard ('*') is indexed by `currentView`)
-      //   ViewAuxiliaryContent: {       EXPECTING: ViewAuxiliaryContent object
-      //     TitleComp: () => .......... a component defining the header title
-      //                                 DEFAULT: rendering of 'Eatery Nod'
-      //     FooterComp: () => ......... a component defining the entire footer content
-      //                                 DEFAULT: no footer
+      // 'AppMotif.view.*': ........... auxiliary view content that varies per view
+      //                                (the wildcard ('*') is indexed by `currentView`)
+      //   ViewAuxiliaryContent: {      EXPECTING: ViewAuxiliaryContent object
+      //     TitleComp: () => ......... a component defining the header title
+      //                                DEFAULT: rendering of 'Eatery Nod'
+      //     FooterComp: () => ........ a component defining the entire footer content
+      //                                DEFAULT: no footer
       //   }
-      ['AppLayout.view.*', {required: false, type: fassetValidations.any}],
+      ['AppMotif.view.*', {required: false, type: fassetValidations.any}],
     ],
   },
 

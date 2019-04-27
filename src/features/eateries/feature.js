@@ -29,10 +29,10 @@ export default createFeature({
     },
 
     defineUse: {
-      [`AppLayout.LeftNavItem.${_eateries}`]: EateryLeftNavItem, // inject our entry into the leftNav
+      [`AppMotif.LeftNavItem.${_eateries}`]: EateryLeftNavItem, // inject our entry into the leftNav
 
       // auxiliary view content for the eateries view
-      [`AppLayout.view.${_eateries}`]: {
+      [`AppMotif.view.${_eateries}`]: {
         TitleComp:  EateriesTitle,
         FooterComp: EateriesFooter,
       },

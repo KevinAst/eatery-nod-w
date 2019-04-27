@@ -65,7 +65,7 @@ const LeftNavWithFassets = withFassets({
   component: LeftNav,
   mapFassetsToProps: {
     // <ListItem>s to inject in our left-nav (the manifestation of our use contract)
-    leftNavItems: 'AppLayout.LeftNavItem.*@withKeys',
+    leftNavItems: 'AppMotif.LeftNavItem.*@withKeys',
   }
 });
 

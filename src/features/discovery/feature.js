@@ -19,10 +19,10 @@ export default createFeature({
   // our public face ...
   fassets: {
     defineUse: {
-      [`AppLayout.LeftNavItem.${_discovery}`]: DiscoveryLeftNavItem, // inject our entry into the leftNav
+      [`AppMotif.LeftNavItem.${_discovery}`]: DiscoveryLeftNavItem, // inject our entry into the leftNav
 
       // auxiliary view content for the discoveries view
-      [`AppLayout.view.${_discovery}`]: {
+      [`AppMotif.view.${_discovery}`]: {
         TitleComp:  DiscoveriesTitle,
         FooterComp: DiscoveriesFooter,
       },

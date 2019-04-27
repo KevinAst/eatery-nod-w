@@ -43,7 +43,7 @@ function UserMenu({userMenuItems}) {
 export default /* UserMenuWithFassets = */ withFassets({
   component: UserMenu,
   mapFassetsToProps: {
-    userMenuItems: 'AppLayout.UserMenuItem.*@withKeys',
+    userMenuItems: 'AppMotif.UserMenuItem.*@withKeys',
   }
 });
 
