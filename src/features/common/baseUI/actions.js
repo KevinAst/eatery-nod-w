@@ -10,7 +10,7 @@ export default generateActions.root({
     },
 
     changeView: {  // actions.changeView(viewName): Action
-                   // > change the curView to the supplied viewName.
+                   // > change the curView to the supplied viewName
                    actionMeta: {
                      traits: ['viewName'],
                    },

@@ -9,13 +9,13 @@ accommodate the wide free-format content).
 
 Actions (see: actions.js)                        Logic (see: logic.js)                                          Reducer (see: state.js)
 ==============================================   ============================================================   ===============================
-layout
+baseUI
 
- .changeView(viewName) .......................................................................................  - set curView FROM action payload
-
-
-  > toggle the UI Theme ('light'/'dark') ?? NEWLY MIGRATED from device feature
- .toggleUITheme() ......................................................................................../...  - device.uiTheme = 'light'/'dark'
+  > toggle the UI Theme ('light'/'dark')
+ .toggleUITheme() ............................................................................................  - baseUI.uiTheme = 'light'/'dark' (toggled)
                                                  persistUITheme:
                                                  ==============
                                                    storeUITheme(...fromCurState)
+
+  > change the curView to the supplied viewName
+ .changeView(viewName) .......................................................................................  - baseUI.curView = action.viewName (FROM action payload)

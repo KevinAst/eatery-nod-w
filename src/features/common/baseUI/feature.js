@@ -11,14 +11,18 @@ import logic                from './logic';
 import MainLayout           from './comp/MainLayout';
 import ToggleUITheme        from './comp/ToggleUITheme';
 
-// feature: layout
-//          ?? retrofit description -and- update README.md
-//          ?? also maintain the curView state as a string (full details in README)
-//          ?? OLD TRASH:
-//          ? promote the app-specific Drawer/SideBar on the app's left
-//          ? side.  This feature is app-neutral, as it pulls in it's
-//          ? menu items from external features using the
-//          ? 'leftNavItem.*' use contract (full details in README)
+// feature: baseUI <<< full details in README
+//          Provides a UI foundation for an entire application.
+//          It manages the following characteristics:
+//          - a Responsive Design that auto adjusts for desktops, cell phones, and
+//            portable devices.
+//          - a UI Theme allowing the user to choose from light/dark renditions
+//          - when an active user is signed-in, the following items are also
+//            manifest:
+//            - a "Left Nav" menu
+//            - a "User Menu" menu
+//            - a "Current View" state (orchestrating which application view is active)
+//            - a "Tool Bar" with various artifacts (ex: title bar and footer)
 export default createFeature({
   name: _baseUI,
 
@@ -31,28 +35,14 @@ export default createFeature({
     },
 
     defineUse: {
-      // inject our user-profile menu item to toggle UI Theme ('light'/'dark')
+      // inject the user menu item to toggle UI Theme ('light'/'dark')
       'AppMotif.UserMenuItem.UIThemeToggle': ToggleUITheme,
     },
 
     use: [
-
-      // 'AppMotif.UserMenuItem.*': ..... component entries of the user-profile menu
-      //                                  EXPECTING: <UserMenuItem/>
-      ['AppMotif.UserMenuItem.*', {required: true, type: fassetValidations.comp}],
-
-      // 'AppMotif.LeftNavItem.*': ...... component entries of the left-nav bar
-      //                                  EXPECTING: <ListItem/>
-      ['AppMotif.LeftNavItem.*', {required: true, type: fassetValidations.comp}],
-
-      // 'AppMotif.auxViewContent.*': ... auxiliary view content that varies per view
-      //                                  (the wildcard ('*') is indexed by `curView`)
-      //   ViewAuxiliaryContent: {        EXPECTING: ViewAuxiliaryContent object
-      //     TitleComp: () => ........... a component defining the header title
-      //                                  DEFAULT: rendering of 'App Motif'
-      //     FooterComp: () => .......... a component defining the entire footer content
-      //                                  DEFAULT: no footer
-      //   }
+      // full details in README
+      ['AppMotif.UserMenuItem.*',   {required: true,  type: fassetValidations.comp}],
+      ['AppMotif.LeftNavItem.*',    {required: true,  type: fassetValidations.comp}],
       ['AppMotif.auxViewContent.*', {required: false, type: fassetValidations.any}],
     ],
   },
@@ -60,7 +50,7 @@ export default createFeature({
   reducer,
   logic,
 
-  // inject our various layout components into the root of our app
+  // inject our baseUI components into the root of our app
   appWillStart({fassets, curRootAppElm}) {
     return (
       <MainLayout>
