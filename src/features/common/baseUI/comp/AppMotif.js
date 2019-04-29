@@ -51,7 +51,6 @@ const appStyles = (theme) => ({
   bottomBar: {
     top:        'auto',
     bottom:     0,
-    alignItems: 'center',
   },
 
   toolbar: {
