@@ -87,10 +87,10 @@ uses the Material UI CSS constructs (via the `<CssBaseline/>`
 component) to accomplish this.
 
 Here is a dialog rendered on a desktop browser:
-<p align="center"><img src="docs/MainLayoutDesktop.png" alt="MainLayout Desktop" width="70%"></p>
+<p align="center"><img src="docs/MainLayoutDesktop.png" alt="MainLayout Desktop" width="70%" style="border:3px solid black"></p>
 
 Here is the same dialog shown on a cell phone.  _**Notice it dynamically overtakes the entire screen**_:
-<p align="center"><img src="docs/MainLayoutPhone.png" alt="MainLayout Phone" width="35%"></p>
+<p align="center"><img src="docs/MainLayoutPhone.png" alt="MainLayout Phone" width="35%" style="border:3px solid black"></p>
 
 </ul>
 
@@ -107,10 +107,10 @@ renditions, and is automatically integrated in the app.
 - and is persisted to local storage (bootstrapped during app start-up)
 
 Here is an app screen shown in a "light" theme.  _**The User Menu is shown with the UI Theme control**_:
-<p align="center"><img src="docs/UIThemePhoneLight.png" alt="UI Theme Light" width="35%"></p>
+<p align="center"><img src="docs/UIThemePhoneLight.png" alt="UI Theme Light" width="35%" style="border:3px solid black"></p>
 
 Here is the same screen shown in a "dark" theme.
-<p align="center"><img src="docs/UIThemePhoneDark.png" alt="UI Theme Dark" width="35%"></p>
+<p align="center"><img src="docs/UIThemePhoneDark.png" alt="UI Theme Dark" width="35%" style="border:3px solid black"></p>
 
 </ul>
 
@@ -159,7 +159,7 @@ If this problem persists, please contact your tech support.`
 ```
 
 Here is a rendition of a sign-out confirmation _(from above)_:
-<p align="center"><img src="docs/Notify.png" alt="Notify" width="35%"></p>
+<p align="center"><img src="docs/Notify.png" alt="Notify" width="35%" style="border:3px solid black"></p>
 
 </ul>
 
@@ -174,7 +174,7 @@ activated, providing:
 - a **[Current View]** state _(orchestrating which app view is active)_
 - a **[Tool Bar]** with various artifacts (ex: title bar and footer)
 
-<p align="center"><img src="docs/AppMotifAnnotated.png" alt="App Motif Annotated" width="70%"></p>
+<p align="center"><img src="docs/AppMotifAnnotated.png" alt="App Motif Annotated" width="70%" style="border:3px solid black"></p>
 
 ### Left Nav
 
@@ -183,7 +183,7 @@ activated, providing:
 The **Left Nav** menu is an app-specific menu that slides out of the
 left side:
 
-<p align="center"><img src="docs/LeftNavMenuScreenFlow.png" alt="LeftNav Menu Screen Flow" width="70%"></p>
+<p align="center"><img src="docs/LeftNavMenuScreenFlow.png" alt="LeftNav Menu Screen Flow" width="70%" style="border:3px solid black"></p>
 
 While the Left Nav control is promoted through the **baseUI** feature,
 it's content is accumulated from external features through the
@@ -202,7 +202,7 @@ following **Use Contract**:
 The **User Menu** is an app-specific menu that is activated from the
 top-right of the **Title Bar**:
 
-<p align="center"><img src="docs/UserMenu.png" alt="User Menu" width="35%"></p>
+<p align="center"><img src="docs/UserMenu.png" alt="User Menu" width="35%" style="border:3px solid black"></p>
 
 While the User Menu control is promoted through the **baseUI**
 feature, it's content is accumulated from external features through
@@ -245,7 +245,7 @@ The **Tool Bar** aspect entails both the Title and Footer components.
 The content of the these items will vary based on the **[Current
 View]**.
 
-<p align="center"><img src="docs/ToolBarAnnotated.png" alt="Tool Bar Annotated" width="70%"></p>
+<p align="center"><img src="docs/ToolBarAnnotated.png" alt="Tool Bar Annotated" width="70%" style="border:3px solid black"></p>
 
 
 While the overall Tool Bar is promoted through the **baseUI**
