@@ -3,6 +3,9 @@
 - [Overview]
   - [Usage Contract Summary]
 - [Main Layout]
+  - [Responsive Design]
+  - [UI Theme]
+  - [Notify]
 - [App Motif]
   - [Left Nav]
   - [User Menu]
@@ -16,11 +19,15 @@
 The **baseUI** feature provides a UI foundation for an entire
 application.  It manages the following characteristics:
 
-- a **Responsive Design** that auto adjusts for desktops, cell phones, and
-  portable devices.
-- a **UI Theme** allowing the user to choose from light/dark renditions
+- The following items are provided (through the [Main Layout] component
+  structure):
+  - a **[Responsive Design]** that auto adjusts for desktops, cell phones, and
+    portable devices
+  - a **[UI Theme]** allowing the user to choose from light/dark renditions
+  - the **[Notify]** utility is activated, supporting programmatic
+    **toasts, alerts, and confirmations**
 - _when an active user is **signed-in**, the following items are also
-  manifest:_
+  manifest (through the [App Motif] component):_
   - a **[Left Nav]** menu
   - a **[User Menu]** menu
   - a **[Current View]** state _(orchestrating which application view is active)_
@@ -56,7 +63,7 @@ introduces the following **root** html, providing a layout foundation:
 ```html
 <MainLayout>         ... which in turn includes:
   <MuiThemeProvider> ... provides UI Theme capability
-    <CssBaseline/>   ... injects Material UI CSS constructs
+    <CssBaseline/>   ... injects Material UI CSS constructs supporting Responsive Design
     <Notify/>        ... bootstraps notify utility (toasts/alerts/confirm)
     <main>
       <AppMotif>     ... conditionally active when user is signed in
@@ -67,25 +74,87 @@ introduces the following **root** html, providing a layout foundation:
 </MainLayout>
 ```
 
-These constructs directly support:
+These constructs the support the following items:
 
-- a **Responsive Design** that adjusts for desktops, cell phones, and
-  portable devices.
-- a **UI Theme**, allowing the user to choose from light/dark
-  renditions _(automatically integrated in the app)_:
-  - maintained in state _(bootstrapped from local storage)_
-  - persisted to local storage
-  - user-selectable (via a control injected in the [User Menu])
-- the activation of the `notify()` utility, supporting programmatic
-  **toasts, alerts, and confirmations**.
+### Responsive Design
 
-?? image: cell phone screen (sign-in screen) ... light color, with a toast
-?? image: desktop screen (sign-in screen as dialog) ... dark color with same toast
+<ul> <!--- indentation hack --->
 
-?? image: docs/MainLayout.png NOT SIGNED IN
-          - YES/NO? showing sign-in screen)
-          - UITheme: one light / one dark
-          - a toast or confirmation
+**Responsive Design** is an approach to web development that allows
+web pages to render well on a variety of devices and window or screen
+sizes (desktops, cell phones, tablets, etc.).  The **baseUI** feature
+uses the Material UI CSS constructs (via the `<CssBaseline/>`
+component) to accomplish this.
+
+?? image: docs/MainLayoutCell.png ... phone screen (sign-in screen as full screen
+?? image: docs/MainLayoutDesktop.png ... browser screen (sign-in screen as dialog
+
+</ul>
+
+
+### UI Theme
+
+<ul> <!--- indentation hack --->
+
+The **UI Theme** allows the user to choose from light or dark
+renditions, and is automatically integrated in the app.
+
+- `uiTheme` is maintained in state
+- is user-selectable (via a control injected in the [User Menu])
+- and is persisted to local storage (bootstrapped during app start-up)
+
+?? image: UIThemeLight.png ?? cell phone eateries screen light WITH user menu CIRCLING UI Theme control
+?? image: UIThemeDark.png  ?? cell phone eateries screen dark  WITH user menu CIRCLING UI Theme control
+
+</ul>
+
+
+### Notify
+
+<ul> <!--- indentation hack --->
+
+The **Notify** utility is activated by injecting the `<Notify/>`
+component.
+
+This allows the programmatic notification of user information in the
+form of **toasts**, **alerts**, and **confirmations**.
+
+Example _(see **notify utility** for complete details)_:
+
+```js
+
+...
+toast({ msg:'Welcome to eatery-nod });
+
+...
+confirm.warn({ 
+  msg: 'Are you sure you wish to sign out?', 
+  actions: [
+    { txt: 'Sign Out', action: () => dispatch( _authAct.signOut() ) },
+    { txt: 'Go Back' }
+  ]
+});
+
+...
+toast.error({
+  msg: err.formatUserMsg(),
+  actions: [
+    { txt:    'details',
+      action: () => {
+        alert.error({ msg: `An unexpected error occurred:
+
+${err}
+
+If this problem persists, please contact your tech support.`
+         });
+       }},
+   ]
+ });
+```
+
+?? image: docs/Notify.png notify toasts and/or confirmations ?? FROM SNIPPETS ABOVE?
+
+</ul>
 
 
 ## App Motif
@@ -155,9 +224,10 @@ cross-communication mechanism to:
 - get the curView ... `fassets.sel.curView(appState)`
 - set the curView ... `fassets.actions.changeView(viewName)`
 
-This state is left to the various view-specific features to
-set/interpret.  A **best practice** would be to maintain the curView
-value (`viewName`) using the active feature name.
+The interpretation of the `curView` state is left to the various
+view-specific features.  A **best practice** would be to maintain the
+`curView` value using the active feature name _(for view-based
+features)_, and interpreted by their routes (for display).
 
 </ul>
 
@@ -209,6 +279,9 @@ Transition](docs/StateTransition.txt) diagram.
 [Overview]:               #Overview
 [Usage Contract Summary]: #usage-contract-summary
 [Main Layout]:            #main-layout
+[Responsive Design]:      #responsive-design
+[UI Theme]:               #ui-theme
+[Notify]:                 #notify
 [App Motif]:              #app-motif
 [Left Nav]:               #left-nav
 [User Menu]:              #user-menu
