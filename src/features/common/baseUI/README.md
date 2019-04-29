@@ -158,7 +158,7 @@ If this problem persists, please contact your tech support.`
  });
 ```
 
-Here is a rendition of a sign-out confimation _(from above)_:
+Here is a rendition of a sign-out confirmation _(from above)_:
 <p align="center"><img class="diagram" src="docs/Notify.png" alt="Notify" width="35%"></p>
 
 </ul>
