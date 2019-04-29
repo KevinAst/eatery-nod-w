@@ -86,8 +86,11 @@ sizes (desktops, cell phones, tablets, etc.).  The **baseUI** feature
 uses the Material UI CSS constructs (via the `<CssBaseline/>`
 component) to accomplish this.
 
-?? image: docs/MainLayoutCell.png ... phone screen (sign-in screen as full screen
-?? image: docs/MainLayoutDesktop.png ... browser screen (sign-in screen as dialog
+Here is a dialog rendered on a desktop browser:
+<p align="center"><img class="diagram" src="docs/MainLayoutDesktop.png" alt="MainLayout Desktop" width="70%"></p>
+
+Here is the same dialog shown on a cell phone.  _**Notice it dynamically overtakes the entire screen**_:
+<p align="center"><img class="diagram" src="docs/MainLayoutPhone.png" alt="MainLayout Phone" width="35%"></p>
 
 </ul>
 
@@ -99,12 +102,15 @@ component) to accomplish this.
 The **UI Theme** allows the user to choose from light or dark
 renditions, and is automatically integrated in the app.
 
-- `uiTheme` is maintained in state
-- is user-selectable (via a control injected in the [User Menu])
+- `uiTheme` is maintained in state _(please refer to the the [State Transition](docs/StateTransition.txt) diagram)_.
+- is user-selectable (via a control automatically injected in the [User Menu])
 - and is persisted to local storage (bootstrapped during app start-up)
 
-?? image: UIThemeLight.png ?? cell phone eateries screen light WITH user menu CIRCLING UI Theme control
-?? image: UIThemeDark.png  ?? cell phone eateries screen dark  WITH user menu CIRCLING UI Theme control
+Here is an app screen shown in a "light" theme.  _**The User Menu is shown with the UI Theme control**_:
+<p align="center"><img class="diagram" src="docs/UIThemePhoneLight.png" alt="UI Theme Light" width="35%"></p>
+
+Here is the same screen shown in a "dark" theme.
+<p align="center"><img class="diagram" src="docs/UIThemePhoneDark.png" alt="UI Theme Dark" width="35%"></p>
 
 </ul>
 
@@ -123,10 +129,10 @@ Example _(see **notify utility** for complete details)_:
 
 ```js
 
-...
+// ... welcome toast
 toast({ msg:'Welcome to eatery-nod });
 
-...
+// ... sign-out confirmation
 confirm.warn({ 
   msg: 'Are you sure you wish to sign out?', 
   actions: [
@@ -135,7 +141,7 @@ confirm.warn({
   ]
 });
 
-...
+// ... unexpected error
 toast.error({
   msg: err.formatUserMsg(),
   actions: [
@@ -152,7 +158,8 @@ If this problem persists, please contact your tech support.`
  });
 ```
 
-?? image: docs/Notify.png notify toasts and/or confirmations ?? FROM SNIPPETS ABOVE?
+Here is a rendition of a sign-out confimation _(from above)_:
+<p align="center"><img class="diagram" src="docs/Notify.png" alt="Notify" width="35%"></p>
 
 </ul>
 
@@ -167,9 +174,7 @@ activated, providing:
 - a **[Current View]** state _(orchestrating which app view is active)_
 - a **[Tool Bar]** with various artifacts (ex: title bar and footer)
 
-
-?? image: docs/AppMotif.png annotate/show the inactivated controls and without the middle view
-
+<p align="center"><img class="diagram" src="docs/AppMotifAnnotated.png" alt="App Motif Annotated" width="70%"></p>
 
 ### Left Nav
 
@@ -178,10 +183,7 @@ activated, providing:
 The **Left Nav** menu is an app-specific menu that slides out of the
 left side:
 
-
-?? image: docs/LeftNavMenu.png showing activated left nav ANNOTATED
-![Left Nav Menu](docs/ScreenFlow.png)
-?? TRASH OLD ScreenFlow.png
+<p align="center"><img class="diagram" src="docs/LeftNavMenuScreenFlow.png" alt="LeftNav Menu Screen Flow" width="70%"></p>
 
 While the Left Nav control is promoted through the **baseUI** feature,
 it's content is accumulated from external features through the
@@ -200,7 +202,7 @@ following **Use Contract**:
 The **User Menu** is an app-specific menu that is activated from the
 top-right of the **Title Bar**:
 
-?? image: docs/UserMenu.png showing an activated User Menu
+<p align="center"><img class="diagram" src="docs/UserMenu.png" alt="User Menu" width="35%"></p>
 
 While the User Menu control is promoted through the **baseUI**
 feature, it's content is accumulated from external features through
@@ -218,7 +220,10 @@ the following **Use Contract**:
 <ul> <!--- indentation hack --->
 
 The **curView** is maintained within the application state as a simple
-string.  This is a **very simple process**.  It merely provides a
+string _(please refer to the the [State
+Transition](docs/StateTransition.txt) diagram)_.
+
+This is a **very simple process**.  It merely provides a
 cross-communication mechanism to:
 
 - get the curView ... `fassets.sel.curView(appState)`
@@ -240,7 +245,7 @@ The **Tool Bar** aspect entails both the Title and Footer components.
 The content of the these items will vary based on the **[Current
 View]**.
 
-?? image: docs/ToolBar.png (highlighting content of the title/footer)
+<p align="center"><img class="diagram" src="docs/ToolBarAnnotated.png" alt="Tool Bar Annotated" width="70%"></p>
 
 
 While the overall Tool Bar is promoted through the **baseUI**
@@ -288,3 +293,17 @@ Transition](docs/StateTransition.txt) diagram.
 [Current View]:           #current-view
 [Tool Bar]:               #tool-bar
 [State Transition]:       #state-transition
+
+
+<style>
+.diagram {
+  border-radius:  8px;          /* rounded border */
+
+                                /* with a drop shadow effect */
+  -webkit-filter: drop-shadow(8px 8px 10px gray); /* Safari 6.0 - 9.0 */
+  filter:         drop-shadow(8px 8px 10px gray);
+
+                                /* blur around frame */
+  box-shadow: 0 0 8px 8px white inset;
+}
+</style>
