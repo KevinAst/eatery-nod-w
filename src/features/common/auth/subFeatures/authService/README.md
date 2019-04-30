@@ -23,7 +23,7 @@ fassets.authService.signIn(email, pass)
 ## Mocking
 
 This service can be "mocked" through app-specific
-[featureFlag](../../../util/featureFlags.js) settings.
+[featureFlag](../../../../../featureFlags.js) settings.
 
 This "base" feature merely specifies the `authService` **use
 contract**, supporting **feature-u** validation: _a required resource

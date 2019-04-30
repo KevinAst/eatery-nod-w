@@ -1,15 +1,13 @@
 # location feature
 
-Initialize the GPS location for use by the app.
-
-?? review
+Initializes and promotes the GPS location for use by the app.
 
 It accomplishes the following:
 
- - Initializes the following critical-path resources through the
-   `'bootstrap.*'` use contract:
+ - Initializes the location through the `'bootstrap.location'` use
+   contract.
 
-   - `'bootstrap.location'` ... initializes the GPS location
+ - Promotes the location through `fassets.sel.getLocation(appState)`.
 
 
 ## State Transition

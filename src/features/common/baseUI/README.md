@@ -1,18 +1,5 @@
 # baseUI
 
-- [Overview]
-  - [Usage Contract Summary]
-- [Main Layout]
-  - [Responsive Design]
-  - [UI Theme]
-  - [Notify]
-- [App Motif]
-  - [Left Nav]
-  - [User Menu]
-  - [Current View]
-  - [Tool Bar]
-- [State Transition]
-
 
 ## Overview
 
@@ -33,15 +20,31 @@ application.  It manages the following characteristics:
   - a **[Current View]** state _(orchestrating which application view is active)_
   - a **[Tool Bar]** with various artifacts (ex: title bar and footer)
 
-### Usage Contract Summary
 
-<ul> <!--- indentation hack --->
+## At a Glance
+
+- [Overview]
+- [Usage Contract Summary]
+- [Main Layout]
+  - [Responsive Design]
+  - [UI Theme]
+  - [Notify]
+- [App Motif]
+  - [Left Nav]
+  - [User Menu]
+  - [Current View]
+  - [Tool Bar]
+- [State Transition]
+
+
+## Usage Contract Summary
 
 The characteristics manifest by **baseUI** are accomplished in an
 **app neutral** way.  While the controls are orchestrated by this
 feature, the details are injected autonomously by **external
 app-specific features**, through **Usage Contracts**.  The following
-contracts are employed _(more detail can be found below)_:
+contracts are employed _(more detail can be found in the sections that
+follow)_:
 
 
 Resource Key                      | Resource               | Description
@@ -50,9 +53,6 @@ Resource Key                      | Resource               | Description
 **`'AppMotif.UserMenuItem.*'`**   | `<UserMenuItem>`       | Component entries that make up the **[User Menu] menu**.
 **`'AppMotif.auxViewContent.*'`** | `ViewAuxiliaryContent` | Entries that inject auxiliary view content that vary by view manifest in the **[Tool Bar]**. For this resource, the wildcard (`*`) is interpreted as the `curView`.
                                                              
-
-
-</ul>
 
 
 ## Main Layout
