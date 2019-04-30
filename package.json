@@ -1,15 +1,32 @@
 {
   "name": "eatery-nod-w",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "A Date Night Restaurant Selector",
+  "author": "Kevin J. Bridges <kevinast@gmail.com> (https://wiiBridges.com/)",
   "private": true,
-  "homepage": "https://eatery-nod-w.js.org",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KevinAst/eatery-nod-w.git"
+  },
+  "keywords": [
+    "react",
+    "web-app",
+    "web",
+    "eatery-nod",
+    "feature-u",
+    "geeku",
+    "astx"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/KevinAst/eatery-nod-w",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "lint": "eslint src",
+    "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
