@@ -7,7 +7,7 @@ describe('Yup sandbox tests', () => {
     const schema = Yup.object().shape({
       name:    Yup.string().required(),
       age:     Yup.number().required().positive().integer(),
-      email:   Yup.string().email()                              .label('Email Address'),
+      email:   Yup.string().email().label('Email Address'),
       website: Yup.string().url(),
     });
 
@@ -30,7 +30,7 @@ describe('Yup sandbox tests', () => {
       //      - for promises, you must return it in your test, and Jest will wait
       //      - if you are expecting an error (rejection), you will obviously have a .catch(),
       //        * but if you attempt to have a .then() with a simulated fail (via some bad expect), it filters into the .catch()
-      //      - the ONLY feasable way to do this is:
+      //      - the ONLY feasible way to do this is:
       //        * have a .catch() only ... DO NOT HAVE A .then()
       //        * prefix entire test with expect.assertions( {numberOfExpects} ) ... to insure all tests were reasoned about
     
@@ -39,7 +39,7 @@ describe('Yup sandbox tests', () => {
       return schema.validate({
         name:  'jimmy',
         age:   '-24',            // age must be a positive number
-        email: 'meATgmail.com',  // email must be a valid email (missing @)
+        email: 'meMail.com',     // email must be a valid email (missing @)
       },
       { // options
         abortEarly: false,       // return ALL errors

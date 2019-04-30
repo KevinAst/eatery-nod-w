@@ -10,7 +10,7 @@ describe('IFormMeta tests', () => {
   const formSchema = Yup.object().shape({
     name:    Yup.string().required(),
     age:     Yup.number().required().positive().integer(),
-    email:   Yup.string().email()                              .label('Email Address'),
+    email:   Yup.string().email().label('Email Address'),
     website: Yup.string().url(),
   });
 
