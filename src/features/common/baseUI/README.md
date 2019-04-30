@@ -281,7 +281,7 @@ Transition](docs/StateTransition.txt) diagram.
 
 <!--- *** REFERENCE LINKS *** ---> 
 
-[Overview]:               #Overview
+[Overview]:               #overview
 [Usage Contract Summary]: #usage-contract-summary
 [Main Layout]:            #main-layout
 [Responsive Design]:      #responsive-design
