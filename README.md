@@ -229,6 +229,11 @@ MISC
 eject ..... eject the Create React App project tooling
             NOTE: This is a one-way operation!
                   Once you eject, you can’t go back!
+            NOTE: This script has been removed,  so as to 
+                  AVOID accidental activation
+                  ... easy to do with VSCode tasks
+                  THE SCRIPT IS:
+                  "eject": "react-scripts eject"
 ```
 
 
