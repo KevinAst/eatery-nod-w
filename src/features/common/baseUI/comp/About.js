@@ -19,12 +19,20 @@ export default function About() {
 }
 
 function showAbout() {
-  alert.success({
-    msg: `${process.env.REACT_APP_NAME}\n\n${process.env.REACT_APP_DESCRIPTION}\n\nversion: ${process.env.REACT_APP_VERSION}`,
-    actions: [
-      { txt: 'Docs',    action: () => window.open(process.env.REACT_APP_ABOUTDOCS, '_blank') },
-      { txt: 'History', action: () => window.open(process.env.REACT_APP_ABOUTHIST, '_blank') },
-      { txt: 'Close' },
-    ]
-  });
+  const name    = process.env.REACT_APP_NAME        || 'UNKNOWN name ... set package.json: name';
+  const desc    = process.env.REACT_APP_DESCRIPTION || 'UNKNOWN desc ... set package.json: description';
+  const ver     = process.env.REACT_APP_VERSION     || 'UNKNOWN ver .... set package.json: version';
+  const docsUrl = process.env.REACT_APP_ABOUT_DOCS;
+  const histUrl = process.env.REACT_APP_ABOUT_HIST;
+
+  const msg = `${name} ... version: ${ver}\n\n${desc}`;
+
+  const actions = [];
+  if (docsUrl)
+    actions.push({ txt: 'Docs',    action: () => window.open(docsUrl, '_blank') });
+  if (histUrl)
+    actions.push({ txt: 'History', action: () => window.open(histUrl, '_blank') });
+  actions.push({ txt: 'Close' });
+
+  alert.success({msg, actions});
 }

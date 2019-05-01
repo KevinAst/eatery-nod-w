@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "A Date Night Restaurant Selector",
   "author": "Kevin J. Bridges <kevinast@gmail.com> (https://wiiBridges.com/)",
+  "about": {
+    "docs": "https://github.com/KevinAst/eatery-nod-w/blob/master/README.md",
+    "hist": "https://github.com/KevinAst/eatery-nod-w/blob/master/README.md#revision-history"
+  },
   "private": true,
+  "homepage": "https://eatery-nod-w.js.org",
   "repository": {
     "type": "git",
     "url": "https://github.com/KevinAst/eatery-nod-w.git"
@@ -18,9 +23,6 @@
     "astx"
   ],
   "license": "MIT",
-  "homepage": "https://eatery-nod-w.js.org",
-  "aboutdocs": "https://github.com/KevinAst/eatery-nod-w/blob/master/README.md",
-  "abouthist": "https://github.com/KevinAst/eatery-nod-w/blob/master/README.md#revision-history",
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test",
