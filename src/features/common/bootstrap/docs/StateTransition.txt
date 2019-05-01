@@ -1,0 +1,42 @@
+********************************************************************************
+* State Transition
+********************************************************************************
+
+This document highlights how actions, logic, and reducers interact
+together to maintain this feature's state (a text document is used to
+accommodate the wide free-format content).
+
+
+Actions (see: actions.js)                        Logic (see: logic.js)                                          Reducer (see: state.js)
+==============================================   ============================================================   ===============================
+
+> bootstrap the app initialization process
+bootstrap()  ................................................................................................   - NONE
+                                                 bootstrap
+                                                 =========
+                                                   Administer the "bootstrap" initialization process.
+                                                   SEE: logic.js for COMPLETE description
+
+                                                   - dispatch bootstrap.setStatus(statusMsg)
+                                                     ... e.g. 'Waiting for bla bla bla' -or- 'COMPLETE'
+
+                                                   - dispatch bootstrap.complete()
+                                                     ... when all bootstrapFns have completed
+
+                                                   - various client-supplied bootstraps:
+
+                                                     ... example (from 'location feature):
+                                                         * 'bootstrap.location'
+                                                           - dispatch setLocation(location)
+
+
+  > set bootstrap status (e.g. 'Waiting for bla bla bla' -or- 'COMPLETE'
+ .setStatus(statusMsg) .......................................................................................   - bootstrap.status = action.statusMsg
+
+
+  > the fundamental action that communicates
+    all bootstraps have completed and the 
+    app is fully initialized and ready to run.
+    ... monitored by down-stream features (e.g. authorization),
+    ... logically starting our app running!
+ .complete() .................................................................................................   - NONE

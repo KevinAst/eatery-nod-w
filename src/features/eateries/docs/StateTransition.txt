@@ -1,0 +1,100 @@
+********************************************************************************
+* State Transition
+********************************************************************************
+
+This document highlights how actions, logic, and reducers interact
+together to maintain this feature's state (a text document is used to
+accommodate the wide free-format content).
+
+TODO: Verify this (may have changed in feature migration)
+
+Actions (see: actions.js)                        Logic (see: logic.js)                                Reducer (see: state.js)
+==============================================   ===================================================  ===============================
+eateries
+
+  .dbPool
+                                                      
+    .changed(eateries) .............................................................................  - retain appState.eateries.dbPool (from action.eateries)
+ 
+    .add(eateryId) .................................................................................  - NO NEED TO DO ANYTHING, due to our real-time notifications
+                                           addToPoolPrep:                                               ... we attempted to retain appState.eateries.dbPool[eateryId] with temporary entry
+                                           =============                                                    in an attempt to makt "discovery check box" faster (but IT DIDN'T HELP)
+                                             - discoveryService.fetchEateryDetail(eateryId)                 ... src/appState/dbPool.js
+                                                 work: DISPATCH .eateryDetail(eatery)                           // temporal entry DONE STICTLY to show up faster in "discovery check box" 
+                                                 fail: DISPATCH .eateryDetail.fail(eateryId, err)               // ... will be followed up by real entry (from our DB real-time notifications)
+                                                                                                                [actions.eateries.dbPool.add]: (state, action) => ( {...state, [action.eateryId]: tempEatery(action.eateryId)} ),
+                                                                                                                ...
+                                                                                                                const tempMsg = 'temporary entry (waiting for DB)';
+                                                                                                                const tempEatery = (id) => ({
+                                                                                                                  id,
+                                                                                                                  name:    tempMsg,
+                                                                                                                  phone:   tempMsg,
+                                                                                                                  loc:     {lat:1, lng:1},
+                                                                                                                  addr:    tempMsg,
+                                                                                                                  navUrl:  tempMsg,
+                                                                                                                  website: tempMsg,
+                                                                                                                });
+ 
+      .eateryDetail(eatery) ........................................................................  - NO NEED TO DO ANYTHING, due to our DB real-time notifications
+                                           addToPool:
+                                           =========
+                                             - fassets.eateryService.addEatery(action.eatery)
+ 
+        .fail(eateryId, err) .......................................................................  - NONE
+                                           NOTE: auto reported to user via logic:
+                                                 diag.communicateUnexpectedErrors
+                                                 MONITORING ALL .fail actions
+ 
+ 
+    .remove(eateryId) ..............................................................................  - NO NEED TO DO ANYTHING, due to our real-time notifications
+                                           removeFromPool:                                              ... we tried deleting appState.eateries.dbPool[eateryId] of temporary entry
+                                           ==============                                                   in an attempt to makt "discovery check box" faster (but IT DIDN'T HELP)
+                                             - fassets.eateryService.removeEatery(action.eateryId)
+ 
+ 
+  .filterForm
+    > iForm logic (auto-generated)         > iForm logic (auto-generated)                             > iForm logic (auto-generated)
+    .open([domain] [,formMsg])                    
+    .fieldChanged(fieldName, value)               
+    .fieldTouched(fieldName)                      
+    .process(values, domain) .......................................................................  - retain appState.eateries.listView.filter  (from action.domain)
+                                           processFilter:
+                                           =============
+                                             DISPATCH view.change('eatery')
+                                             DISPATCH eatery.filterForm.close()
+      .reject(msgs)
+    .close()
+ 
+ 
+  .viewDetail(eateryId) ............................................................................  - retain appState.eateries.selectedEateryId (from action.eateryId)
+
+    .close() .......................................................................................  - retain appState.eateries.selectedEateryId = null
+ 
+ 
+  .spin ............................................................................................  - retain appState.eateries.spin (from action.spinMsg)
+                                           spin:
+                                           ====
+                                             transform():                                           
+                                             ---------
+                                               supplement action.spinMsg
+                                             process():
+                                             ---------
+                                               timeout (x secs)
+                                                 DISPATCH actions.eateries.spin.complete(eateryId)
+ 
+    .complete(eateryId) ............................................................................  - retain appState.eateries.spin = null
+                                           spinComplete:
+                                           ============
+                                             DISPATCH actions.eateries.viewDetail(eateryId)
+
+
+** cross-feature-communication: **
+  fassets.actions.userProfileChanged(user) .........................................................  - NONE
+                                           monitorDbPool:
+                                           =============
+                                             > real-time monitor of eateries DB:
+                                             fassets.eateryService.monitorDbEateryPool(action.user.pool,
+                                                                                       fassets.sel.getLocation(getState()),
+                                                                                       monitorCB)
+                                             > monitorCB: broadcast changes in our eateries (or the initial population)
+                                             DISPATCH actions.dbPool.changed(eateries)

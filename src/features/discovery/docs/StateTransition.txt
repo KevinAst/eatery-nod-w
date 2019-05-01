@@ -1,0 +1,63 @@
+********************************************************************************
+* State Transition
+********************************************************************************
+
+This document highlights how actions, logic, and reducers interact
+together to maintain this feature's state (a text document is used to
+accommodate the wide free-format content).
+
+TODO: Verify this (may have changed in feature migration)
+
+Actions (see: actions.js)                        Logic (see: logic.js)                                Reducer (see: state.js)
+==============================================   ===================================================  ===============================
+discovery
+
+ .filterForm
+    > iForm logic (auto-generated)               > iForm logic (auto-generated)                       > iForm logic (auto-generated)
+    .open([domain] [,formMsg])                   
+    .fieldChanged(fieldName, value)
+    .fieldTouched(fieldName)
+    .process(values, domain) .......................................................................
+                                                 processFilter:
+                                                 =============
+                                                   DISPATCH discovery.retrieve(action.domain ... i.e. filter)
+                                                   DISPATCH view.change('discovery')
+                                                   DISPATCH discovery.filterForm.close()
+      .reject(msgs)
+    .close()
+
+
+ .retrieve([filter]) ...............................................................................  - set appState.discovery.inProgress = 'retrieve'
+                                                 retrieve:
+                                                 ========
+                                                  - discoveryService.searchDiscoveries(action.filter)
+                                                      work: DISPATCH .complete(resp [with pagetoken/discoveries]
+                                                      fail: DISPATCH .fail(err)
+
+   .complete(discoveriesResp [with pagetoken/discoveries]) .........................................  - retain appState.discovery.discoveries (from action.discoveriesResp)
+                                                                                                      - retain appState.discovery.filter      (from action.filter)
+                                                                                                      - retain nextPageToken
+                                                                                                      - set appState.discovery.inProgress = null
+
+   .fail(err) .....................................................................................   - set appState.discovery.inProgress = null
+                                                 NOTE: auto reported to user via logic:
+                                                       diag.communicateUnexpectedErrors << WHA: doesn't exist
+                                                       MONITORING ALL .fail actions
+
+
+
+ .nextPage(pagetoken) .............................................................................   - set appState.discovery.inProgress = 'next'
+                                                 nextPage:
+                                                 ========
+                                                  - discoveryService.searchDiscoveriesNextPage(action.filter)
+                                                      work: DISPATCH .complete(resp [with pagetoken/discoveries]
+                                                       fail: DISPATCH .fail(err)
+
+   .complete(discoveriesResp [with pagetoken/discoveries]) ........................................   - append appState.discovery.discoveries (from action.discoveriesResp)
+                                                                                                      - retain nextPageToken
+                                                                                                      - set appState.discovery.inProgress = null
+
+   .fail(err) .....................................................................................   - set appState.discovery.inProgress = null
+                                                 NOTE: auto reported to user via logic:
+                                                       diag.communicateUnexpectedErrors << WHA: doesn't exist
+                                                       MONITORING ALL .fail actions
