@@ -41,13 +41,13 @@ export default [
   //***
   //*** common app-neutral features
   //***
-
-  baseUI, // ... ORDER: before `auth` feature to promote UITheme user-menu FIRST
   
   auth,
   authService,
   authServiceFirebase,
   authServiceMock,
+
+  baseUI, // ... ORDER: after `auth` feature to promote UITheme user-menu LAST
   
   bootstrap,
   

@@ -11,6 +11,7 @@ application.  It manages the following characteristics:
   - a **[Responsive Design]** that auto adjusts for desktops, cell phones, and
     portable devices
   - a **[UI Theme]** allowing the user to choose from light/dark renditions
+  - an **[About Dialog]** is promoted from information gleaned from the `package.json`
   - the **[Notify]** utility is activated, supporting programmatic
     **toasts, alerts, and confirmations**
 - _when an active user is **signed-in**, the following items are also
@@ -28,6 +29,7 @@ application.  It manages the following characteristics:
 - [Main Layout]
   - [Responsive Design]
   - [UI Theme]
+  - [About Dialog]
   - [Notify]
 - [App Motif]
   - [Left Nav]
@@ -111,6 +113,26 @@ Here is an app screen shown in a "light" theme.  _**The User Menu is shown with 
 
 Here is the same screen shown in a "dark" theme.
 <p align="center"><img src="docs/UIThemePhoneDark.png" alt="UI Theme Dark" width="35%"></p>
+
+</ul>
+
+
+### About Dialog
+
+<ul> <!--- indentation hack --->
+
+An **About Dialog** is promoted through a control that is
+automatically injected in the [User Menu]).
+
+This information is automatically gleaned from the `package.json`
+_(showing name, description, and version)_, and provides links to the
+app's documentation and revision history.
+
+Here is the control that activates **About**:
+<p align="center"><img src="docs/AboutControl.png" alt="About Control" width="35%"></p>
+
+and here is the **About Dialog**:
+<p align="center"><img src="docs/AboutDialog.png" alt="About Dialog" width="35%"></p>
 
 </ul>
 
@@ -286,6 +308,7 @@ Transition](docs/StateTransition.txt) diagram.
 [Main Layout]:            #main-layout
 [Responsive Design]:      #responsive-design
 [UI Theme]:               #ui-theme
+[About Dialog]:           #about-dialog
 [Notify]:                 #notify
 [App Motif]:              #app-motif
 [Left Nav]:               #left-nav

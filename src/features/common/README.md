@@ -2,11 +2,11 @@
 
 The **common** directory is a collection of **app-neutral** features.
 
-- [**baseUI**](baseUI/README.md): provides a **UI Foundation** for the entire application _(in an **app neutral** way)_,  including: **Responsive Design**, **UI Theme**, **Notify** utility activation, **Left Nav** menu items, **User Menu**, **Current View** state, and **Tool Bars**
 - [**auth**](auth/README.md): promotes complete user authentication
   - [**authService**](auth/subFeatures/authService/README.md): a persistent authentication service (retaining active user)
     - [**authServiceFirebase**](auth/subFeatures/authServiceFirebase/AuthServiceFirebase.js): the **real** AuthServiceAPI derivation based on Firebase
     - [**authServiceMock**](auth/subFeatures/authServiceMock/AuthServiceMock.js):             the **mock** AuthServiceAPI derivation
+- [**baseUI**](baseUI/README.md): provides a **UI Foundation** for the entire application _(in an **app neutral** way)_,  including: **Responsive Design**, **UI Theme**, **Notify** utility activation, **Left Nav** menu items, **User Menu**, **Current View** state, and **Tool Bars**
 - [**bootstrap**](bootstrap/README.md): provide critical-path app initialization through the `'bootstrap.*'` use contract
 - [**initFirebase**](initFirebase/README.md): initializes the Google Firebase service when WIFI is enabled
 - [**initGooglePlaces**](initGooglePlaces/README.md): initializes the Google Places service service when WIFI is enabled

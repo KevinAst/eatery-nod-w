@@ -10,6 +10,7 @@ import logic                from './logic';
 
 import MainLayout           from './comp/MainLayout';
 import ToggleUITheme        from './comp/ToggleUITheme';
+import About                from './comp/About';
 
 // feature: baseUI <<< full details in README
 //          Provides a UI foundation for an entire application.
@@ -35,8 +36,11 @@ export default createFeature({
     },
 
     defineUse: {
-      // inject the user menu item to toggle UI Theme ('light'/'dark')
+      // inject User Menu entries
+      // ... to ToggleUITheme ('light'/'dark')
       'AppMotif.UserMenuItem.UIThemeToggle': ToggleUITheme,
+      // ... to display About info (gleaned from package.json)
+      'AppMotif.UserMenuItem.About': About,
     },
 
     use: [

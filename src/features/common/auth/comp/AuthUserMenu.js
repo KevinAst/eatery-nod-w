@@ -12,7 +12,6 @@ function AuthUserMenu({signOut}) {
   return (
     <>
       <UserMenuItem onClick={doL8tr}>User Profile</UserMenuItem>
-      <UserMenuItem onClick={doL8tr}>My Account</UserMenuItem>
       <UserMenuItem onClick={signOut}>Sign Out</UserMenuItem>
     </>
   );

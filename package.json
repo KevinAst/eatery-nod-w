@@ -18,7 +18,9 @@
     "astx"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/KevinAst/eatery-nod-w",
+  "homepage": "https://eatery-nod-w.js.org",
+  "aboutdocs": "https://github.com/KevinAst/eatery-nod-w/blob/master/README.md",
+  "abouthist": "https://github.com/KevinAst/eatery-nod-w/blob/master/README.md#revision-history",
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test",
