@@ -65,7 +65,7 @@ export default class EateryServiceMock extends EateryServiceAPI {
       }
 
       // add the eatery to our DB pool
-      // NOTE: this must be immutable to allow redux to recoginize the change
+      // NOTE: this must be immutable to allow redux to recognize the change
       // console.log(`xx addEatery: `, eatery);
       this.curPoolMonitor.eateries = {
         ...this.curPoolMonitor.eateries,
