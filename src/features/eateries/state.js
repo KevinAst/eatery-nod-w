@@ -12,13 +12,15 @@ import _eateriesAct          from './actions';
 // ***
 
 // NOTE: expandWithFassets() is used NOT for app injection,
-//       but RATHER to delay expansion (avoiding circular dependancies
+//       but RATHER to delay expansion (avoiding circular dependencies
 //       in selector access from eateryFilterFormMeta.js)
-const reducer = slicedReducer(`view.${_eateries}`, expandWithFassets( () => combineReducers({
+//       >>> subsequently, fassets is now used to access fassets.actions.signOut action
+const reducer = slicedReducer(`view.${_eateries}`, expandWithFassets( (fassets) => combineReducers({
 
   // raw eatery entries synced from our realtime DB
   dbPool: reducerHash({
     [_eateriesAct.dbPool.changed]: (state, action) => action.eateries,
+    [fassets.actions.signOut]:     (state, action) => null, // same as initialState ... AI: streamline in "INITIALIZATION" journal entry
   }, null), // initialState
 
   listView: combineReducers({
@@ -29,6 +31,7 @@ const reducer = slicedReducer(`view.${_eateries}`, expandWithFassets( () => comb
     // filter used in visualizing listView
     filter: reducerHash({
       [_eateriesAct.filterForm.process]: (state, action) => action.domain,
+      [fassets.actions.signOut]:         (state, action) => ({distance: null, sortOrder: 'name'}), // same as initialState ... AI: streamline in "INITIALIZATION" journal entry
     }, { // initialState
       distance: null,    // distance in miles (default: null - for any distance)
       sortOrder: 'name', // sortOrder: 'name'/'distance'

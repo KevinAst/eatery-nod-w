@@ -5,6 +5,9 @@ import * as _eateriesSel    from './state';
 import _eateriesAct         from './actions';
 import {expandWithFassets}  from 'feature-u';
 import discloseError        from 'util/discloseError';
+import {toast}              from 'util/notify';
+import EateryServiceMock    from './subFeatures/eateryServiceMock/EateryServiceMock';
+
 
 /**
  * Our persistent monitor that manages various aspects of a given pool.
@@ -13,6 +16,57 @@ let curPoolMonitor = {   // current "pool" monitor (initially a placebo)
   pool:   null,          // type: string
   wrapUp: () => 'no-op', // type: function(): void ... cleanup existing monitored resources
 };
+
+let   originalEateryService = null;
+const mockEateryService     = new EateryServiceMock();
+
+
+/**
+ * Setup any "guest" user to use a "mocked" eatery service backed by
+ * an in-memory DB.
+ */
+export const setupGuestUser = expandWithFassets( (fassets) => createLogic({
+
+  name: `${_eateries}.setupGuestUser`,
+  type: String(fassets.actions.signIn.complete),
+
+  transform({getState, action, fassets}, next) { // transform() so as to swap out service quickly (before it is needed)
+
+    if (action.user.isGuest()) {
+
+      // swap out our eatery service with a mocked in-memory source
+      originalEateryService = fassets.eateryService;
+      fassets.eateryService = mockEateryService; // AI: we are mutating fassets ... may be a  code smell
+
+      // inform user of what is going on
+      toast({ msg:'as a "guest" user, your Eatery pool is a "mocked" in-memory data source'});
+    }
+
+    next(action);
+  },
+
+}) );
+
+
+/**
+ * Tear-down any "guest" user, reverting to the original eatery
+ * service.
+ */
+export const tearDownGuestUser = expandWithFassets( (fassets) => createLogic({
+
+  name: `${_eateries}.tearDownGuestUser`,
+  type: String(fassets.actions.signOut),
+
+  process({getState, action, fassets}, dispatch, done) { // process() so as to allow the action to be supplemented with user
+    if (action.user.isGuest()) {
+      // revert our eatery service to the original service
+      fassets.eateryService = originalEateryService; // AI: we are mutating fassets ... may be a  code smell
+    }
+    done();
+  },
+
+}) );
+
 
 /**
  * This is the primary logic module, which initially loads (and
@@ -66,6 +120,31 @@ export const monitorDbPool = expandWithFassets( (fassets) => createLogic({
         dispatch( _eateriesAct.dbPool.changed(eateries) );
 
       });
+  },
+
+}) );
+
+
+/**
+ * Close down any real-time monitor of our real-time DB pool (at sign-out time).
+ */
+export const closeDbPool = expandWithFassets( (fassets) => createLogic({
+
+  name: `${_eateries}.closeDbPool`,
+  type: String(fassets.actions.signOut),
+
+  process({getState, action, fassets}, dispatch, done) {
+
+    // close prior monitor
+    curPoolMonitor.wrapUp();
+
+    // create new placebo monitor
+    curPoolMonitor = {
+      pool:   null,          // type: string
+      wrapUp: () => 'no-op', // type: function(): void ... cleanup existing monitored resources
+    };
+
+    done();
   },
 
 }) );
@@ -241,7 +320,10 @@ export const removeFromPool = createLogic({
 // promote all logic (accumulated in index.js)
 // ... named exports (above) are used by unit tests :-)
 export default expandWithFassets( (fassets) => [
+  setupGuestUser(fassets),
+  tearDownGuestUser(fassets),
   monitorDbPool(fassets),
+  closeDbPool(fassets),
   ...eateryFilterFormMeta.registrar.formLogic(), // inject the standard eatery filter form-based logic modules
   defaultFilter,
   processFilter,
