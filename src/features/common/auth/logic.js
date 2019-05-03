@@ -2,6 +2,7 @@ import {createLogic}        from 'redux-logic';
 import {expandWithFassets}  from 'feature-u';
 import _auth                from './featureName';
 import _authAct             from './actions';
+import {curUser}            from './state';
 import signInFormMeta       from './signInFormMeta';
 import discloseError        from 'util/discloseError';
 import {toast}              from 'util/notify';
@@ -143,6 +144,23 @@ export const signIn = createLogic({
 
 
 /**
+ * Supplement signed-in user's originalLoc (in support of re-setting
+ * "guest" users on sign-out.
+ */
+export const supplementSignedInUserLoc = createLogic({
+
+  name: `${_auth}.supplementSignedInUserLoc`,
+  type: String(_authAct.signIn.complete),
+
+  transform({getState, action, fassets}, next, reject) {
+    action.user.originalLoc = fassets.sel.getLocation(getState());
+    next(action);
+  },
+
+});
+
+
+/**
  * Supplement signIn complete action by triggering profile.changed action,
  * causing eateries view to populate.
  */
@@ -171,7 +189,7 @@ export const signInCleanup = createLogic({
   type: String(_authAct.signIn.complete),
 
   process({getState, action}, dispatch, done) {
-    // console.log(`xx logic ${featureName}.signInCleanup: user.status: '${sel.curUser(getState()).getAuthStatus()}'`);
+    // console.log(`xx logic ${featureName}.signInCleanup: user.status: '${curUser(getState()).getAuthStatus()}'`);
     dispatch( _authAct.signIn.close() ); // we are done with our signIn form
     done();
   },
@@ -189,7 +207,7 @@ export const checkEmailVerified = createLogic({
 
   transform({getState, action, fassets}, next, reject) {
 
-    toast({ msg:`verifying your email: ${fassets.sel.curUser(getState()).email}` });
+    toast({ msg:`verifying your email: ${curUser(getState()).email}` });
     // fetch the most up-to-date user
     fassets.authService.refreshUser()
            .then( user => {
@@ -218,8 +236,25 @@ export const resendEmailVerification = createLogic({
   type: String(_authAct.signIn.resendEmailVerification),
 
   transform({getState, action, fassets}, next) {
-    toast({ msg:`resending email to: ${fassets.sel.curUser(getState()).email}` });
+    toast({ msg:`resending email to: ${curUser(getState()).email}` });
     fassets.authService.resendEmailVerification()
+    next(action);
+  },
+
+});
+
+
+/**
+ * Supplement signOut action with active user (in support of re-setting
+ * "guest" users on sign-out.
+ */
+export const supplementSignOutUser = createLogic({
+
+  name: `${_auth}.supplementSignOutUser`,
+  type: String(_authAct.signOut),
+
+  transform({getState, action, fassets}, next, reject) {
+    action.user = curUser(getState());
     next(action);
   },
 
@@ -264,6 +299,7 @@ export default expandWithFassets( (fassets) => [
   ...signInFormMeta.registrar.formLogic(), // inject the standard SignIn form-based logic modules
   processSignIn,
 
+  supplementSignedInUserLoc,
   signIn,
   supplementSignInComplete,
   signInCleanup,
@@ -271,5 +307,6 @@ export default expandWithFassets( (fassets) => [
   checkEmailVerified,
   resendEmailVerification,
 
+  supplementSignOutUser,
   signOut,
 ]);

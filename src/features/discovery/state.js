@@ -13,7 +13,8 @@ import _discoveryAct            from './actions';
 // NOTE: expandWithFassets() is used NOT for app injection,
 //       but RATHER to delay expansion (avoiding circular dependancies
 //       in selector access from discoveryFilterFormMeta.js)
-const reducer = slicedReducer(`view.${_discovery}`, expandWithFassets( () => combineReducers({
+//       >>> subsequently, fassets is now used to access fassets.actions.signOut action
+const reducer = slicedReducer(`view.${_discovery}`, expandWithFassets( (fassets) => combineReducers({
 
   // retrieval in-progress (used by BOTH filtered retrieval, and next page)
   // ... null/'retrieve'/'next'
@@ -35,6 +36,7 @@ const reducer = slicedReducer(`view.${_discovery}`, expandWithFassets( () => com
   // selection criteria (filter)
   filter: reducerHash({
     [_discoveryAct.retrieve.complete]: (state, action) => action.filter,
+    [fassets.actions.signOut]:         (state, action) => ({searchText: '', distance: 10, minprice:   '1'}), // same as initialState ... AI: streamline in "INITIALIZATION" journal entry
   }, { // initialState
     searchText: '',
     distance:   10,
@@ -45,12 +47,14 @@ const reducer = slicedReducer(`view.${_discovery}`, expandWithFassets( () => com
   nextPageToken: reducerHash({
     [_discoveryAct.retrieve.complete]: (state, action) => action.discoveriesResp.pagetoken,
     [_discoveryAct.nextPage.complete]: (state, action) => action.discoveriesResp.pagetoken,
+    [fassets.actions.signOut]:         (state, action) => null, // same as initialState ... AI: streamline in "INITIALIZATION" journal entry
   }, null), // initialState
 
   // discoveries (data records)
   discoveries: reducerHash({
     [_discoveryAct.retrieve.complete]: (state, action) => action.discoveriesResp.discoveries,
     [_discoveryAct.nextPage.complete]: (state, action) => [...state, ...action.discoveriesResp.discoveries], // append to state
+    [fassets.actions.signOut]:         (state, action) => null, // same as initialState ... AI: streamline in "INITIALIZATION" journal entry
   }, null), // initialState
 
 }) ) );

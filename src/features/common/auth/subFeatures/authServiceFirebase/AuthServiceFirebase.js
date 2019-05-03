@@ -37,6 +37,19 @@ export default class AuthServiceFirebase extends AuthServiceAPI {
 
     return new Promise( (resolve, reject) => {
 
+      // detect guest signin and resolve immediately
+      if (pass === 'guestNO' && email.indexOf('guestNO@') === 0) { // New Orleans guest ... ex: guestNO@gmail.com/guestNO
+        // NOTE: appears to be working without a delay from say a timeout
+        this.currentAppUser = new User({
+          name:          'Harry',
+          email,
+          emailVerified: true,
+          pool:          'mockNO',
+          guestLoc:      {lat: 30.010479, lng: -90.119414}, // New Orleans, LA
+        });
+        return resolve(this.currentAppUser);
+      }
+      
       // signin through firebase authentication
       firebase.auth().signInWithEmailAndPassword(email, pass)
               .then( fbUser => { // fbUser:  <firebase.User>: https://firebase.google.com/docs/reference/js/firebase.User

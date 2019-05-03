@@ -1,12 +1,11 @@
 # eatery-nod-w
 
-**A Date Night Restaurant Selector**
-
 ## Overview
 
-**eatery-nod-w** is a web-app that randomly selects a "date night"
-restaurant from a pool of favorites.  In other words, it gives a
-**nod** to an **eatery** (_geeks need to have fun somehow_ :-)
+**eatery-nod-w** is **Date Night Restaurant Selector** ... a web-app
+**that randomly selects a "date night" restaurant from a pool of
+favorites**.  In other words, it gives a **nod** to an **eatery**
+(_geeks need to have fun somehow_ :-)
 
 My wife and I have a steady "date night" (with another couple) and we
 are always indecisive on which of our favorite restaurants to
@@ -19,6 +18,7 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
 ## At a Glance
 
 - [Overview]
+  - [Running the App]
   - [Eatery Pool]
   - [Discovery]
   - [Authorization]
@@ -32,6 +32,32 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
 - [Revision History]
   - [v1.0.0]
 
+
+## Running the App
+
+If you wish to play with **eatery-nod-w**, simply run it from it's
+deployed production site: https://eatery-nod-w.js.org/
+
+Currently the sign-in process has **"locked down" account creation**,
+because of the limited resources of the free Google Firebase account.
+However you can **use a "Guest ID"** that will morph the environment
+into your own "mocked" in-memory data source (that doesn't utilize
+Firebase).
+
+<ul> <!--- indentation hack --->
+
+Simply use an email id that begins with `guestNO@` (ex:
+`@guestNO@myDomain.com`), with a password of `guestNO`.
+
+</ul>
+
+When using a "Guest ID", remember the following:
+- Your GPS location will be morphed to New Orleans.
+- Your Eateries pool is morphed into an in-memory DB.
+- Your Discovery view is live, searching real eateries in New Orleans.
+- You can add entries to your pool (from the discovery view), but
+  remember that your pool is an in-memory DB ... so if you refresh the site,
+  it will revert back to the initial in-memory DB image.
 
 ## Eatery Pool
 
@@ -229,6 +255,11 @@ MISC
 eject ..... eject the Create React App project tooling
             NOTE: This is a one-way operation!
                   Once you eject, you can’t go back!
+            NOTE: This script has been removed,  so as to 
+                  AVOID accidental activation
+                  ... easy to do with VSCode tasks
+                  THE SCRIPT IS:
+                  "eject": "react-scripts eject"
 ```
 
 
@@ -273,6 +304,7 @@ Release  | What                                            | *When*
 
 [Overview]:                  #overview
 [Eatery Pool]:               #eatery-pool
+[Running the App]:           #running-the-app
 [Discovery]:                 #discovery
 [Authorization]:             #authorization
 

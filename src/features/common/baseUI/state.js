@@ -1,16 +1,17 @@
-import {combineReducers}  from 'redux';
-import {reducerHash}      from 'astx-redux-util';
-import {slicedReducer}    from 'feature-redux';
-import _baseUI            from './featureName';
-import _baseUIAct         from './actions';
-import {fetchUITheme}     from './uiThemeStorage';
+import {expandWithFassets} from 'feature-u';
+import {combineReducers}   from 'redux';
+import {reducerHash}       from 'astx-redux-util';
+import {slicedReducer}     from 'feature-redux';
+import _baseUI             from './featureName';
+import _baseUIAct          from './actions';
+import {fetchUITheme}      from './uiThemeStorage';
 
 
 // ***
 // *** Our feature reducer, managing our state.
 // ***
 
-const reducer = slicedReducer(_baseUI, combineReducers({
+const reducer = slicedReducer(_baseUI, expandWithFassets( (fassets) => combineReducers({
 
   // uiTheme: 'light'/'dark'
   uiTheme: reducerHash({
@@ -19,10 +20,11 @@ const reducer = slicedReducer(_baseUI, combineReducers({
 
   // loc: {lat, lng} ... device GPS location
   curView: reducerHash({
-    [_baseUIAct.changeView]: (state, action) => action.viewName,
+    [_baseUIAct.changeView]:   (state, action) => action.viewName,
+    [fassets.actions.signOut]: (state, action) => 'eateries', // AI: Innappropriate app knowledge dependancy (really part of an @@INIT app payload) ... AI: streamline in "INITIALIZATION" journal entry
   }, 'uninitialized'), // initialState
 
-}) );
+}) ) );
 
 export default reducer;
 

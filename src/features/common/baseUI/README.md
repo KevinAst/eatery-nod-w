@@ -134,6 +134,22 @@ Here is the control that activates **About**:
 and here is the **About Dialog**:
 <p align="center"><img src="docs/AboutDialog.png" alt="About Dialog" width="35%"></p>
 
+from the information defined here:
+
+**`package.json`**
+```json
+{
+  "name": "eatery-nod-w",
+  "version": "1.0.0",
+  "description": "A Date Night Restaurant Selector",
+  "about": {
+    "docs": "https://github.com/KevinAst/eatery-nod-w/blob/master/README.md",
+    "hist": "https://github.com/KevinAst/eatery-nod-w/blob/master/README.md#revision-history"
+  },
+  ...
+}
+```
+
 </ul>
 
 

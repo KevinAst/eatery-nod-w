@@ -18,6 +18,7 @@ export default createFeature({
       // actions:
       'actions.userProfileChanged': _authAct.userProfileChanged, // userProfileChanged(user) NOTE: PUBLIC for eateries to monitor, and for future use (when user can change their pool)
       'actions.signOut':            _authAct.signOut,            // signOut()
+      'actions.signIn.complete':    _authAct.signIn.complete,    // signIn.complete(user)
 
       // selectors:
       'sel.curUser': curUser, // full blown User object

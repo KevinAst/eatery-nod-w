@@ -30,6 +30,18 @@ export default class User {
    * @param {string} pool the user's eatery pool identifier
    * (e.g. 'DateNightPool').  This identifies the set of pool eateries
    * the user has to choose from, and can be shared with other users.
+   *
+   * @param {loc} guestLoc the location ({lat, lng}) of a "guest"
+   * user.  When supplied, indicates this IS a "guest" user
+   * (i.e. isGuest(): true).
+   *
+   * @param {loc} originalLoc the real location ({lat, lng}) of the
+   * user.  This information is used to "reset" the characteristics of
+   * "guest" users, when they sign out.
+   * 
+   * This information is "supplemented" through logic modules, and is
+   * provided as a constructor parameter SOLELY in support of the
+   * clone() operation.
    */
                                     // INTERNAL NOTES
                                     // =================
@@ -38,6 +50,8 @@ export default class User {
                emailVerified=false, // via firebase.User.emailVerified
                pool=null,           // via app's DB userProfile.pool
              //uid=null,            // via firebase.User.uid             user's unique id hash ... CURRENTLY NO NEED for this (internally available via firebase.auth().currentUser.uid)
+               guestLoc=null,
+               originalLoc=null,
                ...unknownArgs}={}) {
 
     // validate constructor parameters
@@ -53,6 +67,8 @@ export default class User {
     this.email         = email;
     this.emailVerified = emailVerified;
     this.pool          = pool;
+    this.guestLoc      = guestLoc;
+    this.originalLoc   = originalLoc;
   }
 
 
@@ -97,6 +113,15 @@ export default class User {
     }
   }
 
+
+  /**
+   * Return an indicator as to whether the user is a "guest" user.
+   */
+  isGuest() {
+    return this.guestLoc ? true : false;
+  }
+
+
   /**
    * Serialize self into a pure data structure (void of any methods),
    * so as to be serializable.
@@ -116,6 +141,8 @@ export default class User {
       email:         this.email,
       emailVerified: this.emailVerified,
       pool:          this.pool,
+      guestLoc:      this.guestLoc,
+      originalLoc:   this.originalLoc,
     };
   }
 

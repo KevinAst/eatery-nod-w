@@ -43,18 +43,18 @@ export default generateActions.root({
     
       checkEmailVerified: { // actions.signIn.checkEmailVerified(): Action
                             // > check to see if account email has been verified
-                            actionMeta: {}, // NOTE: logic suplements the action with the current user
+                            actionMeta: {}, // NOTE: logic supplements the action with the current user
       },
     
       resendEmailVerification: { // actions.signIn.resendEmailVerification(): Action
-                                 // > resend email verificaion
+                                 // > resend email verification
                                  //   NOTE: logic supplements action with most up-to-date user
                                  actionMeta: {},
       },
     
     }),
 
-    signOut: { // actions.signOut(): Action
+    signOut: { // actions.signOut(): Action <<< NOTE: logic supplements action.user (with current user that is signing out)
                // > sign out active user
                actionMeta: {},
     },
