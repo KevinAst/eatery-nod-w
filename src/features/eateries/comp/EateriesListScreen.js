@@ -68,7 +68,7 @@ function EateriesListScreen({classes, curUser, filteredEateries, filter, selecte
                 <Typography variant="h6"
                   noWrap>
                   {eatery.name}
-                  <Typography inline={true} noWrap>
+                  <Typography inline noWrap>
                     &nbsp;({`${eatery.distance} mile${currentDistance===1?'':'s'}`})
                   </Typography>
                 </Typography>

@@ -13,7 +13,7 @@ export default function DiscoveriesFooter() {
       <Typography>&nbsp;</Typography>
       <Typography color="inherit" variant="subtitle1">
         toggle check as &nbsp;
-        <CheckedIcon color="secondary" inline/>
+        <CheckedIcon color="secondary"/>
         &nbsp; to place in pool
       </Typography>
       <Tooltip title="powered by Google Places">

@@ -12,9 +12,7 @@ function DiscoveriesTitle({curUser}) {
                 color="inherit"
                 noWrap>
       Discovery
-      <Typography color="inherit"
-                  inline={true}
-                  noWrap>
+      <Typography color="inherit" inline noWrap>
         &nbsp;({curUser.pool})
       </Typography>
     </Typography>

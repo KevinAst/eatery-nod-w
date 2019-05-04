@@ -61,7 +61,7 @@ function EateryDetailScreen({curUser, eatery, handleClose, handleSpin, fullScree
         
         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
           Eatery
-          <Typography color="inherit" inline={true} noWrap>
+          <Typography color="inherit" inline noWrap>
             &nbsp;({curUser.pool})
           </Typography>
         </Typography>
