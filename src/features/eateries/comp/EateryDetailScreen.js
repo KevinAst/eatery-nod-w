@@ -111,6 +111,7 @@ function EateryDetailScreen({curUser, eatery, handleClose, handleSpin, fullScree
                 }/>
           </ListItem>
 
+          {eatery.website !== 'not-in-search' &&
           <ListItem>
             <ListItemIcon>
               <LinkIcon/>
@@ -122,10 +123,11 @@ function EateryDetailScreen({curUser, eatery, handleClose, handleSpin, fullScree
                         target="_blank"
                         color="inherit"
                         underline="none">
-                    Web: {eatery.website}
+                    Web Site
                   </Link>
                 }/>
           </ListItem>
+          }
 
         </List>
       </DialogContent>
