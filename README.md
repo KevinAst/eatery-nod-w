@@ -287,7 +287,8 @@ Release  | What                                            | *When*
 [Diff](https://github.com/KevinAst/eatery-nod-w/compare/v1.0.0...v1.0.1)
 -->
 
-**This is where it all began ...**
+The initial port of this [PWA], from the [eatery-nod] react-native
+expo mobile app.
 
 </ul></ul>
 
