@@ -158,7 +158,7 @@ The runtime stack used by **eatery-nod** is:
     `"notistack"`
 
 - [feature-u]: facilitates feature-based solutions
-  `"feature-u", "feature-redux", "feature-redux-logic", "feature-router", "@babel/polyfill"`
+  `"feature-u", "feature-redux", "feature-redux-logic", "feature-router"`
 
 - [redux](https://redux.js.org/): the application state manager
   `"redux", "react-redux"`

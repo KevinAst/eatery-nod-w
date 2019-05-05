@@ -1,4 +1,3 @@
-//import '@babel/polyfill'; // required for feature-u es2015+ constructs // TODO: L8TR: see if this is really needed (if not un-install it) NOTE: was ...import 'babel-polyfill';
 import 'util/ErrorExtensionPolyfill';
 import React                 from 'react';
 import ReactDOM              from 'react-dom';
