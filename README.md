@@ -270,7 +270,26 @@ eject ..... eject the Create React App project tooling
 
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
+[v1.1.0] | TODO                                            | *May xx, 2019*
 [v1.0.0] | Initial Release                                 | *May 05, 2019*
+
+
+<!-- *** RELEASE *************************************************************** -->
+
+### v1.1.0 - TODO *(May xx, 2019)*
+
+<ul><ul><!--- indentation hack ---> 
+
+[GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v1.1.0)
+&bull;
+[GitHub Release](https://github.com/KevinAst/eatery-nod-w/releases/tag/v1.1.0)
+&bull;
+[Diff](https://github.com/KevinAst/eatery-nod-w/compare/v1.0.0...v1.1.0)
+
+- ?? RUNNING CHANGES HERE HERE
+
+</ul></ul>
+
 
 
 <!-- *** RELEASE *************************************************************** -->
@@ -319,6 +338,7 @@ expo mobile app.
 [NPM Scripts]:               #npm-scripts
 
 [Revision History]:    #revision-history
+ [v1.1.0]:             #v110---todo-may-xx-2019
  [v1.0.0]:             #v100---initial-release-may-05-2019
 
 
