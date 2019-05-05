@@ -1,4 +1,6 @@
 import React          from 'react';
+import PropTypes      from 'prop-types';
+
 import {withFassets}  from 'feature-u';
 
 import IconButton     from '@material-ui/core/IconButton';
@@ -43,6 +45,10 @@ function UserMenu({curUser, userMenuItems}) {
     </div>
   );
 }
+
+UserMenu.propTypes = {
+  curUser: PropTypes.object.isRequired,
+};
 
 export default /* UserMenuWithFassets = */ withFassets({
   component: UserMenu,
