@@ -270,12 +270,12 @@ eject ..... eject the Create React App project tooling
 
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
-[v1.0.0] | Initial Release                                 | *May 08, 2019*
+[v1.0.0] | Initial Release                                 | *May 05, 2019*
 
 
 <!-- *** RELEASE *************************************************************** -->
 
-### v1.0.0 - Initial Release *(May 08, 2019)*
+### v1.0.0 - Initial Release *(May 05, 2019)*
 
 <ul><ul><!--- indentation hack ---> 
 
@@ -319,7 +319,7 @@ expo mobile app.
 [NPM Scripts]:               #npm-scripts
 
 [Revision History]:    #revision-history
- [v1.0.0]:             #v100---initial-release-may-08-2019
+ [v1.0.0]:             #v100---initial-release-may-05-2019
 
 
 
