@@ -158,7 +158,7 @@ The runtime stack used by **eatery-nod** is:
     `"notistack"`
 
 - [feature-u]: facilitates feature-based solutions
-  `"feature-u", "feature-redux", "feature-redux-logic", "feature-router", "@babel/polyfill"`
+  `"feature-u", "feature-redux", "feature-redux-logic", "feature-router"`
 
 - [redux](https://redux.js.org/): the application state manager
   `"redux", "react-redux"`
@@ -270,12 +270,12 @@ eject ..... eject the Create React App project tooling
 
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
-[v1.0.0] | Initial Release                                 | *May 08, 2019*
+[v1.0.0] | Initial Release                                 | *May 05, 2019*
 
 
 <!-- *** RELEASE *************************************************************** -->
 
-### v1.0.0 - Initial Release *(May 08, 2019)*
+### v1.0.0 - Initial Release *(May 05, 2019)*
 
 <ul><ul><!--- indentation hack ---> 
 
@@ -287,7 +287,8 @@ Release  | What                                            | *When*
 [Diff](https://github.com/KevinAst/eatery-nod-w/compare/v1.0.0...v1.0.1)
 -->
 
-**This is where it all began ...**
+The initial port of this [PWA], from the [eatery-nod] react-native
+expo mobile app.
 
 </ul></ul>
 
@@ -318,7 +319,7 @@ Release  | What                                            | *When*
 [NPM Scripts]:               #npm-scripts
 
 [Revision History]:    #revision-history
- [v1.0.0]:             #v100---initial-release-may-08-2019
+ [v1.0.0]:             #v100---initial-release-may-05-2019
 
 
 

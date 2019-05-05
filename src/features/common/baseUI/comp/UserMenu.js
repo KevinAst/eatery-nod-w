@@ -1,15 +1,18 @@
 import React          from 'react';
+import PropTypes      from 'prop-types';
+
 import {withFassets}  from 'feature-u';
 
 import IconButton     from '@material-ui/core/IconButton';
 import Menu           from '@material-ui/core/Menu';
 import UserIcon       from '@material-ui/icons/AccountCircle';
+import Typography     from '@material-ui/core/Typography';
 
 
 /**
  * UserMenu: our UserMenu component that accumulates menu items via use contract.
  */
-function UserMenu({userMenuItems}) {
+function UserMenu({curUser, userMenuItems}) {
 
   const [anchorUserMenu, setAnchorUserMenu] = React.useState(null);
   const userMenuOpen = Boolean(anchorUserMenu);
@@ -22,6 +25,9 @@ function UserMenu({userMenuItems}) {
       <IconButton color="inherit"
                   onClick={openUserMenu}>
         <UserIcon/>
+        <Typography variant="subtitle2" color="inherit" noWrap>
+          &nbsp;{curUser.name}
+        </Typography>
       </IconButton>
       <Menu anchorEl={anchorUserMenu}
             anchorOrigin={{
@@ -39,6 +45,10 @@ function UserMenu({userMenuItems}) {
     </div>
   );
 }
+
+UserMenu.propTypes = {
+  curUser: PropTypes.object.isRequired,
+};
 
 export default /* UserMenuWithFassets = */ withFassets({
   component: UserMenu,

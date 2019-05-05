@@ -236,7 +236,7 @@ export const spin = createLogic({
       dispatch( _eateriesAct.spin.complete(randomEateryId) );
       done();
 
-    }, 2000);
+    }, 1200);
 
   },
 

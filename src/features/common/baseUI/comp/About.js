@@ -19,13 +19,13 @@ export default function About() {
 }
 
 function showAbout() {
-  const name    = process.env.REACT_APP_NAME        || 'UNKNOWN name ... set package.json: name';
-  const desc    = process.env.REACT_APP_DESCRIPTION || 'UNKNOWN desc ... set package.json: description';
-  const ver     = process.env.REACT_APP_VERSION     || 'UNKNOWN ver .... set package.json: version';
+  const name    = process.env.REACT_APP_NAME        || 'UNKNOWN name (from package.json: name)';
+  const desc    = process.env.REACT_APP_DESCRIPTION || 'UNKNOWN desc (from package.json: description)';
+  const ver     = process.env.REACT_APP_VERSION     || 'UNKNOWN (from package.json: version)';
   const docsUrl = process.env.REACT_APP_ABOUT_DOCS;
   const histUrl = process.env.REACT_APP_ABOUT_HIST;
 
-  const msg = `${name} ... version: ${ver}\n\n${desc}`;
+  const msg = `${name}\n\n${desc}\n\nversion: ${ver}`;
 
   const actions = [];
   if (docsUrl)

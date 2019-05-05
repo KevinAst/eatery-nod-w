@@ -15,10 +15,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
   },
 
-  favicon: {
-    width: '150px', // size the eatery-nod icon
-  },
-
   progress: {
     margin: theme.spacing.unit * 4,
   },
@@ -52,8 +48,8 @@ function SplashScreen({msg, classes, fullScreen}) {
 
       <DialogContent>
         <center>
-         <br/>
-          <img className={classes.favicon} src='/eatery.png' alt='eatery-nod'/>
+          <br/>
+          <img width="120px" src='/eatery.png' alt='eatery-nod'/>
           <br/>
           <Progress className={classes.progress} color="secondary"/>
           <Typography variant="body2">{msg}</Typography>

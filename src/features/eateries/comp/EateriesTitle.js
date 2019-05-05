@@ -13,9 +13,7 @@ function EateriesTitle({curUser, filter}) {
                 color="inherit"
                 noWrap>
       Pool
-      <Typography color="inherit"
-                  inline={true}
-                  noWrap>
+      <Typography color="inherit" inline noWrap>
         &nbsp;({curUser.pool})
       </Typography>
 

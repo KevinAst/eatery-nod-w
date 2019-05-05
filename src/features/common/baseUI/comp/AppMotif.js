@@ -117,7 +117,7 @@ function AppMotif({curUser, curView, viewAuxiliaryContent, classes, children}) {
           </div>
 
           {/* User Profile Menu */}
-          <UserMenu/>
+          <UserMenu curUser={curUser}/>
 
         </Toolbar>
       </AppBar>
