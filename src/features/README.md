@@ -11,11 +11,11 @@ The **eatery-nod-w** application is composed of the following **features**:
      - [**discoveryServiceGooglePlaces**](discovery/subFeatures/discoveryServiceGooglePlaces/DiscoveryServiceGooglePlaces.js): the **real** DiscoveryServiceAPI derivation based on GooglePlaces API
      - [**discoveryServiceMock**](discovery/subFeatures/discoveryServiceMock/DiscoveryServiceMock.js):                         the **mock** DiscoveryServiceAPI derivation
  - [**common**](common/README.md): a collection of **app-neutral** features
+   - [**baseUI**](common/baseUI/README.md): provides a **UI Foundation** for the entire application _(in an **app neutral** way)_, including: **Responsive Design**, **UI Theme**, **Notify** utility activation, **Left Nav** menu items, **User Menu**, **Current View** state, and **Tool Bars**
    - [**auth**](common/auth/README.md): promotes complete user authentication
      - [**authService**](common/auth/subFeatures/authService/README.md): a persistent authentication service (retaining active user)
        - [**authServiceFirebase**](common/auth/subFeatures/authServiceFirebase/AuthServiceFirebase.js): the **real** AuthServiceAPI derivation based on Firebase
        - [**authServiceMock**](common/auth/subFeatures/authServiceMock/AuthServiceMock.js):             the **mock** AuthServiceAPI derivation
-   - [**baseUI**](common/baseUI/README.md): provides a **UI Foundation** for the entire application _(in an **app neutral** way)_,  including: **Responsive Design**, **UI Theme**, **Notify** utility activation, **Left Nav** menu items, **User Menu**, **Current View** state, and **Tool Bars**
    - [**bootstrap**](common/bootstrap/README.md): provide critical-path app initialization through the `'bootstrap.*'` use contract
    - [**initFirebase**](common/initFirebase/README.md): initializes the Google Firebase service when WIFI is enabled
    - [**initGooglePlaces**](common/initGooglePlaces/README.md): initializes the Google Places service service when WIFI is enabled

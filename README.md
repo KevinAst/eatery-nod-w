@@ -30,6 +30,7 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
     - [Deployment]
   - [NPM Scripts]
 - [Revision History]
+  - [v1.1.0]
   - [v1.0.0]
 
 
@@ -288,6 +289,15 @@ Release  | What                                            | *When*
 
 - ?? RUNNING CHANGES HERE HERE
 
+- **Internal Changes:**
+
+  - The [baseUI] feature now **sorts selected menu items by key**,
+    giving complete control over the order in which they appear,
+    irrespective of feature-expansion order.  This includes the **use
+    contracts** for:
+    - [Left Nav]
+    - [User Menu]
+
 </ul></ul>
 
 
@@ -342,6 +352,10 @@ expo mobile app.
  [v1.0.0]:             #v100---initial-release-may-05-2019
 
 
+
+[baseUI]:                    src/features/common/baseUI/README.md
+[Left Nav]:                  src/features/common/baseUI/README.md#left-nav
+[User Menu]:                 src/features/common/baseUI/README.md#user-menu
 
 [feature-u]:                 https://feature-u.js.org/
 [feature-u teaser]:          http://bit.ly/feature-u-teaser

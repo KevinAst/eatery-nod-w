@@ -38,6 +38,8 @@ function LeftNav({classes, leftNavItems}) {
   _openLeftNav          = () => setLeftNavVisible(true);
   const closeLeftNav    = () => setLeftNavVisible(false);
 
+  const orderedLeftNavItems = leftNavItems.sort(([item1Key], [item2Key]) => item1Key.localeCompare(item2Key));
+
   // AI: have seen some usage of tabIndex in <div> under <Drawer> (unsure if needed)
   //     tabIndex={0} ... should be focus-able in sequential keyboard navigation, but its order is defined by the document's source order */}
   return (
@@ -54,7 +56,7 @@ function LeftNav({classes, leftNavItems}) {
           </Toolbar>
         </AppBar>
         <List>
-          {leftNavItems.map( ([fassetsKey, LeftNavItem]) => <LeftNavItem key={fassetsKey}/> )}
+          {orderedLeftNavItems.map( ([fassetsKey, LeftNavItem]) => <LeftNavItem key={fassetsKey}/> )}
         </List>
       </div>
     </Drawer>

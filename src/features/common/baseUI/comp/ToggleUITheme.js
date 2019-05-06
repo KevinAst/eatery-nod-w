@@ -20,11 +20,11 @@ function ToggleUITheme({uiTheme, toggleUITheme}) {
   const label    = uiTheme==='light' ? 'to dark' : 'to light';
   return (
     <>
-      <Divider/>
       <UserMenuItem onClick={toggleUITheme}>
         <Chip label={label}
               icon={<ChipIcon/>}/>
       </UserMenuItem>
+      <Divider/>
     </>
   );
 }

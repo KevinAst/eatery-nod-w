@@ -230,6 +230,10 @@ following **Use Contract**:
 - **`'AppMotif.LeftNavItem.*'`**: `<ListItem>` component entries that
   constitute the **[Left Nav] menu**.
 
+  These entries are **sorted by key**, giving complete control over the
+  order in which they appear, irrespective of feature-expansion
+  order.
+
 </ul>
 
 
@@ -246,9 +250,12 @@ While the User Menu control is promoted through the **baseUI**
 feature, it's content is accumulated from external features through
 the following **Use Contract**:
 
-- **`'AppMotif.UserMenuItem.*'`**: `<UserMenuItem>` component entries that
-  make up the **[User Menu]**.
+- **`'AppMotif.UserMenuItem.*'`**: `<UserMenuItem>` component entries
+  that make up the **[User Menu]**.
 
+  These entries are **sorted by key**, giving complete control over the
+  order in which they appear, irrespective of feature-expansion
+  order.
 
 </ul>
 

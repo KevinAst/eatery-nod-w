@@ -20,6 +20,8 @@ function UserMenu({curUser, userMenuItems}) {
   const openUserMenu = (event) => setAnchorUserMenu(event.currentTarget);
   _closeUserMenu     = ()      => setAnchorUserMenu(null);
 
+  const orderedUserMenuItems = userMenuItems.sort(([item1Key], [item2Key]) => item1Key.localeCompare(item2Key));
+
   return (
     <div>
       <IconButton color="inherit"
@@ -40,7 +42,7 @@ function UserMenu({curUser, userMenuItems}) {
             }}
             open={userMenuOpen}
             onClose={closeUserMenu}>
-        {userMenuItems.map( ([fassetsKey, UserMenuItem]) => <UserMenuItem key={fassetsKey}/> )}
+        {orderedUserMenuItems.map( ([fassetsKey, UserMenuItem]) => <UserMenuItem key={fassetsKey}/> )}
       </Menu>
     </div>
   );
