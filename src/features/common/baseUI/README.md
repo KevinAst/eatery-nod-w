@@ -59,8 +59,35 @@ Resource Key                      | Resource               | Description
 
 ## Main Layout
 
-The **Main Layout** is always in affect.  The **baseUI** feature
-introduces the following **root** html, providing a layout foundation:
+The **Main Layout** is always in affect.  It promotes the Material-UI
+(MUI) theming/styling using a responsive layout, through the re-usable
+top-level `<MainLayout>` component ... auto injected through
+**feature-u**'s Application Life Cycle Hooks:
+
+```js
+ appWillStart({fassets, curRootAppElm}) {
+   return (
+     <MainLayout>
+       {curRootAppElm}
+     </MainLayout>
+   );
+ }
+```
+
+The following items are provided through the  `<MainLayout>` component:
+
+- a **[Responsive Design]** that auto adjusts for desktops, cell phones, and
+  portable devices
+
+- a **[UI Theme]** allowing the user to choose from light/dark renditions
+
+- an **[About Dialog]** is promoted from information gleaned from the `package.json`
+
+- the **[Notify]** utility is activated, supporting programmatic
+  **toasts, alerts, and confirmations**
+
+These items are manifest through the following html (within the
+`<MainLayout>` component):
 
 ```html
 <MainLayout>         ... which in turn includes:
@@ -75,8 +102,6 @@ introduces the following **root** html, providing a layout foundation:
   </MuiThemeProvider>
 </MainLayout>
 ```
-
-These constructs the support the following items:
 
 ### Responsive Design
 
@@ -204,15 +229,21 @@ Here is a rendition of a sign-out confirmation _(from above)_:
 
 ## App Motif
 
-When a user is actively signed in, the `<AppMotif>` element is
-activated, providing:
+AppMotif is a re-usable top-level component that establishes the
+following application characteristics:
 
 - a **[Left Nav]** menu
 - a **[User Menu]** menu
-- a **[Current View]** state _(orchestrating which app view is active)_
+- a **[Current View]** state _(orchestrating which application view is active)_
 - a **[Tool Bar]** with various artifacts (ex: title bar and footer)
 
 <p align="center"><img src="docs/AppMotifAnnotated.png" alt="App Motif Annotated" width="70%"></p>
+
+While these controls are promoted through AppMotif, it's content is
+accumulated from external features through various **Use Contracts**.
+
+AppMotif is auto injected through the [Main Layout] component,
+however, it is only active when an active user is **signed-in**.
 
 ### Left Nav
 

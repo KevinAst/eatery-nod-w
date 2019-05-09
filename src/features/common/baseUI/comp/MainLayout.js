@@ -12,27 +12,24 @@ import {getUITheme}       from '../state';
 
 
 /**
- * ?? rework description
- *
  * MainLayout is a re-usable top-level component that promotes the
- * proper Material-UI (MUI) theming/styling WITH a reactive layout.
+ * proper Material-UI (MUI) theming/styling WITH a responsive layout.
+ * 
+ * The following items are provided through this component:
  *
- * ?? rethink this comment:
- * Typically, this is used implicitly through AppMotif, however some
- * components that are NOT part of AppMotif (like SignIn) will use
- * MainLayout explicitly.
+ * - a **Responsive Design** that auto adjusts for desktops, cell
+ *   phones, and portable devices
+ *
+ * - a **UI Theme** allowing the user to choose from light/dark
+ *   renditions
+ *
+ * - an **About Dialog** is promoted from information gleaned from the
+ *   `package.json`
+ *
+ * - the **Notify** utility is activated, supporting programmatic
+ *   **toasts, alerts, and confirmations**
  * 
- * USAGE:
- * ```
- *   <MainLayout>
- *     ... content here
- *   </MainLayout>
- * ```
- * 
- * NOTE: This implementation was initially gleaned from the MUI
- *       Sign-in page layout example.
- *        - Visual: https://material-ui.com/getting-started/page-layout-examples/sign-in/
- *        - Source: https://github.com/mui-org/material-ui/blob/master/docs/src/pages/getting-started/page-layout-examples/sign-in/MainLayout.js
+ * Please refer to the **`baseUI` README** for more information.
  */
 
 const lightTheme = createMuiTheme({
@@ -65,10 +62,10 @@ const mainStyles = (theme) => ({
   main: {
     width:        'auto',
     display:      'block', // Fix IE 11 issue.
-    //marginLeft:   theme.spacing.unit * 3, // KJB: ?? bad news for the overall layout
+    //marginLeft:   theme.spacing.unit * 3, // AI: ?? bad news for the overall layout
     //marginRight:  theme.spacing.unit * 3,
 
-    // reactive design ?? KJB: better understand // KJB: ?? THIS IS CAUSING HAVOC on my main content container overall width
+    // reactive design // AI: ?? THIS IS CAUSING HAVOC on my main content container overall width
     //? [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
     //?   width:       400,
     //?   marginLeft:  'auto',

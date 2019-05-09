@@ -19,21 +19,32 @@ import Typography     from '@material-ui/core/Typography';
 
 
 /**
- * ?? rework description
+ * AppMotif is a re-usable top-level component that establishes
+ * the following application characteristics:
  * 
- * AppMotif is a re-usable top-level layout component that
- * establishes the application characteristics like Tool Bar, Left
- * Nav, etc.
+ * - a **Left Nav** menu
+ * - a **User Menu** menu
+ * - a **Current View** state _(orchestrating which application view is active)_
+ * - a **Tool Bar** with various artifacts (ex: title bar and footer)
+ * 
+ * While these controls are promoted through AppMotif, it's content
+ * is accumulated from external features through various **Use
+ * Contracts**.
+
+ * AppMotif is auto injected through the MainLayout component,
+ * however, it is only active when an active user is **signed-in**.
  * 
  * The main page content is rendered as children of this component
- * (like eateries and discovery).
+ * (like eateries, discovery, etc.).
  *
  * USAGE:
  * ```
  *   <AppMotif>
- *     ... page content here
+ *     ... app page content here
  *   </AppMotif>
  * ```
+ * 
+ * Please refer to the **`baseUI` README** for more information.
  */
 
 const appStyles = (theme) => ({
