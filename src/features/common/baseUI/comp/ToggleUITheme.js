@@ -1,6 +1,9 @@
-import React         from 'react';
+import React,
+       {useMemo,
+        useCallback} from 'react';
 
-import withState     from 'util/withState';
+import {useSelector,
+        useDispatch} from 'react-redux'
 
 import _baseUIAct    from '../actions';
 import {getUITheme}  from '../state';
@@ -15,9 +18,16 @@ import UserMenuItem  from 'features/common/baseUI/comp/UserMenuItem';
 /**
  * ToggleUITheme: our user-profile menu items (in the App Header)
  */
-function ToggleUITheme({uiTheme, toggleUITheme}) {
-  const ChipIcon = uiTheme==='light' ? MoonIcon  : SunIcon;
-  const label    = uiTheme==='light' ? 'to dark' : 'to light';
+export default function ToggleUITheme() {
+  
+  const uiTheme = useSelector((appState) => getUITheme(appState), []);
+
+  const ChipIcon = useMemo(() => uiTheme==='light' ? MoonIcon  : SunIcon,    [uiTheme]);
+  const label    = useMemo(() => uiTheme==='light' ? 'to dark' : 'to light', [uiTheme]);
+
+  const dispatch      = useDispatch();
+  const toggleUITheme = useCallback(() => dispatch( _baseUIAct.toggleUITheme() ), []);
+
   return (
     <>
       <UserMenuItem onClick={toggleUITheme}>
@@ -28,19 +38,3 @@ function ToggleUITheme({uiTheme, toggleUITheme}) {
     </>
   );
 }
-
-export default /* ToggleUIThemeWithState = */ withState({
-  component: ToggleUITheme,
-  mapStateToProps(appState) {
-    return {
-      uiTheme: getUITheme(appState),
-    };
-  },
-  mapDispatchToProps(dispatch) {
-    return {
-      toggleUITheme() {
-        dispatch( _baseUIAct.toggleUITheme() );
-      },
-    };
-  },
-});

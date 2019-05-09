@@ -1,10 +1,13 @@
-import React         from 'react';
+import React,
+       {useCallback} from 'react';
+
+import {useFassets}  from 'util/useFassets'; // ?? really 'feature-u'
+import {useDispatch} from 'react-redux'
+
 import _eateries     from '../featureName';
 import _eateriesAct  from '../actions';
 
 import withStyles    from '@material-ui/core/styles/withStyles';
-import {withFassets} from 'feature-u';
-import withState     from 'util/withState';
 
 import Divider                  from '@material-ui/core/Divider';
 import ListItem                 from '@material-ui/core/ListItem';
@@ -18,7 +21,12 @@ import IconButton               from '@material-ui/core/IconButton';
 /**
  * EateryLeftNavItem: our Eatery entry into the LeftNav.
  */
-function EateryLeftNavItem({classes, changeView, handleFilter}) {
+function EateryLeftNavItem({classes}) {
+
+  const fassets      = useFassets();
+  const dispatch     = useDispatch();
+  const changeView   = useCallback(() => dispatch( fassets.actions.changeView(_eateries) ), [fassets]);
+  const handleFilter = useCallback(() => dispatch( _eateriesAct.filterForm.open() ),        [fassets]);
 
   // render our menu item
   return (
@@ -36,27 +44,6 @@ function EateryLeftNavItem({classes, changeView, handleFilter}) {
   );
 }
 
-const EateryLeftNavItemWithState = withState({
-  component: EateryLeftNavItem,
-  mapDispatchToProps(dispatch, {fassets}) {// ... fassets available in ownProps (via withFassets() below)
-    return {
-      changeView() {
-        dispatch( fassets.actions.changeView(_eateries) );
-      },
-      handleFilter() {
-        dispatch( _eateriesAct.filterForm.open() );
-      },
-    };
-  },
-});
-
-const EateryLeftNavItemWithFassets = withFassets({
-  component: EateryLeftNavItemWithState,
-  mapFassetsToProps: {
-    fassets: '.', // ... introduce fassets into props via the '.' keyword
-  }
-});
-
 const styles = (theme) => ({
   major: {
     color: theme.palette.grey.A200, // light grey (or redish: theme.palette.secondary.main
@@ -66,4 +53,4 @@ const styles = (theme) => ({
   },
 });
 
-export default /* EateryLeftNavItemWithStyle = */  withStyles(styles)(EateryLeftNavItemWithFassets);
+export default /* EateryLeftNavItemWithStyle = */  withStyles(styles)(EateryLeftNavItem);

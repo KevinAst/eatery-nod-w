@@ -1,6 +1,9 @@
-import React             from 'react';
+import React,
+       {useCallback}     from 'react';
 
-import withState         from 'util/withState';
+import {useSelector,
+        useDispatch}  from 'react-redux'
+
 import {withStyles}      from '@material-ui/core/styles';
 import withMobileDialog  from '@material-ui/core/withMobileDialog';
 
@@ -65,7 +68,14 @@ function CenterItems({children}) {
 /**
  * SignInVerifyScreen requesting email verification completion.
  */
-function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification, signOut, fullScreen, classes}) {
+function SignInVerifyScreen({fullScreen, classes}) {
+
+  const email = useSelector((appState) => _authSel.curUser(appState).email, []);
+
+  const dispatch = useDispatch();
+  const checkEmailVerified      = useCallback(() => dispatch( _authAct.signIn.checkEmailVerified() ),      []);
+  const resendEmailVerification = useCallback(() => dispatch( _authAct.signIn.resendEmailVerification() ), []);
+  const signOut                 = useCallback(() => dispatch( _authAct.signOut() ),                        []);
 
   return (
     <Dialog open={true}
@@ -143,29 +153,7 @@ function SignInVerifyScreen({email, checkEmailVerified, resendEmailVerification,
   );
 }
 
-const SignInVerifyScreenWithState = withState({
-  component: SignInVerifyScreen,
-  mapStateToProps(appState) {
-    return {
-      email: _authSel.curUser(appState).email,
-    };
-  },
-  mapDispatchToProps(dispatch) {
-    return {
-      checkEmailVerified() {
-        dispatch( _authAct.signIn.checkEmailVerified() );
-      },
-      resendEmailVerification() {
-        dispatch( _authAct.signIn.resendEmailVerification() );
-      },
-      signOut() {
-        dispatch( _authAct.signOut() );
-      },
-    };
-  },
-});
-
-const SignInVerifyScreenWithStyles = withStyles(styles)(SignInVerifyScreenWithState);
+const SignInVerifyScreenWithStyles = withStyles(styles)(SignInVerifyScreen);
 
 // inject responsive `fullScreen` true/false prop based on screen size
 // ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl

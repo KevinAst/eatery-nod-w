@@ -24,6 +24,7 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
   - [Authorization]
 - [Technical]
   - [Feature Based Development]
+  - [React Hooks]
   - [Dependencies]
     - [Runtime Stack]
     - [Tooling]
@@ -137,6 +138,20 @@ You can find more information about **[feature-u]** here:
 - **[feature-u repo]**
 
 
+## React Hooks
+
+This project uses the [React] UI Framework _(maintained by Facebook)_,
+and employs it's latest and **most exciting feature called [Hooks]**.
+
+**Hooks** allow you to **"hook into"** React state and lifecycle
+aspects _from functional components_.  They greatly simplify the UI
+implementation _over the alternative of Higher Order Components
+([HoC])_.
+
+Here is a [before/after
+hooks](https://github.com/KevinAst/eatery-nod-w/compare/beforeHooks...afterHooks)
+source comparison for this project.
+
 
 ## Dependencies
 
@@ -149,7 +164,7 @@ In case your wondering what all those dependencies are in
 
 The runtime stack used by **eatery-nod** is:
 
-- [React](https://reactjs.org/): the UI framework
+- [React]: the UI framework
   `"react", "react-dom"`
 
 - [Material-UI](https://material-ui.com/): the UI component library
@@ -289,7 +304,10 @@ Release  | What                                            | *When*
 
 - ?? RUNNING CHANGES HERE HERE
 
-- **Internal Changes:**
+- **Technical Changes:**
+
+  - React [Hooks] are now used in place of Higher Order Components
+    ([HoC]) ... read about it [here](#react-hooks).
 
   - The [baseUI] feature now **sorts selected menu items by key**,
     giving complete control over the order in which they appear,
@@ -340,6 +358,7 @@ expo mobile app.
 
 [Technical]:                 #technical
 [Feature Based Development]: #feature-based-development
+[React Hooks]:               #react-hooks
 [Dependencies]:              #dependencies
 [Runtime Stack]:             #runtime-stack
 [Tooling]:                   #tooling
@@ -356,6 +375,10 @@ expo mobile app.
 [baseUI]:                    src/features/common/baseUI/README.md
 [Left Nav]:                  src/features/common/baseUI/README.md#left-nav
 [User Menu]:                 src/features/common/baseUI/README.md#user-menu
+
+[React]:                     https://reactjs.org/
+[HoC]:                       https://reactjs.org/docs/higher-order-components.html
+[Hooks]:                     https://reactjs.org/docs/hooks-overview.html
 
 [feature-u]:                 https://feature-u.js.org/
 [feature-u teaser]:          http://bit.ly/feature-u-teaser

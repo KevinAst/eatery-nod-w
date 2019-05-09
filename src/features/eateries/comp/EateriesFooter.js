@@ -1,6 +1,7 @@
-import React             from 'react';
+import React,
+       {useCallback}     from 'react';
+import {useDispatch}     from 'react-redux'
 
-import withState         from 'util/withState';
 import _eateriesAct      from '../actions';
 
 import Grid              from '@material-ui/core/Grid';
@@ -13,7 +14,11 @@ import Typography        from '@material-ui/core/Typography';
 /**
  * EateriesFooter displaying the spin control
  */
-function EateriesFooter({handleSpin}) {
+export default function EateriesFooter() {
+
+  const dispatch   = useDispatch();
+  const handleSpin = useCallback(() => dispatch( _eateriesAct.spin() ), []);
+
   return (
     <Grid container direction="row" justify="space-between" alignItems="center">
       <Typography>&nbsp;</Typography>
@@ -27,14 +32,3 @@ function EateriesFooter({handleSpin}) {
     </Grid>
   );
 }
-
-export default /* EateriesFooterWithState = */ withState({
-  component: EateriesFooter,
-  mapDispatchToProps(dispatch) {
-    return {
-      handleSpin() {
-        dispatch( _eateriesAct.spin() );
-      },
-    };
-  },
-});

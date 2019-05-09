@@ -1,6 +1,7 @@
-import React              from 'react';
+import React,
+       {useMemo}          from 'react';
+import {useSelector}      from 'react-redux'
 import PropTypes          from 'prop-types';
-import withState          from 'util/withState';
 import withStyles         from '@material-ui/core/styles/withStyles';
 import {MuiThemeProvider,      // NOTE: MuiThemeProvider **SHOULD** be at the root of ALL visible components
         createMuiTheme}   from '@material-ui/core/styles';
@@ -76,8 +77,10 @@ const mainStyles = (theme) => ({
   },
 });
 
-function MainLayout({uiTheme, classes, children}) {
-  const themeInUse = uiTheme==='dark' ? darkTheme : lightTheme;
+function MainLayout({classes, children}) {
+
+  const uiTheme    = useSelector((appState) => getUITheme(appState), []);
+  const themeInUse = useMemo(() => uiTheme==='dark' ? darkTheme : lightTheme, [uiTheme]);
 
   return (
     <MuiThemeProvider theme={themeInUse}>
@@ -93,17 +96,7 @@ function MainLayout({uiTheme, classes, children}) {
 }
 
 MainLayout.propTypes = {
-  children:     PropTypes.node.isRequired,
-  classes:      PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-const MainLayoutWithState = withState({
-  component: MainLayout,
-  mapStateToProps(appState) {
-    return {
-      uiTheme: getUITheme(appState),
-    };
-  },
-});
-
-export default /* MainLayoutWithStyles = */ withStyles(mainStyles)(MainLayoutWithState);
+export default /* MainLayoutWithStyles = */ withStyles(mainStyles)(MainLayout);

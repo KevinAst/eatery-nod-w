@@ -1,6 +1,8 @@
 import React             from 'react';
 
-import withState         from 'util/withState';
+import {useSelector,
+        useDispatch}     from 'react-redux'
+
 import {withStyles}      from '@material-ui/core/styles';
 import withMobileDialog  from '@material-ui/core/withMobileDialog';
 
@@ -74,7 +76,12 @@ function CenterItems({children}) {
 /**
  * SignInScreen: gather user sign-in credentials.
  */
-function SignInScreen({iForm, fullScreen, classes}) {
+function SignInScreen({fullScreen, classes}) {
+
+  const dispatch  = useDispatch();
+  const formState = useSelector((appState) => signInFormMeta.formStateSelector(appState), []);
+
+  const iForm = signInFormMeta.IForm(formState, dispatch); // AI: unsure if I should wrap in useMemo()
 
   const formLabel     = iForm.getLabel();
   const formInProcess = iForm.inProcess();
@@ -172,25 +179,7 @@ function SignInScreen({iForm, fullScreen, classes}) {
 
 }
 
-const SignInScreenWithState = withState({
-  component: SignInScreen,
-  mapStateToProps(appState) {
-    return {
-      formState: signInFormMeta.formStateSelector(appState),
-    };
-  },
-  mergeProps(stateProps, dispatchProps, ownProps) {
-    return {
-      ...ownProps,
-      //...stateProps,    // unneeded (in this case) ... wonder: does this impact connect() optimization?
-      //...dispatchProps, // ditto
-      iForm: signInFormMeta.IForm(stateProps.formState, 
-                                  dispatchProps.dispatch),
-    };
-  },
-});
-
-const SignInScreenWithStyles = withStyles(styles)(SignInScreenWithState);
+const SignInScreenWithStyles = withStyles(styles)(SignInScreen);
 
 // inject responsive `fullScreen` true/false prop based on screen size
 // ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
