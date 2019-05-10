@@ -2,7 +2,7 @@ import React,
        {useCallback}    from 'react';
 import PropTypes        from 'prop-types';
 
-import {useFassets}   from 'util/useFassets'; // ?? really 'feature-u'
+import {useFassets}   from 'feature-u';
 import {useSelector,
         useDispatch}  from 'react-redux'
 

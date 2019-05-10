@@ -1,7 +1,7 @@
 import React,
        {useCallback} from 'react';
 
-import {useFassets}  from 'util/useFassets'; // ?? really 'feature-u'
+import {useFassets}  from 'feature-u';
 import {useDispatch} from 'react-redux'
 
 import _eateries     from '../featureName';

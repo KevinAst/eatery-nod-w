@@ -3,7 +3,7 @@ import React,
         useMemo}      from 'react';
 import PropTypes      from 'prop-types';
 
-import {useFassets}   from 'util/useFassets'; // ?? really 'feature-u'
+import {useFassets}   from 'feature-u';
 
 import IconButton     from '@material-ui/core/IconButton';
 import Menu           from '@material-ui/core/Menu';

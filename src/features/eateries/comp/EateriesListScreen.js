@@ -1,7 +1,6 @@
 import React,
        {useCallback}       from 'react';
 
-import {useFassets}        from 'util/useFassets'; // ?? really 'feature-u'
 import {useSelector,
         useDispatch}       from 'react-redux'
 
@@ -24,13 +23,10 @@ import SplashScreen        from 'util/SplashScreen';
  */
 export default function EateriesListScreen({classes}) {
 
-  const fassets = useFassets();
-
   const filteredEateries = useSelector((appState) => _eateriesSel.getFilteredEateries(appState), []);
   const filter           = useSelector((appState) => _eateriesSel.getListViewFilter(appState),   []);
   const selectedEatery   = useSelector((appState) => _eateriesSel.getSelectedEatery(appState),   []);
   const spinMsg          = useSelector((appState) => _eateriesSel.getSpinMsg(appState),          []);
-  const curUser          = useSelector((appState) => fassets.sel.curUser(appState),              [fassets]);
 
   const dispatch    = useDispatch();
   const showDetail  = useCallback((eateryId) => {

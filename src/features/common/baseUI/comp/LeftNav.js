@@ -2,7 +2,7 @@ import React,
        {useCallback,
         useMemo}       from 'react';
 
-import {useFassets}    from 'util/useFassets'; // ?? really 'feature-u'
+import {useFassets}    from 'feature-u';
 import withStyles      from '@material-ui/core/styles/withStyles';
 
 import AppBar          from '@material-ui/core/AppBar';

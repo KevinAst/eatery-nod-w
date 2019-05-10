@@ -4,7 +4,7 @@ import React,
 import _discovery      from '../featureName';
 import _discoveryAct   from '../actions';
 
-import {useFassets}    from 'util/useFassets'; // ?? really 'feature-u'
+import {useFassets}    from 'feature-u';
 import {useDispatch}   from 'react-redux'
 
 import withStyles      from '@material-ui/core/styles/withStyles';

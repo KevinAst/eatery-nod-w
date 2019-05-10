@@ -48,6 +48,7 @@
     "feature-redux": "^1.0.0",
     "feature-redux-logic": "^1.0.0",
     "feature-router": "^1.0.0",
+    "feature-u": "^2.0.0",
     "firebase": "^5.9.0",
     "geodist": "^0.2.1",
     "lodash.isequal": "^4.5.0",

@@ -2,7 +2,7 @@ import React,
        {useMemo}      from 'react';
 import PropTypes      from 'prop-types';
 
-import {useFassets}   from 'util/useFassets'; // ?? really 'feature-u'
+import {useFassets}   from 'feature-u';
 import {useSelector}  from 'react-redux'
 
 import withStyles     from '@material-ui/core/styles/withStyles';

@@ -1,6 +1,6 @@
 import React             from 'react';
 
-import {useFassets}      from 'util/useFassets'; // ?? really 'feature-u'
+import {useFassets}      from 'feature-u';
 import {useSelector}     from 'react-redux'
 
 import * as _eateriesSel from '../state';
