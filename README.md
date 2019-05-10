@@ -31,7 +31,7 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
     - [Deployment]
   - [NPM Scripts]
 - [Revision History]
-  - [v1.1.0]
+  - [v2.0.0]
   - [v1.0.0]
 
 
@@ -284,37 +284,36 @@ eject ..... eject the Create React App project tooling
 
 ## Revision History
 
+
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
-[v1.1.0] | TODO                                            | *May xx, 2019*
+[v2.0.0] | React Hooks                                     | *May 10, 2019*
 [v1.0.0] | Initial Release                                 | *May 05, 2019*
 
 
 <!-- *** RELEASE *************************************************************** -->
 
-### v1.1.0 - TODO *(May xx, 2019)*
+### v2.0.0 - React Hooks *(May 10, 2019)*
 
 <ul><ul><!--- indentation hack ---> 
 
-[GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v1.1.0)
+[GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v2.0.0)
 &bull;
-[GitHub Release](https://github.com/KevinAst/eatery-nod-w/releases/tag/v1.1.0)
+[GitHub Release](https://github.com/KevinAst/eatery-nod-w/releases/tag/v2.0.0)
 &bull;
-[Diff](https://github.com/KevinAst/eatery-nod-w/compare/v1.0.0...v1.1.0)
+[Diff](https://github.com/KevinAst/eatery-nod-w/compare/v1.0.0...v2.0.0)
 
-- ?? RUNNING CHANGES HERE HERE
+**Technical Changes:**
 
-- **Technical Changes:**
+- React [Hooks] are now used in place of Higher Order Components
+  ([HoC]) ... read about it [here](#react-hooks).
 
-  - React [Hooks] are now used in place of Higher Order Components
-    ([HoC]) ... read about it [here](#react-hooks).
-
-  - The [baseUI] feature now **sorts selected menu items by key**,
-    giving complete control over the order in which they appear,
-    irrespective of feature-expansion order.  This includes the **use
-    contracts** for:
-    - [Left Nav]
-    - [User Menu]
+- The [baseUI] feature now **sorts selected menu items by key**,
+  giving complete control over the order in which they appear,
+  irrespective of feature-expansion order.  This includes the **use
+  contracts** for:
+  - [Left Nav]
+  - [User Menu]
 
 </ul></ul>
 
@@ -367,7 +366,7 @@ expo mobile app.
 [NPM Scripts]:               #npm-scripts
 
 [Revision History]:    #revision-history
- [v1.1.0]:             #v110---todo-may-xx-2019
+ [v2.0.0]:             #v200---react-hooks-may-10-2019
  [v1.0.0]:             #v100---initial-release-may-05-2019
 
 
