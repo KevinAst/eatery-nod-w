@@ -1,9 +1,12 @@
-import React            from 'react';
+import React,
+       {useCallback}    from 'react';
 import PropTypes        from 'prop-types';
 
-import {withFassets}    from 'feature-u';
+import {useFassets}   from 'feature-u';
+import {useSelector,
+        useDispatch}  from 'react-redux'
+
 import {withStyles}     from '@material-ui/core/styles';
-import withState        from 'util/withState';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 import _eateriesAct     from '../actions';
@@ -49,7 +52,14 @@ const styles = theme => ({
 /**
  * EateryDetailScreen displaying the details of a given eatery.
  */
-function EateryDetailScreen({curUser, eatery, handleClose, handleSpin, fullScreen, classes}) {
+function EateryDetailScreen({eatery, fullScreen, classes}) {
+
+  const fassets = useFassets();
+  const curUser = useSelector((appState) => fassets.sel.curUser(appState), [fassets]);
+
+  const dispatch    = useDispatch();
+  const handleClose = useCallback(() => dispatch( _eateriesAct.viewDetail.close() ), []);
+  const handleSpin  = useCallback(() => dispatch( _eateriesAct.spin() ),             []);
 
   return (
     <Dialog open={true}
@@ -145,36 +155,9 @@ function EateryDetailScreen({curUser, eatery, handleClose, handleSpin, fullScree
 
 EateryDetailScreen.propTypes = {
   eatery:     PropTypes.object.isRequired,
-  fullScreen: PropTypes.bool.isRequired,
 };
 
-const EateryDetailScreenWithState = withState({
-  component: EateryDetailScreen,
-  mapStateToProps(appState, {fassets}) { // ... fassets available in ownProps (via withFassets() below)
-    return {
-      curUser: fassets.sel.curUser(appState),
-    };
-  },
-  mapDispatchToProps(dispatch) {
-    return {
-      handleClose() {
-        dispatch( _eateriesAct.viewDetail.close() );
-      },
-      handleSpin() {
-        dispatch( _eateriesAct.spin() );
-      },
-    };
-  },
-});
-
-const EateryDetailScreenWithFassets = withFassets({
-  component: EateryDetailScreenWithState,
-  mapFassetsToProps: {
-    fassets: '.', // introduce fassets into props via the '.' keyword
-  }
-});
-
-const EateryDetailScreenWithStyles = withStyles(styles)(EateryDetailScreenWithFassets);
+const EateryDetailScreenWithStyles = withStyles(styles)(EateryDetailScreen);
 
 // inject responsive `fullScreen` true/false prop based on screen size
 // ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl

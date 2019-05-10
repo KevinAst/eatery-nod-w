@@ -1,7 +1,8 @@
-import React               from 'react';
-import {withFassets}       from 'feature-u';
-import withState           from 'util/withState';
-import withStyles          from '@material-ui/core/styles/withStyles';
+import React,
+       {useCallback}       from 'react';
+
+import {useSelector,
+        useDispatch}       from 'react-redux'
 
 import _eateriesAct        from '../actions';
 import * as _eateriesSel   from '../state';
@@ -16,16 +17,22 @@ import ListItemText        from '@material-ui/core/ListItemText';
 import EateryDetailScreen  from './EateryDetailScreen';
 import SplashScreen        from 'util/SplashScreen';
 
-const listStyles = (theme) => ({ // ?? NOT currently used ... a big fat no-op
-  list: {
-  },
-});
-
 
 /**
  * EateriesListScreen displaying a set of eateries (possibly filtered).
  */
-function EateriesListScreen({classes, curUser, filteredEateries, filter, selectedEatery, spinMsg, showDetail}) {
+export default function EateriesListScreen({classes}) {
+
+  const filteredEateries = useSelector((appState) => _eateriesSel.getFilteredEateries(appState), []);
+  const filter           = useSelector((appState) => _eateriesSel.getListViewFilter(appState),   []);
+  const selectedEatery   = useSelector((appState) => _eateriesSel.getSelectedEatery(appState),   []);
+  const spinMsg          = useSelector((appState) => _eateriesSel.getSpinMsg(appState),          []);
+
+  const dispatch    = useDispatch();
+  const showDetail  = useCallback((eateryId) => {
+    //console.log(`xx showDetail for ${eateryId}`);
+    dispatch( _eateriesAct.viewDetail(eateryId) );
+  }, []);
 
   if (!filteredEateries) {
     return <SplashScreen msg="... waiting for pool entries"/>;
@@ -86,41 +93,11 @@ function EateriesListScreen({classes, curUser, filteredEateries, filter, selecte
 
   return (
     <>
-      <List className={classes.list}>
+      <List>
         { listContent() }
       </List>
-      {spinMsg && <SplashScreen msg={spinMsg}/>}
+      {spinMsg        && <SplashScreen msg={spinMsg}/>}
       {selectedEatery && <EateryDetailScreen eatery={selectedEatery}/>}
     </>
   );
 }
-
-const EateriesListScreenWithState = withState({
-  component: EateriesListScreen,
-  mapStateToProps(appState, {fassets}) { // ... fassets available in ownProps (via withFassets() below)
-    return {
-      filteredEateries: _eateriesSel.getFilteredEateries(appState),
-      filter:           _eateriesSel.getListViewFilter(appState),
-      selectedEatery:   _eateriesSel.getSelectedEatery(appState),
-      spinMsg:          _eateriesSel.getSpinMsg(appState),
-      curUser:          fassets.sel.curUser(appState),
-    };
-  },
-  mapDispatchToProps(dispatch) {
-    return {
-      showDetail(eateryId) {
-        //console.log(`xx showDetail for ${eateryId}`);
-        dispatch( _eateriesAct.viewDetail(eateryId) );
-      },
-    };
-  },
-});
-
-const EateriesListScreenWithFassets =  withFassets({
-  component: EateriesListScreenWithState,
-  mapFassetsToProps: {
-    fassets: '.', // introduce fassets into props via the '.' keyword
-  }
-});
-
-export default /* EateriesListScreenWithStyles = */ withStyles(listStyles)(EateriesListScreenWithFassets);

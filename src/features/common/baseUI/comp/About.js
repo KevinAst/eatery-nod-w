@@ -13,7 +13,7 @@ export default function About() {
   return (
     <>
       <Divider/>
-      <UserMenuItem onClick={showAbout}>About</UserMenuItem>
+      <UserMenuItem onClick={showAbout}>About ...</UserMenuItem>
     </>
   );
 }

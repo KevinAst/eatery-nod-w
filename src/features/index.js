@@ -27,7 +27,7 @@ export default [
   //*** app-specific features
   //***
 
-  eateries, // ... ORDER: before `discovery` feature to promote Pool left-nav FIRST
+  eateries,
   eateryService,
   eateryServiceFirebase,
   eateryServiceMock,
@@ -41,13 +41,13 @@ export default [
   //***
   //*** common app-neutral features
   //***
+
+  baseUI,
   
   auth,
   authService,
   authServiceFirebase,
   authServiceMock,
-
-  baseUI, // ... ORDER: after `auth` feature to promote UITheme user-menu LAST
   
   bootstrap,
   

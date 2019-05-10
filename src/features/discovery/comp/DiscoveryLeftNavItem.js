@@ -1,9 +1,12 @@
-import React           from 'react';
+import React,
+       {useCallback}   from 'react';
+
 import _discovery      from '../featureName';
 import _discoveryAct   from '../actions';
 
-import {withFassets}   from 'feature-u';
-import withState       from 'util/withState';
+import {useFassets}    from 'feature-u';
+import {useDispatch}   from 'react-redux'
+
 import withStyles      from '@material-ui/core/styles/withStyles';
 
 import DiscoveryIcon            from '@material-ui/icons/CloudDone';
@@ -18,7 +21,12 @@ import SettingsIcon             from '@material-ui/icons/Tune';           // pos
 /**
  * DiscoveryLeftNavItem: our Discovery entry into the LeftNav.
  */
-function DiscoveryLeftNavItem({classes, changeView, handleFilter}) {
+function DiscoveryLeftNavItem({classes}) {
+
+  const fassets      = useFassets();
+  const dispatch     = useDispatch();
+  const changeView   = useCallback(() => dispatch( fassets.actions.changeView(_discovery) ), [fassets]);
+  const handleFilter = useCallback(() => dispatch( _discoveryAct.filterForm.open() ),        []);
 
   // render our menu item
   return (
@@ -36,27 +44,6 @@ function DiscoveryLeftNavItem({classes, changeView, handleFilter}) {
   );
 }
 
-const DiscoveryLeftNavItemWithState = withState({
-  component: DiscoveryLeftNavItem,
-  mapDispatchToProps(dispatch, {fassets}) { // ... fassets available in ownProps (via withFassets() below)
-    return {
-      changeView() {
-        dispatch( fassets.actions.changeView(_discovery) );
-      },
-      handleFilter() {
-        dispatch( _discoveryAct.filterForm.open() );
-      },
-    };
-  },
-});
-
-const DiscoveryLeftNavItemWithFassets = withFassets({
-  component: DiscoveryLeftNavItemWithState,
-  mapFassetsToProps: {
-    fassets: '.', // ... introduce fassets into props via the '.' keyword
-  }
-});
-
 const styles = (theme) => ({
   major: {
     color: theme.palette.secondary.main, // redish
@@ -66,4 +53,4 @@ const styles = (theme) => ({
   },
 });
 
-export default /* DiscoveryLeftNavItemWithStyle = */  withStyles(styles)(DiscoveryLeftNavItemWithFassets);
+export default /* DiscoveryLeftNavItemWithStyle = */  withStyles(styles)(DiscoveryLeftNavItem);

@@ -24,12 +24,14 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
   - [Authorization]
 - [Technical]
   - [Feature Based Development]
+  - [React Hooks]
   - [Dependencies]
     - [Runtime Stack]
     - [Tooling]
     - [Deployment]
   - [NPM Scripts]
 - [Revision History]
+  - [v2.0.0]
   - [v1.0.0]
 
 
@@ -136,6 +138,20 @@ You can find more information about **[feature-u]** here:
 - **[feature-u repo]**
 
 
+## React Hooks
+
+This project uses the [React] UI Framework _(maintained by Facebook)_,
+and employs it's latest and **most exciting feature called [Hooks]**.
+
+**Hooks** allow you to **"hook into"** React state and lifecycle
+aspects _from functional components_.  They greatly simplify the UI
+implementation _over the alternative of Higher Order Components
+([HoC])_.
+
+Here is a [before/after
+hooks](https://github.com/KevinAst/eatery-nod-w/compare/beforeHooks...afterHooks)
+source comparison for this project.
+
 
 ## Dependencies
 
@@ -148,7 +164,7 @@ In case your wondering what all those dependencies are in
 
 The runtime stack used by **eatery-nod** is:
 
-- [React](https://reactjs.org/): the UI framework
+- [React]: the UI framework
   `"react", "react-dom"`
 
 - [Material-UI](https://material-ui.com/): the UI component library
@@ -268,9 +284,39 @@ eject ..... eject the Create React App project tooling
 
 ## Revision History
 
+
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
+[v2.0.0] | React Hooks                                     | *May 10, 2019*
 [v1.0.0] | Initial Release                                 | *May 05, 2019*
+
+
+<!-- *** RELEASE *************************************************************** -->
+
+### v2.0.0 - React Hooks *(May 10, 2019)*
+
+<ul><ul><!--- indentation hack ---> 
+
+[GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v2.0.0)
+&bull;
+[GitHub Release](https://github.com/KevinAst/eatery-nod-w/releases/tag/v2.0.0)
+&bull;
+[Diff](https://github.com/KevinAst/eatery-nod-w/compare/v1.0.0...v2.0.0)
+
+**Technical Changes:**
+
+- React [Hooks] are now used in place of Higher Order Components
+  ([HoC]) ... read about it [here](#react-hooks).
+
+- The [baseUI] feature now **sorts selected menu items by key**,
+  giving complete control over the order in which they appear,
+  irrespective of feature-expansion order.  This includes the **use
+  contracts** for:
+  - [Left Nav]
+  - [User Menu]
+
+</ul></ul>
+
 
 
 <!-- *** RELEASE *************************************************************** -->
@@ -311,6 +357,7 @@ expo mobile app.
 
 [Technical]:                 #technical
 [Feature Based Development]: #feature-based-development
+[React Hooks]:               #react-hooks
 [Dependencies]:              #dependencies
 [Runtime Stack]:             #runtime-stack
 [Tooling]:                   #tooling
@@ -319,9 +366,18 @@ expo mobile app.
 [NPM Scripts]:               #npm-scripts
 
 [Revision History]:    #revision-history
+ [v2.0.0]:             #v200---react-hooks-may-10-2019
  [v1.0.0]:             #v100---initial-release-may-05-2019
 
 
+
+[baseUI]:                    src/features/common/baseUI/README.md
+[Left Nav]:                  src/features/common/baseUI/README.md#left-nav
+[User Menu]:                 src/features/common/baseUI/README.md#user-menu
+
+[React]:                     https://reactjs.org/
+[HoC]:                       https://reactjs.org/docs/higher-order-components.html
+[Hooks]:                     https://reactjs.org/docs/hooks-overview.html
 
 [feature-u]:                 https://feature-u.js.org/
 [feature-u teaser]:          http://bit.ly/feature-u-teaser

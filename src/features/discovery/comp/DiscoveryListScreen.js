@@ -1,7 +1,10 @@
-import React         from 'react';
+import React,
+       {useCallback} from 'react';
 
-import {withFassets} from 'feature-u';
-import withState     from 'util/withState';
+import {useFassets}  from 'feature-u';
+import {useSelector,
+        useDispatch} from 'react-redux'
+
 import withStyles    from '@material-ui/core/styles/withStyles';
 
 import _discoveryAct      from '../actions';
@@ -34,7 +37,34 @@ const listStyles = (theme) => ({
 /**
  * DiscoveryListScreen displaying our discoveries.
  */
-function DiscoveryListScreen({inProgress, discoveries, nextPageToken, eateryPool, toggleEateryPool, handleNextPage, handleFilterDiscovery, classes}) {
+function DiscoveryListScreen({classes}) {
+
+  // ***
+  // *** setup
+  // ***
+
+  const fassets    = useFassets();
+
+  const inProgress    = useSelector( (appState) => _discoverySel.getInProgress(appState),    [] );
+  const discoveries   = useSelector( (appState) => _discoverySel.getDiscoveries(appState),   [] );
+  const nextPageToken = useSelector( (appState) => _discoverySel.getNextPageToken(appState), [] );
+  const eateryPool    = useSelector( (appState) => fassets.sel.getEateryDbPool(appState),    [fassets] );
+
+  const dispatch = useDispatch();
+
+  const handleNextPage        = useCallback((nextPageToken) => dispatch( _discoveryAct.nextPage(nextPageToken) ), []);
+  const handleFilterDiscovery = useCallback(() => dispatch( _discoveryAct.filterForm.open() ),                    []);
+  const toggleEateryPool      = useCallback((discovery, eateryPool) => {
+    if (eateryPool[discovery.id]) { // in pool
+      // console.log(`xx delete ${discovery.name} from pool`);
+      dispatch( fassets.actions.removeEatery(discovery.id) );
+    }
+    else { // NOT in pool
+      // console.log(`xx add ${discovery.name} to pool`);
+      dispatch( fassets.actions.addEatery(discovery.id) );
+    }
+  }, []);
+
 
   // ***
   // *** define page content
@@ -185,43 +215,4 @@ function DiscoveryListScreen({inProgress, discoveries, nextPageToken, eateryPool
   );
 }
 
-const DiscoveryListScreenWithState = withState({
-  component: DiscoveryListScreen,
-  mapStateToProps(appState, {fassets}) { // ... fassets available in ownProps (via withFassets() below)
-    return {
-      inProgress:    _discoverySel.getInProgress(appState),
-      discoveries:   _discoverySel.getDiscoveries(appState),
-      nextPageToken: _discoverySel.getNextPageToken(appState),
-      eateryPool:    fassets.sel.getEateryDbPool(appState),
-    };
-  },
-  mapDispatchToProps(dispatch, {fassets}) { // ... fassets available in ownProps (via withFassets() below)
-    return {
-      toggleEateryPool(discovery, eateryPool) {
-        if (eateryPool[discovery.id]) { // in pool
-          // console.log(`xx delete ${discovery.name} from pool`);
-          dispatch( fassets.actions.removeEatery(discovery.id) );
-        }
-        else { // NOT in pool
-          // console.log(`xx add ${discovery.name} to pool`);
-          dispatch( fassets.actions.addEatery(discovery.id) );
-        }
-      },
-      handleNextPage(nextPageToken) {
-        dispatch( _discoveryAct.nextPage(nextPageToken) );
-      },
-      handleFilterDiscovery() {
-        dispatch( _discoveryAct.filterForm.open() );
-      },
-    };
-  },
-});
-
-const DiscoveryListScreenWithFassets = withFassets({
-  component: DiscoveryListScreenWithState,
-  mapFassetsToProps: {
-    fassets:     '.',            // introduce fassets into props via the '.' keyword
-  }
-});
-
-export default /* DiscoveryListScreenWithStyles = */ withStyles(listStyles)(DiscoveryListScreenWithFassets);
+export default /* DiscoveryListScreenWithStyles = */ withStyles(listStyles)(DiscoveryListScreen);

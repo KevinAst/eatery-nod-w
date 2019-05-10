@@ -1,7 +1,9 @@
-import React          from 'react';
+import React,
+       {useCallback,
+        useMemo}      from 'react';
 import PropTypes      from 'prop-types';
 
-import {withFassets}  from 'feature-u';
+import {useFassets}   from 'feature-u';
 
 import IconButton     from '@material-ui/core/IconButton';
 import Menu           from '@material-ui/core/Menu';
@@ -12,13 +14,18 @@ import Typography     from '@material-ui/core/Typography';
 /**
  * UserMenu: our UserMenu component that accumulates menu items via use contract.
  */
-function UserMenu({curUser, userMenuItems}) {
+export default function UserMenu({curUser}) {
 
   const [anchorUserMenu, setAnchorUserMenu] = React.useState(null);
-  const userMenuOpen = Boolean(anchorUserMenu);
+  const userMenuOpen = useMemo(() => Boolean(anchorUserMenu), [anchorUserMenu]);
 
-  const openUserMenu = (event) => setAnchorUserMenu(event.currentTarget);
-  _closeUserMenu     = ()      => setAnchorUserMenu(null);
+  const openUserMenu = useCallback((event) => setAnchorUserMenu(event.currentTarget), []);
+  _closeUserMenu     = useCallback(()      => setAnchorUserMenu(null),                []);
+
+  const userMenuItems        = useFassets('AppMotif.UserMenuItem.*@withKeys');
+  const orderedUserMenuItems = useMemo(() => (
+    [...userMenuItems].sort(([item1Key], [item2Key]) => item1Key.localeCompare(item2Key))
+  ), [userMenuItems]);
 
   return (
     <div>
@@ -40,7 +47,7 @@ function UserMenu({curUser, userMenuItems}) {
             }}
             open={userMenuOpen}
             onClose={closeUserMenu}>
-        {userMenuItems.map( ([fassetsKey, UserMenuItem]) => <UserMenuItem key={fassetsKey}/> )}
+        {orderedUserMenuItems.map( ([fassetsKey, UserMenuItem]) => <UserMenuItem key={fassetsKey}/> )}
       </Menu>
     </div>
   );
@@ -50,16 +57,14 @@ UserMenu.propTypes = {
   curUser: PropTypes.object.isRequired,
 };
 
-export default /* UserMenuWithFassets = */ withFassets({
-  component: UserMenu,
-  mapFassetsToProps: {
-    userMenuItems: 'AppMotif.UserMenuItem.*@withKeys',
-  }
-});
 
-let _closeUserMenu = null;
-export function closeUserMenu() {
+
+/**
+ * Utility function that closes our user menu.
+ */
+export function closeUserMenu() { // exported for use by our own: UserMenuItem
   if (_closeUserMenu) {
     _closeUserMenu();
   }
 }
+let _closeUserMenu = null;

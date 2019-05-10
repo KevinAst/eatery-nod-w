@@ -1,6 +1,8 @@
 import React                   from 'react';
 
-import withState               from 'util/withState';
+import {useSelector,
+        useDispatch}           from 'react-redux'
+
 import {withStyles}            from '@material-ui/core/styles';
 import withMobileDialog        from '@material-ui/core/withMobileDialog';
 
@@ -62,7 +64,12 @@ function CenterItems({children}) {
  * DiscoveryFilterScreen: gather filter information (selection criteria) 
  * for a discovery retrieval.
  */
-function DiscoveryFilterScreen({iForm, fullScreen, classes}) {
+function DiscoveryFilterScreen({fullScreen, classes}) {
+
+  const dispatch  = useDispatch();
+  const formState = useSelector((appState) => discoveryFilterFormMeta.formStateSelector(appState), []);
+
+  const iForm = discoveryFilterFormMeta.IForm(formState, dispatch); // AI: unsure if I should wrap in useMemo()
 
   const formLabel       = iForm.getLabel();
   const formInProcess   = iForm.inProcess();
@@ -154,25 +161,7 @@ function DiscoveryFilterScreen({iForm, fullScreen, classes}) {
   );
 }
 
-const DiscoveryFilterScreenWithState = withState({
-  component: DiscoveryFilterScreen,
-  mapStateToProps(appState) {
-    return {
-      formState: discoveryFilterFormMeta.formStateSelector(appState),
-    };
-  },
-  mergeProps(stateProps, dispatchProps, ownProps) {
-    return {
-      ...ownProps,
-    //...stateProps,    // unneeded (in this case) ... wonder: does this impact connect() optimization?
-    //...dispatchProps, // ditto
-      iForm: discoveryFilterFormMeta.IForm(stateProps.formState, 
-                                           dispatchProps.dispatch),
-    };
-  },
-});
-
-const DiscoveryFilterScreenWithStyles = withStyles(styles)(DiscoveryFilterScreenWithState);
+const DiscoveryFilterScreenWithStyles = withStyles(styles)(DiscoveryFilterScreen);
 
 // inject responsive `fullScreen` true/false prop based on screen size
 // ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl

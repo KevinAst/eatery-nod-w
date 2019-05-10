@@ -1,13 +1,21 @@
 import React             from 'react';
-import {withFassets}     from 'feature-u';
-import withState         from 'util/withState';
+
+import {useFassets}      from 'feature-u';
+import {useSelector}     from 'react-redux'
+
 import * as _eateriesSel from '../state';
 import Typography        from '@material-ui/core/Typography';
 
 /**
  * EateriesTitle displaying the eateries pool title
  */
-function EateriesTitle({curUser, filter}) {
+export default function EateriesTitle() {
+
+  const fassets = useFassets();
+
+  const curUser = useSelector((appState) => fassets.sel.curUser(appState),            [fassets]);
+  const filter  = useSelector((appState) => _eateriesSel.getListViewFilter(appState), []);
+
   return (
     <Typography variant="h6"
                 color="inherit"
@@ -25,20 +33,3 @@ function EateriesTitle({curUser, filter}) {
     </Typography>
   );
 }
-
-const EateriesTitleWithState = withState({
-  component: EateriesTitle,
-  mapStateToProps(appState, {fassets}) { // ... fassets available in ownProps (via withFassets() below)
-    return {
-      curUser: fassets.sel.curUser(appState),
-      filter:  _eateriesSel.getListViewFilter(appState),
-    };
-  },
-});
-
-export default /* EateriesTitleWithFassets = */ withFassets({
-  component: EateriesTitleWithState,
-  mapFassetsToProps: {
-    fassets: '.', // introduce fassets into props via the '.' keyword
-  }
-});

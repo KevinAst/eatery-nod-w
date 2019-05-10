@@ -29,7 +29,7 @@ export default createFeature({
     },
 
     defineUse: {
-      [`AppMotif.LeftNavItem.${_eateries}`]: EateryLeftNavItem, // inject our entry into the leftNav
+      [`AppMotif.LeftNavItem.cc4_${_eateries}`]: EateryLeftNavItem, // inject our entry into the leftNav
 
       // auxiliary view content for the eateries view
       [`AppMotif.auxViewContent.${_eateries}`]: {

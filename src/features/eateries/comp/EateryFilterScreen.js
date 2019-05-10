@@ -1,6 +1,8 @@
 import React                 from 'react';
 
-import withState             from 'util/withState';
+import {useSelector,
+        useDispatch}         from 'react-redux'
+
 import {withStyles}          from '@material-ui/core/styles';
 import withMobileDialog      from '@material-ui/core/withMobileDialog';
 
@@ -64,7 +66,12 @@ function CenterItems({children}) {
  * EateryFilterScreen: gather filter information (selection criteria) 
  * for our eatery pool view.
  */
-function EateryFilterScreen({iForm, fullScreen, classes}) {
+function EateryFilterScreen({fullScreen, classes}) {
+
+  const dispatch  = useDispatch();
+  const formState = useSelector((appState) => eateryFilterFormMeta.formStateSelector(appState), []);
+
+  const iForm = eateryFilterFormMeta.IForm(formState, dispatch); // AI: unsure if I should wrap in useMemo()
 
   const formLabel       = iForm.getLabel();
   const formInProcess   = iForm.inProcess();
@@ -146,25 +153,7 @@ function EateryFilterScreen({iForm, fullScreen, classes}) {
   );
 }
 
-const EateryFilterScreenWithState = withState({
-  component: EateryFilterScreen,
-  mapStateToProps(appState) {
-    return {
-      formState: eateryFilterFormMeta.formStateSelector(appState),
-    };
-  },
-  mergeProps(stateProps, dispatchProps, ownProps) {
-    return {
-      ...ownProps,
-    //...stateProps,    // unneeded (in this case) ... wonder: does this impact connect() optimization?
-    //...dispatchProps, // ditto
-      iForm: eateryFilterFormMeta.IForm(stateProps.formState, 
-                                        dispatchProps.dispatch),
-    };
-  },
-});
-
-const EateryFilterScreenWithStyles = withStyles(styles)(EateryFilterScreenWithState);
+const EateryFilterScreenWithStyles = withStyles(styles)(EateryFilterScreen);
 
 // inject responsive `fullScreen` true/false prop based on screen size
 // ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl

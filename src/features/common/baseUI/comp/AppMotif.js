@@ -1,8 +1,11 @@
-import React          from 'react';
+import React,
+       {useMemo}      from 'react';
 import PropTypes      from 'prop-types';
+
+import {useFassets}   from 'feature-u';
+import {useSelector}  from 'react-redux'
+
 import withStyles     from '@material-ui/core/styles/withStyles';
-import {withFassets}  from 'feature-u';
-import withState      from 'util/withState';
 
 import LeftNav        from './LeftNav';
 import {openLeftNav}  from './LeftNav';
@@ -16,21 +19,32 @@ import Typography     from '@material-ui/core/Typography';
 
 
 /**
- * ?? rework description
+ * AppMotif is a re-usable top-level component that establishes
+ * the following application characteristics:
  * 
- * AppMotif is a re-usable top-level layout component that
- * establishes the application characteristics like Tool Bar, Left
- * Nav, etc.
+ * - a **Left Nav** menu
+ * - a **User Menu** menu
+ * - a **Current View** state _(orchestrating which application view is active)_
+ * - a **Tool Bar** with various artifacts (ex: title bar and footer)
+ * 
+ * While these controls are promoted through AppMotif, it's content
+ * is accumulated from external features through various **Use
+ * Contracts**.
+
+ * AppMotif is auto injected through the MainLayout component,
+ * however, it is only active when an active user is **signed-in**.
  * 
  * The main page content is rendered as children of this component
- * (like eateries and discovery).
+ * (like eateries, discovery, etc.).
  *
  * USAGE:
  * ```
  *   <AppMotif>
- *     ... page content here
+ *     ... app page content here
  *   </AppMotif>
  * ```
+ * 
+ * Please refer to the **`baseUI` README** for more information.
  */
 
 const appStyles = (theme) => ({
@@ -79,7 +93,18 @@ const appStyles = (theme) => ({
 
 });
 
-function AppMotif({curUser, curView, viewAuxiliaryContent, classes, children}) {
+
+function AppMotif({classes, children}) {
+
+  const fassets = useFassets();
+
+  const curUser = useSelector( (appState) => fassets.sel.curUser(appState), [fassets] );
+  const curView = useSelector( (appState) => fassets.sel.curView(appState), [fassets] );
+
+  // define our auxiliary view content
+  const viewAuxiliaryContent    = fassets.get('AppMotif.auxViewContent.*@withKeys');
+  const curViewAuxiliaryContent = useMemo(() => resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent), [curView, viewAuxiliaryContent]);
+  const {TitleComp, FooterComp} = curViewAuxiliaryContent;
 
   // no-op when no user is signed-in
   if (!curUser.isUserSignedIn()) {
@@ -89,11 +114,6 @@ function AppMotif({curUser, curView, viewAuxiliaryContent, classes, children}) {
       </>
     );
   }
-  
-
-  // define our auxiliary view content
-  const curViewAuxiliaryContent = resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent);
-  const {TitleComp, FooterComp} = curViewAuxiliaryContent;
 
   return (
     <div className={classes.app}>
@@ -149,27 +169,7 @@ AppMotif.propTypes = {
   children: PropTypes.node.isRequired, // main page content (like eateries and discovery)
 };
 
-
-const AppMotifWithState = withState({
-  component: AppMotif,
-  mapStateToProps(appState, {fassets}) { // ... 2nd param (ownProps) seeded from withFassets() below
-    return {
-      curUser: fassets.sel.curUser(appState),
-      curView: fassets.sel.curView(appState),
-    };
-  },
-});
-
-const AppMotifWithFassets = withFassets({
-  component: AppMotifWithState,
-  mapFassetsToProps: {
-    fassets:              '.', // introduce fassets into props via the '.' keyword
-    viewAuxiliaryContent: 'AppMotif.auxViewContent.*@withKeys',
-  }
-});
-
-export default /* AppMotifWithStyles = */ withStyles(appStyles)(AppMotifWithFassets);
-
+export default /* AppMotifWithStyles = */ withStyles(appStyles)(AppMotif);
 
 
 

@@ -26,7 +26,7 @@ export default createFeature({
 
     defineUse: {
       // inject our user-profile menu items (in the App Header)
-      'AppMotif.UserMenuItem.AuthUserMenu': AuthUserMenu,
+      'AppMotif.UserMenuItem.cc5_AuthUserMenu': AuthUserMenu,
     },
   },
 

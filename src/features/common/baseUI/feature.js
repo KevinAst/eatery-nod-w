@@ -38,9 +38,9 @@ export default createFeature({
     defineUse: {
       // inject User Menu entries
       // ... to ToggleUITheme ('light'/'dark')
-      'AppMotif.UserMenuItem.UIThemeToggle': ToggleUITheme,
+      'AppMotif.UserMenuItem.aa2_UIThemeToggle': ToggleUITheme,
       // ... to display About info (gleaned from package.json)
-      'AppMotif.UserMenuItem.About': About,
+      'AppMotif.UserMenuItem.zz8_About': About,
     },
 
     use: [

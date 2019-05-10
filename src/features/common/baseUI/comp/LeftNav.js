@@ -1,6 +1,8 @@
-import React           from 'react';
+import React,
+       {useCallback,
+        useMemo}       from 'react';
 
-import {withFassets }  from 'feature-u';
+import {useFassets}    from 'feature-u';
 import withStyles      from '@material-ui/core/styles/withStyles';
 
 import AppBar          from '@material-ui/core/AppBar';
@@ -8,18 +10,6 @@ import Drawer          from '@material-ui/core/Drawer';
 import List            from '@material-ui/core/List';
 import Toolbar         from '@material-ui/core/Toolbar';
 import Typography      from '@material-ui/core/Typography';
-
-
-let _openLeftNav = null; // expose our inner function
-
-/**
- * Open our left-nav menu (our publicly promoted function).
- */
-export function openLeftNav() {
-  if (_openLeftNav) {
-    _openLeftNav();
-  }
-}
 
 
 const leftNavStyles = (theme) => ({
@@ -32,11 +22,17 @@ const leftNavStyles = (theme) => ({
 /**
  * LeftNav: our LeftNav component that accumulates menu items via use contract.
  */
-function LeftNav({classes, leftNavItems}) {
+function LeftNav({classes}) {
 
   const [leftNavVisible, setLeftNavVisible] = React.useState(false);
-  _openLeftNav          = () => setLeftNavVisible(true);
-  const closeLeftNav    = () => setLeftNavVisible(false);
+
+  _openLeftNav       = useCallback(() => setLeftNavVisible(true),  []);
+  const closeLeftNav = useCallback(() => setLeftNavVisible(false), []);
+
+  const leftNavItems        = useFassets('AppMotif.LeftNavItem.*@withKeys');
+  const orderedLeftNavItems = useMemo(() => (
+    [...leftNavItems].sort(([item1Key], [item2Key]) => item1Key.localeCompare(item2Key))
+  ), [leftNavItems]);
 
   // AI: have seen some usage of tabIndex in <div> under <Drawer> (unsure if needed)
   //     tabIndex={0} ... should be focus-able in sequential keyboard navigation, but its order is defined by the document's source order */}
@@ -54,19 +50,24 @@ function LeftNav({classes, leftNavItems}) {
           </Toolbar>
         </AppBar>
         <List>
-          {leftNavItems.map( ([fassetsKey, LeftNavItem]) => <LeftNavItem key={fassetsKey}/> )}
+          {orderedLeftNavItems.map( ([fassetsKey, LeftNavItem]) => <LeftNavItem key={fassetsKey}/> )}
         </List>
       </div>
     </Drawer>
   );
 }
 
-const LeftNavWithFassets = withFassets({
-  component: LeftNav,
-  mapFassetsToProps: {
-    // <ListItem>s to inject in our left-nav (the manifestation of our use contract)
-    leftNavItems: 'AppMotif.LeftNavItem.*@withKeys',
-  }
-});
+export default /* LeftNavWithStyles = */  withStyles(leftNavStyles)(LeftNav);
 
-export default /* LeftNavWithStyles = */  withStyles(leftNavStyles)(LeftNavWithFassets);
+
+
+/**
+ * Utility function that opens our left-nav menu.
+ */
+export function openLeftNav() { // exported for use by our own: AppMotif
+  if (_openLeftNav) {
+    _openLeftNav();
+  }
+}
+let _openLeftNav = null; // expose our inner function
+
