@@ -22,5 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-src/features/common/initFirebase/config/firebaseAppConfig.js
-src/features/common/initGooglePlaces/config/googlePlacesApiKey.js
+**/gpak
+**/fbac

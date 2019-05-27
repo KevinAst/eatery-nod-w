@@ -31,6 +31,7 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
     - [Deployment]
   - [NPM Scripts]
 - [Revision History]
+  - [v2.1.0]
   - [v2.0.0]
   - [v1.0.0]
 
@@ -287,8 +288,31 @@ eject ..... eject the Create React App project tooling
 
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
+[v2.1.0] | Misc Changes                                    | *June xx, 2019*
 [v2.0.0] | React Hooks                                     | *May 10, 2019*
 [v1.0.0] | Initial Release                                 | *May 05, 2019*
+
+
+<!-- *** RELEASE *************************************************************** -->
+
+### v2.1.0 - Misc Changes *(June xx, 2019)*
+
+<ul><ul><!--- indentation hack ---> 
+
+[GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v2.1.0)
+&bull;
+[GitHub Release](https://github.com/KevinAst/eatery-nod-w/releases/tag/v2.1.0)
+&bull;
+[Diff](https://github.com/KevinAst/eatery-nod-w/compare/v2.0.0...v2.1.0)
+
+**Technical Changes:**
+
+- The API Credentials have been decoupled from the common "init"
+  feature packages, by accessing them from the deployed server (see
+  features: [initFirebase](src/features/common/initFirebase/README.md)
+  and [initGooglePlaces](src/features/common/initGooglePlaces/README.md)).
+
+</ul></ul>
 
 
 <!-- *** RELEASE *************************************************************** -->
@@ -366,6 +390,7 @@ expo mobile app.
 [NPM Scripts]:               #npm-scripts
 
 [Revision History]:    #revision-history
+ [v2.1.0]:             #v210---misc-changes-june-xx-2019
  [v2.0.0]:             #v200---react-hooks-may-10-2019
  [v1.0.0]:             #v100---initial-release-may-05-2019
 
