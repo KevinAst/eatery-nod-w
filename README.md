@@ -31,9 +31,6 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
     - [Deployment]
   - [NPM Scripts]
 - [Revision History]
-  - [v2.1.0]
-  - [v2.0.0]
-  - [v1.0.0]
 
 
 ## Running the App

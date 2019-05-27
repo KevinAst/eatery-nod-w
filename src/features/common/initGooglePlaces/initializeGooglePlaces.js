@@ -30,7 +30,6 @@ export default function initializeGooglePlaces() {
         // check for non-existent resource (see NOTE above)
         if (txt.includes('<html')) {
           // NOTE: this is the only real error we will ever emit
-          // ?? TEST
           return reject( new Error(`**ERROR** Non Existent Resource: /gpak`) );
         }
         
@@ -38,9 +37,9 @@ export default function initializeGooglePlaces() {
         //*** process our credentials
         //***
         else {
-          console.log(`?? /gpak resource content: '${txt}'`);
+          // console.log(`xx /gpak resource content: '${txt}'`);
           const googlePlacesApiKey = decode(txt);
-          console.log('?? googlePlacesApiKey: ', googlePlacesApiKey);
+          // console.log('xx googlePlacesApiKey: ', googlePlacesApiKey);
 
           // bootstrap the script tag required by Google Places API
           // NOTE: Due to the nature of injecting a script tag (with the credentials)
