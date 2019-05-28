@@ -177,14 +177,14 @@ you can make changes)_, follow these instructions:
          KevinResa: {
            ChIJ1Wb6nh76dYgRbFqImosN0to: {
              id:   "ChIJ1Wb6nh76dYgRbFqImosN0to",
+             name: "Andria's Countryside Restaurant",
              addr: "7415 IL-143, Edwardsville, IL 62025, USA",
              loc: {
                lat: 38.8035556,
                lng: -89.9180782,
              },
-             name: "Andria's Countryside Restaurant",
              navUrl:  "https://maps.google.com/?cid=15767680138621770348",
-             phone: "(618) 656-0281",
+             phone:   "(618) 656-0281",
              website: "http://www.andriascountryside.com/",
            },
            // ... more pool entries here
@@ -192,8 +192,6 @@ you can make changes)_, follow these instructions:
        },
      }
      ```
-
-
 
 4. Start your dev server, launching the app at http://localhost:3000
    ```
@@ -409,6 +407,7 @@ Release  | What                                            | *When*
 - Added a complete [Running the App] section that describes how you
   can run **eatery-nod-w** and/or setup the project in your local
   environment.
+
 
 **Technical Changes:**
 
