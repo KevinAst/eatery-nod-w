@@ -18,10 +18,12 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
 ## At a Glance
 
 - [Overview]
-  - [Running the App]
   - [Eatery Pool]
   - [Discovery]
   - [Authorization]
+- [Running the App]
+  - [From Deployment]
+  - [From Source]
 - [Technical]
   - [Feature Based Development]
   - [React Hooks]
@@ -32,32 +34,6 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
   - [NPM Scripts]
 - [Revision History]
 
-
-## Running the App
-
-If you wish to play with **eatery-nod-w**, simply run it from it's
-deployed production site: https://eatery-nod-w.js.org/
-
-Currently the sign-in process has **"locked down" account creation**,
-because of the limited resources of the free Google Firebase account.
-However you can **use a "Guest ID"** that will morph the environment
-into your own "mocked" in-memory data source (that doesn't utilize
-Firebase).
-
-<ul> <!--- indentation hack --->
-
-Simply use an email id that begins with `guestNO@` (ex:
-`@guestNO@myDomain.com`), with a password of `guestNO`.
-
-</ul>
-
-When using a "Guest ID", remember the following:
-- Your GPS location will be morphed to New Orleans.
-- Your Eateries pool is morphed into an in-memory DB.
-- Your Discovery view is live, searching real eateries in New Orleans.
-- You can add entries to your pool (from the discovery view), but
-  remember that your pool is an in-memory DB ... so if you refresh the site,
-  it will revert back to the initial in-memory DB image.
 
 ## Eatery Pool
 
@@ -101,6 +77,130 @@ before promoting any application screens.
 ![Screen Flow](src/features/common/auth/docs/ScreenFlow.png)
 
 
+## Running the App
+
+You can run **eatery-nod-w** in one of two ways: [From Deployment], or
+[From Source]:
+
+
+## From Deployment
+
+You can play with **eatery-nod-w** immediately through it's production
+deployment site: https://eatery-nod-w.js.org/
+
+Currently the sign-in process has **"locked down" account creation**,
+because of the limited resources of the free Google Firebase account.
+However you can **use a "Guest ID"** that will morph the environment
+into your own "mocked" in-memory data source (that doesn't utilize
+Firebase).
+
+<ul> <!--- indentation hack --->
+
+Simply use an email id that begins with `guestNO@` (ex:
+`guestNO@myDomain.com`), with a password of `guestNO`.
+
+</ul>
+
+When using a "Guest ID", remember the following:
+- Your GPS location will be morphed to New Orleans.
+- Your Eateries pool is morphed into an in-memory DB.
+- Your Discovery view is live, searching real eateries in New Orleans.
+- You can add entries to your pool (from the discovery view), but
+  remember that your pool is an in-memory DB ... so if you refresh the site,
+  it will revert back to the initial in-memory DB image.
+
+
+## From Source
+
+If you wish to run **eatery-nod-w** from your local machine _(where
+you can make changes)_, follow these instructions:
+
+1. Clone _(or zip)_ the git repo to your local machine.
+
+2. Initialize the project:
+   ```
+   $ cd {project-root}
+   $ npm install  # install project dependencies
+   ```
+
+3. Setup the services ... _you have two choices_:
+
+   - **Using Mock Services**
+
+     The easiest way play with the project is to use the mock
+     services.  This means you don't have any setup for the back-end
+     service credentials or the DB configuration _(retaining the pool
+     entries)_.
+
+     To enable the mock services, simply make the following settings
+     in [`src/featureFlags.js`](src/featureFlags.js):
+
+     ```js
+     useWIFI: false,                             // use mock service
+     mockGPS: {lat: 30.010479, lng: -90.119414}, // simulate New Orleans GPS location
+     ```
+
+   - **Using Real Services**
+
+     eatery-nod uses two Google cloud services: 
+       - firebase (for authorization and the eatery pool DB)
+       - google places (for the discovery)
+
+     **Define Service Credentials**
+
+     You must establish your own credentials for these services ... see:
+     - [initFirebase]
+     - [initGooglePlaces]
+
+     **Define DB Schema**
+
+     The **userProfiles** and **pools** are maintained in a persistent Firebase DB.
+     You must establish the following DB schema in your firebase account:
+
+     ```js
+     eatery-nod: {
+       userProfiles: {
+         // ... login profiles
+         //     NOTE: these entries are maintained by eatery-nod-w code!
+         //           You just need to define the parent structure (in your schema)!!
+         //           For completeness, here is an example:
+         dbcatrem2PwyWgLJciViS7q0szg2: {
+           name: "Kevin",
+           pool: "KevinResa",
+         },
+       },
+       pools: {
+         // ... pool entry points, cataloged by userProfile.{user-id}.pool
+         //     NOTE: these entries are maintained by eatery-nod-w code!
+         //           You just need to define the parent structure (in your schema)!!
+         //           For completeness, here is an example:
+         KevinResa: {
+           ChIJ1Wb6nh76dYgRbFqImosN0to: {
+             id:   "ChIJ1Wb6nh76dYgRbFqImosN0to",
+             addr: "7415 IL-143, Edwardsville, IL 62025, USA",
+             loc: {
+               lat: 38.8035556,
+               lng: -89.9180782,
+             },
+             name: "Andria's Countryside Restaurant",
+             navUrl:  "https://maps.google.com/?cid=15767680138621770348",
+             phone: "(618) 656-0281",
+             website: "http://www.andriascountryside.com/",
+           },
+           // ... more pool entries here
+         }
+       },
+     }
+     ```
+
+
+
+4. Start your dev server, launching the app at http://localhost:3000
+   ```
+   $ npm start
+   ```
+
+
 ## Technical
 
 The technical details about the **eatery-nod-w** application can be
@@ -108,6 +208,9 @@ found here.
 
 **eatery-nod-w** is a web-based [PWA] rendition of the [eatery-nod]
 **react-native expo mobile app**.
+
+The tooling for **eatery-nod-w** is maintained through [Create React
+App].
 
 
 ## Feature Based Development
@@ -212,8 +315,7 @@ The runtime stack used by **eatery-nod** is:
 
 <ul> <!--- indentation hack --->
 
-- [Create React App](https://facebook.github.io/create-react-app/): project tooling
-  `"react-scripts"`
+- [Create React App]: project tooling `"react-scripts"`
 
 </ul>
 
@@ -302,12 +404,17 @@ Release  | What                                            | *When*
 &bull;
 [Diff](https://github.com/KevinAst/eatery-nod-w/compare/v2.0.0...v2.1.0)
 
+**Documentation:**
+
+- Added a complete [Running the App] section that describes how you
+  can run **eatery-nod-w** and/or setup the project in your local
+  environment.
+
 **Technical Changes:**
 
 - The API Credentials have been decoupled from the common "init"
   feature packages, by accessing them from the deployed server (see
-  features: [initFirebase](src/features/common/initFirebase/README.md)
-  and [initGooglePlaces](src/features/common/initGooglePlaces/README.md)).
+  features: [initFirebase] and [initGooglePlaces]).
 
 </ul></ul>
 
@@ -372,9 +479,12 @@ expo mobile app.
 
 [Overview]:                  #overview
 [Eatery Pool]:               #eatery-pool
-[Running the App]:           #running-the-app
 [Discovery]:                 #discovery
 [Authorization]:             #authorization
+
+[Running the App]:           #running-the-app
+[From Deployment]:           #from-deployment
+[From Source]:               #from-source
 
 [Technical]:                 #technical
 [Feature Based Development]: #feature-based-development
@@ -397,9 +507,13 @@ expo mobile app.
 [Left Nav]:                  src/features/common/baseUI/README.md#left-nav
 [User Menu]:                 src/features/common/baseUI/README.md#user-menu
 
+[initFirebase]:              src/features/common/initFirebase/README.md
+[initGooglePlaces]:          src/features/common/initGooglePlaces/README.md
+
 [React]:                     https://reactjs.org/
 [HoC]:                       https://reactjs.org/docs/higher-order-components.html
 [Hooks]:                     https://reactjs.org/docs/hooks-overview.html
+[Create React App]:          https://facebook.github.io/create-react-app/
 
 [feature-u]:                 https://feature-u.js.org/
 [feature-u teaser]:          http://bit.ly/feature-u-teaser
