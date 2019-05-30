@@ -7,7 +7,7 @@ import {useDispatch} from 'react-redux'
 import _eateries     from '../featureName';
 import _eateriesAct  from '../actions';
 
-import withStyles    from '@material-ui/core/styles/withStyles';
+import {makeStyles}  from '@material-ui/core/styles';
 
 import Divider                  from '@material-ui/core/Divider';
 import ListItem                 from '@material-ui/core/ListItem';
@@ -21,12 +21,13 @@ import IconButton               from '@material-ui/core/IconButton';
 /**
  * EateryLeftNavItem: our Eatery entry into the LeftNav.
  */
-function EateryLeftNavItem({classes}) {
+export default function EateryLeftNavItem() {
 
   const fassets      = useFassets();
   const dispatch     = useDispatch();
   const changeView   = useCallback(() => dispatch( fassets.actions.changeView(_eateries) ), [fassets]);
   const handleFilter = useCallback(() => dispatch( _eateriesAct.filterForm.open() ),        [fassets]);
+  const classes      = useStyles();
 
   // render our menu item
   return (
@@ -44,13 +45,12 @@ function EateryLeftNavItem({classes}) {
   );
 }
 
-const styles = (theme) => ({
+
+const useStyles = makeStyles( theme => ({
   major: {
     color: theme.palette.grey.A200, // light grey (or redish: theme.palette.secondary.main
   },
   minor:{
     color: theme.palette.primary.dark,   // bluish
   },
-});
-
-export default /* EateryLeftNavItemWithStyle = */  withStyles(styles)(EateryLeftNavItem);
+}) );

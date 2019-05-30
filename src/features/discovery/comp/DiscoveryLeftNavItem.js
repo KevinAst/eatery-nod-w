@@ -7,7 +7,7 @@ import _discoveryAct   from '../actions';
 import {useFassets}    from 'feature-u';
 import {useDispatch}   from 'react-redux'
 
-import withStyles      from '@material-ui/core/styles/withStyles';
+import {makeStyles}    from '@material-ui/core/styles';
 
 import DiscoveryIcon            from '@material-ui/icons/CloudDone';
 import Divider                  from '@material-ui/core/Divider';
@@ -21,12 +21,13 @@ import SettingsIcon             from '@material-ui/icons/Tune';           // pos
 /**
  * DiscoveryLeftNavItem: our Discovery entry into the LeftNav.
  */
-function DiscoveryLeftNavItem({classes}) {
+export default function DiscoveryLeftNavItem() {
 
   const fassets      = useFassets();
   const dispatch     = useDispatch();
   const changeView   = useCallback(() => dispatch( fassets.actions.changeView(_discovery) ), [fassets]);
   const handleFilter = useCallback(() => dispatch( _discoveryAct.filterForm.open() ),        []);
+  const classes      = useStyles();
 
   // render our menu item
   return (
@@ -44,13 +45,12 @@ function DiscoveryLeftNavItem({classes}) {
   );
 }
 
-const styles = (theme) => ({
+
+const useStyles = makeStyles( theme => ({
   major: {
     color: theme.palette.secondary.main, // redish
   },
   minor:{
     color: theme.palette.primary.dark,   // bluish
   },
-});
-
-export default /* DiscoveryLeftNavItemWithStyle = */  withStyles(styles)(DiscoveryLeftNavItem);
+}) );

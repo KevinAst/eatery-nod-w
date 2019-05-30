@@ -2,10 +2,10 @@ import React,
        {useCallback}     from 'react';
 
 import {useSelector,
-        useDispatch}  from 'react-redux'
-
-import {withStyles}      from '@material-ui/core/styles';
-import withMobileDialog  from '@material-ui/core/withMobileDialog';
+        useDispatch}     from 'react-redux'
+import {makeStyles,
+        useTheme}        from '@material-ui/core/styles';
+import useMediaQuery     from '@material-ui/core/useMediaQuery';
 
 import _authAct          from '../actions';
 import * as _authSel     from '../state';
@@ -17,65 +17,28 @@ import Dialog            from '@material-ui/core/Dialog';
 import DialogContent     from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle       from '@material-ui/core/DialogTitle';
-import Grid              from '@material-ui/core/Grid';
 import LockIcon          from '@material-ui/icons/LockOpen';
 import MailIcon          from '@material-ui/icons/Mail';
 import SignOutIcon       from '@material-ui/icons/ExitToApp';
 import Typography        from '@material-ui/core/Typography';
 import {TransitionZoom}  from 'util/Transition';
+import CenterItems       from 'util/CenterItems';
 
-const styles = theme => ({
-
-  titleBar: {
-    display:         'flex',
-    alignItems:      'center', // vertically align title text with close (X) to it's right (leave this even though we do NOT have a close in this dialog)
-    padding:         '10px 15px',
-    color:           theme.palette.common.white,
-    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
-  },
-
-  title: {
-    flexGrow: 1, // moves right-most toolbar items to the right
-  },
-
-  lockAvatar: {
-    margin:          theme.spacing.unit,
-    backgroundColor: theme.palette.primary.main,
-  },
-
-  entry: {
-    margin:   '30px 0px',
-  },
-
-  icon: {
-    marginRight: theme.spacing.unit,
-  },
-  
-  inProgress: {
-    margin: theme.spacing.unit * 4,
-  },
-
-});
-
-function CenterItems({children}) {
-  return (
-    <Grid container direction="row" justify="center" alignItems="center">
-      {children}
-    </Grid>
-  );
-}
 
 /**
  * SignInVerifyScreen requesting email verification completion.
  */
-function SignInVerifyScreen({fullScreen, classes}) {
+export default function SignInVerifyScreen() {
 
   const email = useSelector((appState) => _authSel.curUser(appState).email, []);
 
-  const dispatch = useDispatch();
+  const dispatch                = useDispatch();
   const checkEmailVerified      = useCallback(() => dispatch( _authAct.signIn.checkEmailVerified() ),      []);
   const resendEmailVerification = useCallback(() => dispatch( _authAct.signIn.resendEmailVerification() ), []);
   const signOut                 = useCallback(() => dispatch( _authAct.signOut() ),                        []);
+  const theme                   = useTheme();
+  const fullScreen              = useMediaQuery(theme.breakpoints.down('xs'));
+  const classes                 = useStyles();
 
   return (
     <Dialog open={true}
@@ -153,8 +116,36 @@ function SignInVerifyScreen({fullScreen, classes}) {
   );
 }
 
-const SignInVerifyScreenWithStyles = withStyles(styles)(SignInVerifyScreen);
 
-// inject responsive `fullScreen` true/false prop based on screen size
-// ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
-export default withMobileDialog({breakpoint: 'xs'})(SignInVerifyScreenWithStyles);
+const useStyles = makeStyles( theme => ({
+
+  titleBar: {
+    display:         'flex',
+    alignItems:      'center', // vertically align title text with close (X) to it's right (leave this even though we do NOT have a close in this dialog)
+    padding:         '10px 15px',
+    color:           theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+  },
+
+  title: {
+    flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  lockAvatar: {
+    margin:          theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+  },
+
+  entry: {
+    margin:   '30px 0px',
+  },
+
+  icon: {
+    marginRight: theme.spacing(1),
+  },
+  
+  inProgress: {
+    margin: theme.spacing(4),
+  },
+
+}) );

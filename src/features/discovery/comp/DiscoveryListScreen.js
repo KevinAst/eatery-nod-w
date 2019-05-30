@@ -5,7 +5,7 @@ import {useFassets}  from 'feature-u';
 import {useSelector,
         useDispatch} from 'react-redux'
 
-import withStyles    from '@material-ui/core/styles/withStyles';
+import {makeStyles}  from '@material-ui/core/styles';
 
 import _discoveryAct      from '../actions';
 import * as _discoverySel from '../state';
@@ -23,21 +23,10 @@ import SettingsIcon   from '@material-ui/icons/Tune';          // -or- Tune Perm
 import Typography     from '@material-ui/core/Typography';
 import UnCheckedIcon  from '@material-ui/icons/Check';
 
-const listStyles = (theme) => ({
-  list: {
-  },
-  progress: {
-    margin: theme.spacing.unit * 4,
-  },
-  nextPage: {
-    fontStyle: 'italic',
-  },
-});
-
 /**
  * DiscoveryListScreen displaying our discoveries.
  */
-function DiscoveryListScreen({classes}) {
+export default function DiscoveryListScreen() {
 
   // ***
   // *** setup
@@ -64,6 +53,8 @@ function DiscoveryListScreen({classes}) {
       dispatch( fassets.actions.addEatery(discovery.id) );
     }
   }, []);
+
+  const classes = useStyles();
 
 
   // ***
@@ -215,4 +206,14 @@ function DiscoveryListScreen({classes}) {
   );
 }
 
-export default /* DiscoveryListScreenWithStyles = */ withStyles(listStyles)(DiscoveryListScreen);
+
+const useStyles = makeStyles( theme => ({
+  list: {
+  },
+  progress: {
+    margin: theme.spacing(4),
+  },
+  nextPage: {
+    fontStyle: 'italic',
+  },
+}) );

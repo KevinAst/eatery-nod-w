@@ -2,9 +2,9 @@ import React             from 'react';
 
 import {useSelector,
         useDispatch}     from 'react-redux'
-
-import {withStyles}      from '@material-ui/core/styles';
-import withMobileDialog  from '@material-ui/core/withMobileDialog';
+import {makeStyles,
+        useTheme}        from '@material-ui/core/styles';
+import useMediaQuery     from '@material-ui/core/useMediaQuery';
 
 import signInFormMeta    from '../signInFormMeta';
 import ITextField        from 'util/iForms/comp/ITextField';
@@ -17,69 +17,24 @@ import DialogContent     from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle       from '@material-ui/core/DialogTitle';
 import FormHelperText    from '@material-ui/core/FormHelperText';
-import Grid              from '@material-ui/core/Grid';
 import InProgress        from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
 import LockIcon          from '@material-ui/icons/LockOpen';
 import SignInIcon        from '@material-ui/icons/ExitToApp';
 import Typography        from '@material-ui/core/Typography';
 import {TransitionZoom}  from 'util/Transition';
-
-const styles = theme => ({
-
-  titleBar: {
-    display:         'flex',
-    alignItems:      'center', // vertically align title text with close (X) to it's right (leave this even though we do NOT have a close in this dialog)
-    padding:         '10px 15px',
-    color:           theme.palette.common.white,
-    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
-  },
-
-  title: {
-    flexGrow: 1, // moves right-most toolbar items to the right
-  },
-
-  lockAvatar: {
-    margin:          theme.spacing.unit,
-    backgroundColor: theme.palette.primary.main,
-  },
-
-  entry: {
-    margin:   '30px 0px',
-  },
-
-  // our fieldset is strictly strictly to disable all inputs/submit when form is in-process
-  invisible: {
-    border:  '0 none',
-    margin:  0,
-    padding: 0,
-  },
-
-  icon: {
-    marginRight: theme.spacing.unit,
-  },
-  
-  inProgress: {
-    margin: theme.spacing.unit * 4,
-  },
-
-});
-
-function CenterItems({children}) {
-  return (
-    <Grid container direction="row" justify="center" alignItems="center">
-      {children}
-    </Grid>
-  );
-}
+import CenterItems       from 'util/CenterItems';
 
 
 /**
  * SignInScreen: gather user sign-in credentials.
  */
-function SignInScreen({fullScreen, classes}) {
+export default function SignInScreen() {
 
-  const dispatch  = useDispatch();
-  const formState = useSelector((appState) => signInFormMeta.formStateSelector(appState), []);
+  const dispatch   = useDispatch();
+  const formState  = useSelector((appState) => signInFormMeta.formStateSelector(appState), []);
+  const theme      = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+  const classes    = useStyles();
 
   const iForm = signInFormMeta.IForm(formState, dispatch); // AI: unsure if I should wrap in useMemo()
 
@@ -179,8 +134,42 @@ function SignInScreen({fullScreen, classes}) {
 
 }
 
-const SignInScreenWithStyles = withStyles(styles)(SignInScreen);
 
-// inject responsive `fullScreen` true/false prop based on screen size
-// ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
-export default withMobileDialog({breakpoint: 'xs'})(SignInScreenWithStyles);
+const useStyles = makeStyles( theme => ({
+  titleBar: {
+    display:         'flex',
+    alignItems:      'center', // vertically align title text with close (X) to it's right (leave this even though we do NOT have a close in this dialog)
+    padding:         '10px 15px',
+    color:           theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+  },
+
+  title: {
+    flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  lockAvatar: {
+    margin:          theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+  },
+
+  entry: {
+    margin:   '30px 0px',
+  },
+
+  // our fieldset is strictly strictly to disable all inputs/submit when form is in-process
+  invisible: {
+    border:  '0 none',
+    margin:  0,
+    padding: 0,
+  },
+
+  icon: {
+    marginRight: theme.spacing(1),
+  },
+  
+  inProgress: {
+    margin: theme.spacing(4),
+  },
+
+}) );

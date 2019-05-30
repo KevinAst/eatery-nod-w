@@ -75,7 +75,7 @@ export default function EateriesListScreen({classes}) {
                 <Typography variant="h6"
                   noWrap>
                   {eatery.name}
-                  <Typography inline noWrap>
+                  <Typography display="inline" noWrap>
                     &nbsp;({`${eatery.distance} mile${currentDistance===1?'':'s'}`})
                   </Typography>
                 </Typography>

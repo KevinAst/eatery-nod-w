@@ -2,12 +2,12 @@ import React,
        {useCallback}    from 'react';
 import PropTypes        from 'prop-types';
 
-import {useFassets}   from 'feature-u';
+import {useFassets}     from 'feature-u';
 import {useSelector,
-        useDispatch}  from 'react-redux'
-
-import {withStyles}     from '@material-ui/core/styles';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
+        useDispatch}    from 'react-redux'
+import {makeStyles,
+        useTheme}       from '@material-ui/core/styles';
+import useMediaQuery    from '@material-ui/core/useMediaQuery';
 
 import _eateriesAct     from '../actions';
 
@@ -29,37 +29,22 @@ import SpinIcon         from '@material-ui/icons/SwapCalls';
 import Typography       from '@material-ui/core/Typography';
 import {TransitionZoom} from 'util/Transition';
 
-const styles = theme => ({
-  titleBar: {
-    display:         'flex',
-    alignItems:      'center', // vertically align title text with close (X) to it's right
-    padding:         '10px 15px',
-    color:           theme.palette.common.white,
-    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
-  },
-
-  title: {
-    flexGrow: 1, // moves right-most toolbar items to the right
-  },
-
-  bottomBar: {
-    color:           theme.palette.common.white,
-    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
-  },
-});
-
 
 /**
  * EateryDetailScreen displaying the details of a given eatery.
  */
-function EateryDetailScreen({eatery, fullScreen, classes}) {
+export default function EateryDetailScreen({eatery}) {
 
-  const fassets = useFassets();
-  const curUser = useSelector((appState) => fassets.sel.curUser(appState), [fassets]);
+  const fassets     = useFassets();
+  const curUser     = useSelector((appState) => fassets.sel.curUser(appState), [fassets]);
 
   const dispatch    = useDispatch();
   const handleClose = useCallback(() => dispatch( _eateriesAct.viewDetail.close() ), []);
   const handleSpin  = useCallback(() => dispatch( _eateriesAct.spin() ),             []);
+
+  const theme       = useTheme();
+  const fullScreen  = useMediaQuery(theme.breakpoints.down('xs'));
+  const classes     = useStyles();
 
   return (
     <Dialog open={true}
@@ -71,7 +56,7 @@ function EateryDetailScreen({eatery, fullScreen, classes}) {
         
         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
           Eatery
-          <Typography color="inherit" inline noWrap>
+          <Typography color="inherit" display="inline" noWrap>
             &nbsp;({curUser.pool})
           </Typography>
         </Typography>
@@ -157,8 +142,22 @@ EateryDetailScreen.propTypes = {
   eatery:     PropTypes.object.isRequired,
 };
 
-const EateryDetailScreenWithStyles = withStyles(styles)(EateryDetailScreen);
 
-// inject responsive `fullScreen` true/false prop based on screen size
-// ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
-export default withMobileDialog({breakpoint: 'xs'})(EateryDetailScreenWithStyles);
+const useStyles = makeStyles( theme => ({
+  titleBar: {
+    display:         'flex',
+    alignItems:      'center', // vertically align title text with close (X) to it's right
+    padding:         '10px 15px',
+    color:           theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+  },
+
+  title: {
+    flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  bottomBar: {
+    color:           theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+  },
+}) );

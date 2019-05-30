@@ -1,5 +1,6 @@
 import React,
-       {useCallback,
+       {useState,
+        useCallback,
         useMemo}      from 'react';
 import PropTypes      from 'prop-types';
 
@@ -16,7 +17,7 @@ import Typography     from '@material-ui/core/Typography';
  */
 export default function UserMenu({curUser}) {
 
-  const [anchorUserMenu, setAnchorUserMenu] = React.useState(null);
+  const [anchorUserMenu, setAnchorUserMenu] = useState(null);
   const userMenuOpen = useMemo(() => Boolean(anchorUserMenu), [anchorUserMenu]);
 
   const openUserMenu = useCallback((event) => setAnchorUserMenu(event.currentTarget), []);

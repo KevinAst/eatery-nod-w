@@ -415,6 +415,11 @@ Release  | What                                            | *When*
   feature packages, by accessing them from the deployed server (see
   features: [initFirebase] and [initGooglePlaces]).
 
+- The Material-UI library was upgraded to V4, replacing **ALL** HOCs
+  with **React Hooks**!
+
+- Upgraded to React V16.8.6.
+
 </ul></ul>
 
 

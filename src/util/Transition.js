@@ -7,14 +7,6 @@ import Zoom   from '@material-ui/core/Zoom';
 //*** Common Transition components used throughout our app :-)
 //***
 
-export function TransitionFade(props) {
-  return <Fade timeout="1000" {...props} />;
-}
-
-export function TransitionSlide(props) {
-  return <Slide direction="right" timeout="1000" {...props} />;
-}
-
-export function TransitionZoom(props) {
-  return <Zoom timeout="1000" {...props} />;
-}
+export const TransitionFade  = React.forwardRef( (props, ref) => <Fade  ref={ref} timeout="1000"                   {...props} /> );
+export const TransitionSlide = React.forwardRef( (props, ref) => <Slide ref={ref} direction="right" timeout="1000" {...props} /> );
+export const TransitionZoom  = React.forwardRef( (props, ref) => <Zoom  ref={ref} timeout="1000"                   {...props} /> );
