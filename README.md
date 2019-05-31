@@ -94,12 +94,12 @@ However you can **use a "Guest ID"** that will morph the environment
 into your own "mocked" in-memory data source (that doesn't utilize
 Firebase).
 
-<div style="margin-left: 2em;">
+<ul> <!--- indentation hack --->
 
 Simply use an email id that begins with `guestNO@` (ex:
 `guestNO@myDomain.com`), with a password of `guestNO`.
 
-</div>
+</ul>
 
 When using a "Guest ID", remember the following:
 - Your GPS location will be morphed to New Orleans.
@@ -259,7 +259,7 @@ In case your wondering what all those dependencies are in
 
 ### Runtime Stack
 
-<div style="margin-left: 2em;">
+<ul> <!--- indentation hack --->
 
 The runtime stack used by **eatery-nod** is:
 
@@ -306,26 +306,26 @@ The runtime stack used by **eatery-nod** is:
 - [Firebase](https://github.com/firebase/firebase-js-sdk): Google Firebase SDK
   `"firebase"`
 
-</div>
+</ul>
 
 
 ### Tooling
 
-<div style="margin-left: 2em;">
+<ul> <!--- indentation hack --->
 
 - [Create React App]: project tooling `"react-scripts"`
 
-</div>
+</ul>
 
 
 ### Deployment
 
-<div style="margin-left: 2em;">
+<ul> <!--- indentation hack --->
 
 - [GitHub Pages](https://pages.github.com/): project deployment
   `"gh-pages"`
 
-</div>
+</ul>
 
 
 ## NPM Scripts
@@ -394,7 +394,7 @@ Release  | What                                            | *When*
 
 ### v2.1.0 - Misc Changes *(June xx, 2019)*
 
-<div style="margin-left: 4em;">
+<ul><ul> <!--- indentation hack --->
 
 [GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v2.1.0)
 &bull;
@@ -407,11 +407,15 @@ Release  | What                                            | *When*
 - The pool list mileage divider is now more visually distinct _(using
   color)_, when pool entries are sorted by distance.
 
+&nbsp; <!--- hack to push title down WITHIN ul --->
+
 **Docs:**
 
 - Added a complete [Running the App] section that describes how you
   can run **eatery-nod-w** and/or setup the project in your local
   environment.
+
+&nbsp; <!--- hack to push title down WITHIN ul --->
 
 **Technical:**
 
@@ -424,14 +428,14 @@ Release  | What                                            | *When*
 
 - Upgraded to React V16.8.6.
 
-</div>
+</ul></ul>
 
 
 <!-- *** RELEASE *************************************************************** -->
 
 ### v2.0.0 - React Hooks *(May 10, 2019)*
 
-<div style="margin-left: 4em;">
+<ul><ul> <!--- indentation hack --->
 
 [GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v2.0.0)
 &bull;
@@ -451,14 +455,14 @@ Release  | What                                            | *When*
   - [Left Nav]
   - [User Menu]
 
-</div>
+</ul></ul>
 
 
 <!-- *** RELEASE *************************************************************** -->
 
 ### v1.0.0 - Initial Release *(May 05, 2019)*
 
-<div style="margin-left: 4em;">
+<ul><ul> <!--- indentation hack --->
 
 [GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v1.0.0)
 &bull;
@@ -473,7 +477,7 @@ Release  | What                                            | *When*
 - This represents the initial port of this [PWA], from the
   [eatery-nod] react-native expo mobile app.
 
-</div>
+</ul></ul>
 
 
 
