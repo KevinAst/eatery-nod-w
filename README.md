@@ -407,7 +407,8 @@ Release  | What                                            | *When*
 - The pool list mileage divider is now more visually distinct _(using
   color)_, when pool entries are sorted by distance.
 
-&nbsp; <!--- hack to push title down WITHIN ul --->
+<!--- hack to push title down WITHIN ul --->
+&nbsp;
 
 **Docs:**
 
@@ -415,7 +416,8 @@ Release  | What                                            | *When*
   can run **eatery-nod-w** and/or setup the project in your local
   environment.
 
-&nbsp; <!--- hack to push title down WITHIN ul --->
+<!--- hack to push title down WITHIN ul --->
+&nbsp;
 
 **Technical:**
 
