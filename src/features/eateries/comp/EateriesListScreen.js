@@ -3,6 +3,7 @@ import React,
 
 import {useSelector,
         useDispatch}       from 'react-redux'
+import {makeStyles}        from '@material-ui/core/styles';
 
 import _eateriesAct        from '../actions';
 import * as _eateriesSel   from '../state';
@@ -21,7 +22,7 @@ import SplashScreen        from 'util/SplashScreen';
 /**
  * EateriesListScreen displaying a set of eateries (possibly filtered).
  */
-export default function EateriesListScreen({classes}) {
+export default function EateriesListScreen() {
 
   const filteredEateries = useSelector((appState) => _eateriesSel.getFilteredEateries(appState), []);
   const filter           = useSelector((appState) => _eateriesSel.getListViewFilter(appState),   []);
@@ -33,6 +34,8 @@ export default function EateriesListScreen({classes}) {
     //console.log(`xx showDetail for ${eateryId}`);
     dispatch( _eateriesAct.viewDetail(eateryId) );
   }, []);
+
+  const classes = useStyles();
 
   if (!filteredEateries) {
     return <SplashScreen msg="... waiting for pool entries"/>;
@@ -46,16 +49,16 @@ export default function EateriesListScreen({classes}) {
       // optionally supply sub-header when ordered by distance
       if (filter.sortOrder === 'distance' && eatery.distance !== currentDistance) {
         currentDistance = eatery.distance;
-        // ?? additional style: ... NOTE have not yet seen this rendering
-        //    - ? red color (or secondary
-        //    - ? format "(as the crow flies)" on second line -and- smaller
-        const subTxt = `${currentDistance} mile${currentDistance===1?'':'s'} (as the crow flies)`;
+        const subTxt = `${currentDistance} mile${currentDistance===1?'':'s'}`;
         content.push((
           <ListItem key={`subheader${currentDistance}`}
                     dense
-                    button
+                    className={classes.divider}
                     divider>
-            <ListItemText primary={subTxt}/>
+            <ListItemText primary={subTxt}
+                          primaryTypographyProps={{variant:'subtitle1'}}
+                          secondary=" (as the crow flies)"
+                          secondaryTypographyProps={{display:'inline'}}/>
           </ListItem>
         ));
       }
@@ -101,3 +104,14 @@ export default function EateriesListScreen({classes}) {
     </>
   );
 }
+
+
+const useStyles = makeStyles( theme => ({
+
+  // vary background grey intensity based on light/dark theme
+  // ... and text auto oscillates
+  divider: {
+    backgroundColor: theme.palette.divider,
+  },
+
+}) );

@@ -94,12 +94,12 @@ However you can **use a "Guest ID"** that will morph the environment
 into your own "mocked" in-memory data source (that doesn't utilize
 Firebase).
 
-<ul> <!--- indentation hack --->
+<div style="margin-left: 2em;">
 
 Simply use an email id that begins with `guestNO@` (ex:
 `guestNO@myDomain.com`), with a password of `guestNO`.
 
-</ul>
+</div>
 
 When using a "Guest ID", remember the following:
 - Your GPS location will be morphed to New Orleans.
@@ -259,7 +259,7 @@ In case your wondering what all those dependencies are in
 
 ### Runtime Stack
 
-<ul> <!--- indentation hack --->
+<div style="margin-left: 2em;">
 
 The runtime stack used by **eatery-nod** is:
 
@@ -306,26 +306,26 @@ The runtime stack used by **eatery-nod** is:
 - [Firebase](https://github.com/firebase/firebase-js-sdk): Google Firebase SDK
   `"firebase"`
 
-</ul>
+</div>
 
 
 ### Tooling
 
-<ul> <!--- indentation hack --->
+<div style="margin-left: 2em;">
 
 - [Create React App]: project tooling `"react-scripts"`
 
-</ul>
+</div>
 
 
 ### Deployment
 
-<ul> <!--- indentation hack --->
+<div style="margin-left: 2em;">
 
 - [GitHub Pages](https://pages.github.com/): project deployment
   `"gh-pages"`
 
-</ul>
+</div>
 
 
 ## NPM Scripts
@@ -394,7 +394,7 @@ Release  | What                                            | *When*
 
 ### v2.1.0 - Misc Changes *(June xx, 2019)*
 
-<ul><ul><!--- indentation hack ---> 
+<div style="margin-left: 4em;">
 
 [GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v2.1.0)
 &bull;
@@ -402,14 +402,18 @@ Release  | What                                            | *When*
 &bull;
 [Diff](https://github.com/KevinAst/eatery-nod-w/compare/v2.0.0...v2.1.0)
 
-**Documentation:**
+**General:**
+
+- The pool list mileage divider is now more visually distinct _(using
+  color)_, when pool entries are sorted by distance.
+
+**Docs:**
 
 - Added a complete [Running the App] section that describes how you
   can run **eatery-nod-w** and/or setup the project in your local
   environment.
 
-
-**Technical Changes:**
+**Technical:**
 
 - The API Credentials have been decoupled from the common "init"
   feature packages, by accessing them from the deployed server (see
@@ -420,14 +424,14 @@ Release  | What                                            | *When*
 
 - Upgraded to React V16.8.6.
 
-</ul></ul>
+</div>
 
 
 <!-- *** RELEASE *************************************************************** -->
 
 ### v2.0.0 - React Hooks *(May 10, 2019)*
 
-<ul><ul><!--- indentation hack ---> 
+<div style="margin-left: 4em;">
 
 [GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v2.0.0)
 &bull;
@@ -435,7 +439,7 @@ Release  | What                                            | *When*
 &bull;
 [Diff](https://github.com/KevinAst/eatery-nod-w/compare/v1.0.0...v2.0.0)
 
-**Technical Changes:**
+**Technical:**
 
 - React [Hooks] are now used in place of Higher Order Components
   ([HoC]) ... read about it [here](#react-hooks).
@@ -447,15 +451,14 @@ Release  | What                                            | *When*
   - [Left Nav]
   - [User Menu]
 
-</ul></ul>
-
+</div>
 
 
 <!-- *** RELEASE *************************************************************** -->
 
 ### v1.0.0 - Initial Release *(May 05, 2019)*
 
-<ul><ul><!--- indentation hack ---> 
+<div style="margin-left: 4em;">
 
 [GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v1.0.0)
 &bull;
@@ -465,12 +468,12 @@ Release  | What                                            | *When*
 [Diff](https://github.com/KevinAst/eatery-nod-w/compare/v1.0.0...v1.0.1)
 -->
 
-The initial port of this [PWA], from the [eatery-nod] react-native
-expo mobile app.
+**General:**
 
-</ul></ul>
+- This represents the initial port of this [PWA], from the
+  [eatery-nod] react-native expo mobile app.
 
-
+</div>
 
 
 
