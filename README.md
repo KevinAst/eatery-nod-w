@@ -404,6 +404,8 @@ Release  | What                                            | *When*
 
 **General:**
 
+- Distance (mileage) is now visible in the eatery detail screen.
+
 - The pool list mileage divider is now more visually distinct _(using
   color)_, when pool entries are sorted by distance.
 
