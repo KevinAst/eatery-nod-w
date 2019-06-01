@@ -3,9 +3,8 @@ import React,
 
 import {useSelector,
         useDispatch}     from 'react-redux'
-import {makeStyles,
-        useTheme}        from '@material-ui/core/styles';
-import useMediaQuery     from '@material-ui/core/useMediaQuery';
+import {makeStyles}      from '@material-ui/core/styles';
+import {useForCellPhone} from 'util/responsiveBreakpoints';
 
 import _authAct          from '../actions';
 import * as _authSel     from '../state';
@@ -36,13 +35,12 @@ export default function SignInVerifyScreen() {
   const checkEmailVerified      = useCallback(() => dispatch( _authAct.signIn.checkEmailVerified() ),      []);
   const resendEmailVerification = useCallback(() => dispatch( _authAct.signIn.resendEmailVerification() ), []);
   const signOut                 = useCallback(() => dispatch( _authAct.signOut() ),                        []);
-  const theme                   = useTheme();
-  const fullScreen              = useMediaQuery(theme.breakpoints.down('xs'));
+  const isCellPhone             = useForCellPhone();
   const classes                 = useStyles();
 
   return (
     <Dialog open={true}
-            fullScreen={fullScreen}
+            fullScreen={isCellPhone}
             TransitionComponent={TransitionZoom}>
 
       <DialogTitle disableTypography className={classes.titleBar}>

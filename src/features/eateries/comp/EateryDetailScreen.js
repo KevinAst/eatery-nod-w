@@ -1,33 +1,32 @@
 import React,
-       {useCallback}    from 'react';
-import PropTypes        from 'prop-types';
+       {useCallback}     from 'react';
+import PropTypes         from 'prop-types';
 
-import {useFassets}     from 'feature-u';
+import {useFassets}      from 'feature-u';
 import {useSelector,
-        useDispatch}    from 'react-redux'
-import {makeStyles,
-        useTheme}       from '@material-ui/core/styles';
-import useMediaQuery    from '@material-ui/core/useMediaQuery';
+        useDispatch}     from 'react-redux'
+import {makeStyles}      from '@material-ui/core/styles';
+import {useForCellPhone} from 'util/responsiveBreakpoints';
 
-import _eateriesAct     from '../actions';
+import _eateriesAct      from '../actions';
 
-import CloseIcon        from '@material-ui/icons/Close';
-import Dialog           from '@material-ui/core/Dialog';
-import DialogActions    from '@material-ui/core/DialogActions';
-import DialogContent    from '@material-ui/core/DialogContent';
-import DialogTitle      from '@material-ui/core/DialogTitle';
-import IconButton       from '@material-ui/core/IconButton';
-import Link             from '@material-ui/core/Link';
-import LinkIcon         from '@material-ui/icons/Link';
-import List             from '@material-ui/core/List';
-import ListItem         from '@material-ui/core/ListItem';
-import ListItemIcon     from '@material-ui/core/ListItemIcon';
-import ListItemText     from '@material-ui/core/ListItemText';
-import NavigationIcon   from '@material-ui/icons/Navigation';
-import PhoneIcon        from '@material-ui/icons/Phone';
-import SpinIcon         from '@material-ui/icons/SwapCalls';
-import Typography       from '@material-ui/core/Typography';
-import {TransitionZoom} from 'util/Transition';
+import CloseIcon         from '@material-ui/icons/Close';
+import Dialog            from '@material-ui/core/Dialog';
+import DialogActions     from '@material-ui/core/DialogActions';
+import DialogContent     from '@material-ui/core/DialogContent';
+import DialogTitle       from '@material-ui/core/DialogTitle';
+import IconButton        from '@material-ui/core/IconButton';
+import Link              from '@material-ui/core/Link';
+import LinkIcon          from '@material-ui/icons/Link';
+import List              from '@material-ui/core/List';
+import ListItem          from '@material-ui/core/ListItem';
+import ListItemIcon      from '@material-ui/core/ListItemIcon';
+import ListItemText      from '@material-ui/core/ListItemText';
+import NavigationIcon    from '@material-ui/icons/Navigation';
+import PhoneIcon         from '@material-ui/icons/Phone';
+import SpinIcon          from '@material-ui/icons/SwapCalls';
+import Typography        from '@material-ui/core/Typography';
+import {TransitionZoom}  from 'util/Transition';
 
 
 /**
@@ -42,14 +41,14 @@ export default function EateryDetailScreen({eatery}) {
   const handleClose = useCallback(() => dispatch( _eateriesAct.viewDetail.close() ), []);
   const handleSpin  = useCallback(() => dispatch( _eateriesAct.spin() ),             []);
 
-  const theme       = useTheme();
-  const fullScreen  = useMediaQuery(theme.breakpoints.down('xs'));
+  const isCellPhone = useForCellPhone();
+
   const classes     = useStyles();
 
   return (
     <Dialog open={true}
             onClose={handleClose}
-            fullScreen={fullScreen}
+            fullScreen={isCellPhone}
             TransitionComponent={TransitionZoom}>
 
       <DialogTitle disableTypography className={classes.titleBar}>

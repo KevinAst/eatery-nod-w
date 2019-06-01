@@ -2,9 +2,8 @@ import React             from 'react';
 
 import {useSelector,
         useDispatch}     from 'react-redux'
-import {makeStyles,
-        useTheme}        from '@material-ui/core/styles';
-import useMediaQuery     from '@material-ui/core/useMediaQuery';
+import {makeStyles}      from '@material-ui/core/styles';
+import {useForCellPhone} from 'util/responsiveBreakpoints';
 
 import signInFormMeta    from '../signInFormMeta';
 import ITextField        from 'util/iForms/comp/ITextField';
@@ -30,11 +29,10 @@ import CenterItems       from 'util/CenterItems';
  */
 export default function SignInScreen() {
 
-  const dispatch   = useDispatch();
-  const formState  = useSelector((appState) => signInFormMeta.formStateSelector(appState), []);
-  const theme      = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
-  const classes    = useStyles();
+  const dispatch    = useDispatch();
+  const formState   = useSelector((appState) => signInFormMeta.formStateSelector(appState), []);
+  const isCellPhone = useForCellPhone();
+  const classes     = useStyles();
 
   const iForm = signInFormMeta.IForm(formState, dispatch); // AI: unsure if I should wrap in useMemo()
 
@@ -44,7 +42,7 @@ export default function SignInScreen() {
 
   return (
     <Dialog open={true}
-            fullScreen={fullScreen}
+            fullScreen={isCellPhone}
             TransitionComponent={TransitionZoom}>
 
       <DialogTitle disableTypography className={classes.titleBar}>

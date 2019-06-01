@@ -4,8 +4,7 @@ import React,
 import {useSelector,
         useDispatch}       from 'react-redux'
 import {makeStyles}        from '@material-ui/core/styles';
-import {useTheme}          from '@material-ui/core/styles';
-import useMediaQuery       from '@material-ui/core/useMediaQuery';
+import {useForTabletPlus}  from 'util/responsiveBreakpoints';
 
 import _eateriesAct        from '../actions';
 import * as _eateriesSel   from '../state';
@@ -45,8 +44,7 @@ export default function EateriesListScreen() {
     dispatch( _eateriesAct.viewDetail(eateryId) );
   }, []);
 
-  const theme        = useTheme();
-  const isTabletPlus = useMediaQuery(theme.breakpoints.up('md')); // breakpoints: xs/sm/md/lg/xl
+  const isTabletPlus = useForTabletPlus();
 
   const classes      = useStyles();
 

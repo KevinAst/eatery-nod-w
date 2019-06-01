@@ -438,6 +438,9 @@ Release  | What                                            | *When*
 
 - Upgraded to React V16.8.6.
 
+- Define reusable custom hooks that reveal responsive breakpoints (based on media query)
+  ... see: [`src/util/responsiveBreakpoints.js`](src/util/responsiveBreakpoints.js)
+
 </ul></ul>
 
 

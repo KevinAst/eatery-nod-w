@@ -1,16 +1,15 @@
-import React            from 'react';
-import PropTypes        from 'prop-types';
+import React             from 'react';
+import PropTypes         from 'prop-types';
 
-import {makeStyles,
-        useTheme}       from '@material-ui/core/styles';
-import useMediaQuery    from '@material-ui/core/useMediaQuery';
+import {makeStyles}      from '@material-ui/core/styles';
+import {useForCellPhone} from 'util/responsiveBreakpoints';
 
-import Progress         from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
-import Dialog           from '@material-ui/core/Dialog';
-import DialogContent    from '@material-ui/core/DialogContent';
-import DialogTitle      from '@material-ui/core/DialogTitle';
-import Typography       from '@material-ui/core/Typography';
-import {TransitionZoom} from 'util/Transition';
+import Progress          from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
+import Dialog            from '@material-ui/core/Dialog';
+import DialogContent     from '@material-ui/core/DialogContent';
+import DialogTitle       from '@material-ui/core/DialogTitle';
+import Typography        from '@material-ui/core/Typography';
+import {TransitionZoom}  from 'util/Transition';
 
 
 /**
@@ -29,13 +28,12 @@ import {TransitionZoom} from 'util/Transition';
  */
 export default function SplashScreen({msg}) {
 
-  const theme      = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
-  const classes    = useStyles();
+  const isCellPhone = useForCellPhone();
+  const classes     = useStyles();
 
   return (
     <Dialog open={true}
-            fullScreen={fullScreen}
+            fullScreen={isCellPhone}
             TransitionComponent={TransitionZoom}>
     
       <DialogTitle className={classes.title}>
