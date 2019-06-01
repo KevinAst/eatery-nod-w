@@ -85,14 +85,14 @@ const useStyles = makeStyles( theme => ({
   main: {
     width:        'auto',
     display:      'block', // Fix IE 11 issue.
-    //marginLeft:   theme.spacing(3), // AI: ?? bad news for the overall layout
-    //marginRight:  theme.spacing(3),
+ // marginLeft:   theme.spacing(3), // N/A: bad news for the overall layout
+ // marginRight:  theme.spacing(3),
 
-    // reactive design // AI: ?? THIS IS CAUSING HAVOC on my main content container overall width
-    //? [theme.breakpoints.up(400 + theme.spacing(3 * 2))]: {
-    //?   width:       400,
-    //?   marginLeft:  'auto',
-    //?   marginRight: 'auto',
-    //? },
+ // reactive design // N/A:  THIS IS CAUSING HAVOC on my main content container overall width
+ // [theme.breakpoints.up(400 + theme.spacing(3 * 2))]: {
+ //   width:       400,
+ //   marginLeft:  'auto',
+ //   marginRight: 'auto',
+ // },
   },
 }) );

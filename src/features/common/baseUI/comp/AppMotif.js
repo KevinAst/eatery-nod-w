@@ -130,12 +130,12 @@ const useStyles = makeStyles( theme => ({
   },
 
   appBar: {
-    //? ***Dashboard Sample***
-    //? zIndex:     theme.zIndex.drawer + 1,
-    //? transition: theme.transitions.create(['width', 'margin'], {
-    //?   easing:   theme.transitions.easing.sharp,
-    //?   duration: theme.transitions.duration.leavingScreen,
-    //? }),
+    // ***Dashboard Sample***
+    // zIndex:     theme.zIndex.drawer + 1,
+    // transition: theme.transitions.create(['width', 'margin'], {
+    //   easing:   theme.transitions.easing.sharp,
+    //   duration: theme.transitions.duration.leavingScreen,
+    // }),
   },
 
   bottomBar: {
@@ -144,12 +144,11 @@ const useStyles = makeStyles( theme => ({
   },
 
   toolbar: {
-    //? ***Dashboard Sample***
-    //? paddingRight: 24, // keep right padding when drawer closed
+    // ***Dashboard Sample***
+    // paddingRight: 24, // keep right padding when drawer closed
   },
 
   menuButton: {
-    //? marginLeft:  12, //? ...more ***Dashboard Sample***
     marginRight: 36, // proper spacing between menu button and title
   },
 
