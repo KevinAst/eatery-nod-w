@@ -4,16 +4,26 @@ import React,
 import {useSelector,
         useDispatch}       from 'react-redux'
 import {makeStyles}        from '@material-ui/core/styles';
+import {useTheme}          from '@material-ui/core/styles';
+import useMediaQuery       from '@material-ui/core/useMediaQuery';
 
 import _eateriesAct        from '../actions';
 import * as _eateriesSel   from '../state';
 
-import Typography          from '@material-ui/core/Typography';
-import ListItemIcon        from '@material-ui/core/ListItemIcon';
-import RestaurantIcon      from '@material-ui/icons/Restaurant';
+import Link                from '@material-ui/core/Link';
+import LinkIcon            from '@material-ui/icons/Link';
 import List                from '@material-ui/core/List';
 import ListItem            from '@material-ui/core/ListItem';
+import ListItemIcon        from '@material-ui/core/ListItemIcon';
 import ListItemText        from '@material-ui/core/ListItemText';
+import NavigationIcon      from '@material-ui/icons/Navigation';
+import RestaurantIcon      from '@material-ui/icons/Restaurant';
+import Table               from '@material-ui/core/Table';
+import TableBody           from '@material-ui/core/TableBody';
+import TableCell           from '@material-ui/core/TableCell';
+import TableHead           from '@material-ui/core/TableHead';
+import TableRow            from '@material-ui/core/TableRow';
+import Typography          from '@material-ui/core/Typography';
 
 import EateryDetailScreen  from './EateryDetailScreen';
 import SplashScreen        from 'util/SplashScreen';
@@ -35,19 +45,33 @@ export default function EateriesListScreen() {
     dispatch( _eateriesAct.viewDetail(eateryId) );
   }, []);
 
-  const classes = useStyles();
+  const theme        = useTheme();
+  const isTabletPlus = useMediaQuery(theme.breakpoints.up('md')); // breakpoints: xs/sm/md/lg/xl
 
+  const classes      = useStyles();
+
+  // no-op if our pool entries are NOT yet retrieved
   if (!filteredEateries) {
     return <SplashScreen msg="... waiting for pool entries"/>;
   }
 
-  let currentDistance = -1;
+  const orderByDistance = filter.sortOrder === 'distance';
 
-  function listContent() {
+
+  //***
+  //*** inner function to list content for smaller devices (like cell phones)
+  //*** ... using <List>
+  //***
+
+  let currentDistance = -1;
+  function listContentCellPhone() {
+
     const content = [];
+
     filteredEateries.forEach( eatery => {
+
       // optionally supply sub-header when ordered by distance
-      if (filter.sortOrder === 'distance' && eatery.distance !== currentDistance) {
+      if (orderByDistance && eatery.distance !== currentDistance) {
         currentDistance = eatery.distance;
         const subTxt = `${currentDistance} mile${currentDistance===1?'':'s'}`;
         content.push((
@@ -62,6 +86,7 @@ export default function EateriesListScreen() {
           </ListItem>
         ));
       }
+
       // supply our primary entry content
       content.push((
         <ListItem key={eatery.id}
@@ -79,7 +104,7 @@ export default function EateriesListScreen() {
                   noWrap>
                   {eatery.name}
                   <Typography display="inline" noWrap>
-                    &nbsp;({`${eatery.distance} mile${currentDistance===1?'':'s'}`})
+                    &nbsp;({`${eatery.distance} mile${eatery.distance===1?'':'s'}`})
                   </Typography>
                 </Typography>
               }
@@ -91,14 +116,79 @@ export default function EateriesListScreen() {
         </ListItem>
       ));
     });
-    return content;
+    return <List>{content}</List>;
   }
+
+  //***
+  //*** inner function to list content for larger devices (like tablets or greater)
+  //*** ... using <Table>
+  //***
+
+  function listContentTabletPlus() {
+    return (
+      <Table size="small" className={classes.table}>
+        <TableHead>
+          <TableRow>
+            {orderByDistance && <TableCell className={classes.tableHeader}>Miles</TableCell>}
+            <TableCell className={classes.tableHeader}>Eatery</TableCell>
+            <TableCell className={classes.tableHeader}>Phone</TableCell>
+            {!orderByDistance && <TableCell className={classes.tableHeader}>Miles</TableCell>}
+            <TableCell className={classes.tableHeader}>Address</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          { filteredEateries.map( eatery => (
+              <TableRow key={eatery.id}
+                        hover
+                        onClick={()=>showDetail(eatery.id)}>
+
+                {orderByDistance && <TableCell align="right">{eatery.distance}</TableCell>}
+
+                <TableCell>
+                  {eatery.name}
+                  {eatery.website !== 'not-in-search' &&
+                   <>
+                     &nbsp;
+                     <Link href={eatery.website}
+                           target="_blank"
+                           color="inherit"
+                           underline="none">
+                       <LinkIcon className={classes.icon}/>
+                     </Link>
+                   </>
+                  }
+                </TableCell>
+
+                <TableCell><Typography variant="body2" noWrap>{eatery.phone}</Typography></TableCell>
+
+                {!orderByDistance && <TableCell align="right">{eatery.distance}</TableCell>}
+
+                <TableCell>
+                  <Link href={eatery.navUrl}
+                        target="_blank"
+                        color="inherit"
+                        underline="none">
+                    <NavigationIcon className={classes.icon}/>
+                  </Link> &nbsp;
+                  {eatery.addr}
+                </TableCell>
+
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    );
+  }
+
+  //***
+  //*** render our EateriesListScreen
+  //***
+
+  const ListContent = () => isTabletPlus ? listContentTabletPlus() : listContentCellPhone();
 
   return (
     <>
-      <List>
-        { listContent() }
-      </List>
+      <ListContent/>
       {spinMsg        && <SplashScreen msg={spinMsg}/>}
       {selectedEatery && <EateryDetailScreen eatery={selectedEatery}/>}
     </>
@@ -112,6 +202,34 @@ const useStyles = makeStyles( theme => ({
   // ... and text auto oscillates
   divider: {
     backgroundColor: theme.palette.divider,
+  },
+
+  table: {
+    // hack to move table down a bit (so as to not be covered by our App Header)
+    marginTop:  15,
+  },
+
+  // hack to make table header ALWAYS visible <<< using "sticky"
+  tableHeader: {
+    top:      0,
+    position: "sticky",
+    color:    'black',
+
+    // set the table header background to a light grey
+    // NOTE: uses  an opacity-level of 1 (NOT TRANSPARENT)
+    //       - use technique that does NOT affect our children (via rgba css function)
+    //         ... so when scrolling (with the "sticky" attr, the header is NOT obscured
+    //       - this is accomplished through the rgba css function
+    //         ... i.e. it is NOT possible through the 'opacity' css attr
+    //       - for this reason we cannot tap into our theme colors (via theme.palette)
+    //       - SO we choose a neutral color (light grey)
+    background: 'rgba(200, 200, 200, 1.0)',  // opacity-level of 1 (NOT TRANSPARENT), while NOT affecting children (because of rgba usage)
+  },
+
+  icon: {
+    width: 16,
+    color: theme.palette.secondary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+    verticalAlign: 'middle',             // FIX icon alignment when used in conjunction with text
   },
 
 }) );

@@ -404,10 +404,16 @@ Release  | What                                            | *When*
 
 **General:**
 
-- Distance (mileage) is now visible in the eatery detail screen.
+- The Eateries List screen has changed as follows:
 
-- The pool list mileage divider is now more visually distinct _(using
-  color)_, when pool entries are sorted by distance.
+  - it is now **responsive**, adjusting the original cell-phone list
+    to a more detailed table when enough device real estate is
+    available.
+
+  - it's mileage divider is now more visually distinct _(using
+    color)_, when pool entries are sorted by distance.
+
+- Distance (mileage) is now visible in the Eatery Detail screen.
 
 <!--- hack to push title down WITHIN ul --->
 &nbsp;
