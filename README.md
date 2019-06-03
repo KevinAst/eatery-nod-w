@@ -34,9 +34,9 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
     - [Deployment]
   - [NPM Scripts]
 - [Revision History]
-  - [v2.1.0] - Responsive Design _(June xx, 2019)_
-  - [v2.0.0] - React Hooks _(May 10, 2019)_
-  - [v1.0.0] - Initial Release _(May 05, 2019)_
+  - [v2.1.0] - _**Responsive Design** (June xx, 2019)_
+  - [v2.0.0] - _**React Hooks** (May 10, 2019)_
+  - [v1.0.0] - _**Initial Release** (May 05, 2019)_
 
 
 ## Eatery Pool
