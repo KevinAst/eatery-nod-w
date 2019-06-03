@@ -34,6 +34,9 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
     - [Deployment]
   - [NPM Scripts]
 - [Revision History]
+  - [v2.1.0] - Responsive Design _(June xx, 2019)_
+  - [v2.0.0] - React Hooks _(May 10, 2019)_
+  - [v1.0.0] - Initial Release _(May 05, 2019)_
 
 
 ## Eatery Pool
@@ -296,10 +299,7 @@ The runtime stack used by **eatery-nod** is:
 - [redux](https://redux.js.org/): the application state manager
   `"redux", "react-redux"`
 
-- [redux-logic](https://github.com/jeffbski/redux-logic): organizes business logic
-  `"redux-logic"`
-
-- _misc redux utils_
+  _misc redux utils:_
 
   - [action-u](https://action-u.js.org/): redux action creator and organization
     `"action-u"`
@@ -310,7 +310,13 @@ The runtime stack used by **eatery-nod** is:
   - [reselect](https://github.com/reduxjs/reselect): selector library for Redux
     `"reselect"`
 
-- _misc general utils_
+- [redux-logic](https://github.com/jeffbski/redux-logic): organizes business logic
+  `"redux-logic"`
+
+- [Firebase](https://github.com/firebase/firebase-js-sdk): Google Firebase SDK
+  `"firebase"`
+
+- _misc general utils:_
 
   - [lodash](https://lodash.com/): JS utils
     `"lodash.isequal", "lodash.isfunction", "lodash.isplainobject", "lodash.isstring"`
@@ -319,10 +325,7 @@ The runtime stack used by **eatery-nod** is:
     `"geodist"`
 
   - [yup](https://github.com/jquense/yup): JS object schema validator
-    `"yup"`
-
-- [Firebase](https://github.com/firebase/firebase-js-sdk): Google Firebase SDK
-  `"firebase"`
+    `"yup"` _(used by the [iForms util](src/util/iForms))_
 
 </ul>
 
@@ -403,14 +406,14 @@ eject ..... eject the Create React App project tooling
 
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
-[v2.1.0] | Misc Changes                                    | *June xx, 2019*
+[v2.1.0] | Responsive Design                               | *June xx, 2019*
 [v2.0.0] | React Hooks                                     | *May 10, 2019*
 [v1.0.0] | Initial Release                                 | *May 05, 2019*
 
 
 <!-- *** RELEASE *************************************************************** -->
 
-### v2.1.0 - Misc Changes *(June xx, 2019)*
+### v2.1.0 - Responsive Design *(June xx, 2019)*
 
 <ul><ul> <!--- indentation hack --->
 
@@ -546,7 +549,7 @@ Release  | What                                            | *When*
 [NPM Scripts]:               #npm-scripts
 
 [Revision History]:    #revision-history
- [v2.1.0]:             #v210---misc-changes-june-xx-2019
+ [v2.1.0]:             #v210---responsive-design-june-xx-2019
  [v2.0.0]:             #v200---react-hooks-may-10-2019
  [v1.0.0]:             #v100---initial-release-may-05-2019
 
