@@ -4,7 +4,7 @@ import React,
 import {useSelector,
         useDispatch}       from 'react-redux'
 import {makeStyles}        from '@material-ui/core/styles';
-import {useForTabletPlus}  from 'util/responsiveBreakpoints';
+import {useForWiderDevice} from 'util/responsiveBreakpoints';
 
 import _eateriesAct        from '../actions';
 import * as _eateriesSel   from '../state';
@@ -44,9 +44,9 @@ export default function EateriesListScreen() {
     dispatch( _eateriesAct.viewDetail(eateryId) );
   }, []);
 
-  const isTabletPlus = useForTabletPlus();
+  const isWiderDevice = useForWiderDevice();
 
-  const classes      = useStyles();
+  const classes = useStyles();
 
   // no-op if our pool entries are NOT yet retrieved
   if (!filteredEateries) {
@@ -62,7 +62,7 @@ export default function EateriesListScreen() {
   //***
 
   let currentDistance = -1;
-  function listContentCellPhone() {
+  function contentAsList() {
 
     const content = [];
 
@@ -118,11 +118,11 @@ export default function EateriesListScreen() {
   }
 
   //***
-  //*** inner function to list content for larger devices (like tablets or greater)
+  //*** inner function to list content for larger devices (like tablets or desktops)
   //*** ... using <Table>
   //***
 
-  function listContentTabletPlus() {
+  function contentAsTable() {
     return (
       <Table size="small" className={classes.table}>
         <TableHead>
@@ -182,7 +182,7 @@ export default function EateriesListScreen() {
   //*** render our EateriesListScreen
   //***
 
-  const ListContent = () => isTabletPlus ? listContentTabletPlus() : listContentCellPhone();
+  const ListContent = () => isWiderDevice ? contentAsTable() : contentAsList();
 
   return (
     <>

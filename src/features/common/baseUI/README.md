@@ -10,6 +10,8 @@ application.  It manages the following characteristics:
   structure):
   - a **[Responsive Design]** that auto adjusts for desktops, cell phones, and
     portable devices
+    - in addition **[Responsive Boundaries]** allow the user to select screen
+      sizes where additional content can be manifest
   - a **[UI Theme]** allowing the user to choose from light/dark renditions
   - an **[About Dialog]** is promoted from information gleaned from the `package.json`
   - the **[Notify]** utility is activated, supporting programmatic
@@ -28,6 +30,7 @@ application.  It manages the following characteristics:
 - [Usage Contract Summary]
 - [Main Layout]
   - [Responsive Design]
+    - [Responsive Boundaries]
   - [UI Theme]
   - [About Dialog]
   - [Notify]
@@ -81,6 +84,9 @@ The following items are provided through the  `<MainLayout>` component:
 
 - a **[UI Theme]** allowing the user to choose from light/dark renditions
 
+  - in addition **[Responsive Boundaries]** allow the user to select screen
+    sizes where additional content can be manifest
+
 - an **[About Dialog]** is promoted from information gleaned from the `package.json`
 
 - the **[Notify]** utility is activated, supporting programmatic
@@ -119,6 +125,76 @@ Here is a dialog rendered on a desktop browser:
 Here is the same dialog shown on a cell phone.  _**Notice it dynamically overtakes the entire screen**_:
 <p align="center"><img src="docs/MainLayoutPhone.png" alt="MainLayout Phone" width="35%"></p>
 
+### Responsive Boundaries
+
+[PWA]s are designed with **mobile devices** in mind **first and foremost**.
+With that said, **responsive apps** will dynamically adjust selected
+screens to take advantage of the additional screen real estate.  _As an
+example, a simple list can morph into a detailed table (when more
+space is available)_.
+
+The **baseUI** feature maintains a `responsiveMode` that defines the
+boundaries where additional content can be manifest (based on the
+screen width).  The `responsiveMode`:
+
+- is maintained in state _(please refer to the the [State Transition](docs/StateTransition.txt) diagram)_.
+- is user-selectable (via a control automatically injected in the [User Menu])
+- is persisted to local storage (bootstrapped during app start-up)
+- and can be fully disabled
+
+The `useForWiderDevice()` **custom react hook** (found in
+[`responsiveBreakpoints.js`](../../../util/responsiveBreakpoints.js))
+can be used to tap into this responsive state:
+
+```js
+import {useTheme}           from '@material-ui/core/styles';
+import useMediaQuery        from '@material-ui/core/useMediaQuery';
+import {useSelector}        from 'react-redux'
+import {getResponsiveMode}  from 'features/common/baseUI/state'
+
+export function useForWiderDevice() {
+  const responsiveMode  = useSelector( (appState) => getResponsiveMode(appState), [] );
+  const theme           = useTheme();
+  const isWiderDevice   = useMediaQuery(theme.breakpoints.up(responsiveMode));
+
+  return isWiderDevice;
+}
+```
+
+Here is the hook in action:
+```js
+
+export default function MyResponsiveComp() {
+
+  const isWiderDevice = useForWiderDevice();
+
+  return (
+    <>
+      {!isWiderDevice && <ListRendition  content={myData}/>}
+      {isWiderDevice  && <TableRendition content={myData}/>}
+    </>
+  );
+}
+```
+
+As an example, here is the eatery pool shown on a **cell phone**:
+
+?? screen print
+
+And here is the same screen manifest on a **desktop browser**:
+
+?? screen print
+
+The **user is in control of the responsive boundaries** where
+additional content can be manifest.  Here the User Menu that shows the
+**responsive** menu:
+
+?? screen print
+
+And here is the dialog that adjusts **responsive boundaries**:
+
+?? screen print
+
 </ul>
 
 
@@ -140,6 +216,7 @@ Here is the same screen shown in a "dark" theme.
 <p align="center"><img src="docs/UIThemePhoneDark.png" alt="UI Theme Dark" width="35%"></p>
 
 </ul>
+
 
 
 ### About Dialog
@@ -361,6 +438,7 @@ Transition](docs/StateTransition.txt) diagram.
 [Usage Contract Summary]: #usage-contract-summary
 [Main Layout]:            #main-layout
 [Responsive Design]:      #responsive-design
+[Responsive Boundaries]:  #responsive-boundaries
 [UI Theme]:               #ui-theme
 [About Dialog]:           #about-dialog
 [Notify]:                 #notify
@@ -370,3 +448,4 @@ Transition](docs/StateTransition.txt) diagram.
 [Current View]:           #current-view
 [Tool Bar]:               #tool-bar
 [State Transition]:       #state-transition
+[PWA]:                    https://developers.google.com/web/progressive-web-apps/

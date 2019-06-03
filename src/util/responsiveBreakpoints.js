@@ -1,5 +1,7 @@
-import {useTheme}     from '@material-ui/core/styles';
-import useMediaQuery  from '@material-ui/core/useMediaQuery';
+import {useTheme}           from '@material-ui/core/styles';
+import useMediaQuery        from '@material-ui/core/useMediaQuery';
+import {useSelector}        from 'react-redux'
+import {getResponsiveMode}  from 'features/common/baseUI/state'
 
 
 /**
@@ -21,15 +23,34 @@ export function useForCellPhone() {
  * whether the device's width is sufficient to be considered a tablet
  * (or greater - such as a desktop).
  *
- * TODO: ?? also tap into responsive state
- * NOTE: This algorithm also considers the "reactive" state, allowing
- *       the user to "opt out" of wider-screen formats.
- *
  * @return {boolean} see description (above)
+ *
+ * @deprecated ... currently NOT used
  */
 export function useForTabletPlus() {
   const theme        = useTheme();
   const isTabletPlus = useMediaQuery(theme.breakpoints.up('md')); // breakpoints: xs/sm/md/lg/xl
 
   return isTabletPlus;
+}
+
+
+/**
+ * A react hook promoting a boolean indicator (true/false) as to
+ * whether the device's width is sufficient to be filled with more
+ * content (such as a tablet or desktop).
+ *
+ * This algorithm is based on the breakpoint defined in the
+ * reactiveMOde state, which can be controlled by the user -AND-
+ * disabled.
+ *
+ * @return {boolean} see description (above)
+ */
+
+export function useForWiderDevice() {
+  const responsiveMode  = useSelector( (appState) => getResponsiveMode(appState), [] );
+  const theme           = useTheme();
+  const isWiderDevice   = useMediaQuery(theme.breakpoints.up(responsiveMode)); // NOTE: theme.breakpoints.up('off'): false
+
+  return isWiderDevice;
 }

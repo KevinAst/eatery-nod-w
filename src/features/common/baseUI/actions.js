@@ -9,6 +9,13 @@ export default generateActions.root({
                      actionMeta: {},
     },
 
+    setResponsiveMode: {  // actions.setResponsiveMode(responsiveMode): Action
+                          // > change the responsiveMode to the supplied value ('md'/'lg'/'off')
+                          actionMeta: {
+                            traits: ['responsiveMode'],
+                          },
+    },
+
     changeView: {  // actions.changeView(viewName): Action
                    // > change the curView to the supplied viewName
                    actionMeta: {

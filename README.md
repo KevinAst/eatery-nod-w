@@ -21,6 +21,7 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
   - [Eatery Pool]
   - [Discovery]
   - [Authorization]
+  - [Responsive Design]
 - [Running the App]
   - [From Deployment]
   - [From Source]
@@ -75,6 +76,23 @@ feature](src/features/common/auth), requiring a validated email/password
 before promoting any application screens.
 
 ![Screen Flow](src/features/common/auth/docs/ScreenFlow.png)
+
+
+## Responsive Design
+
+**eatery-nod-w** employs a **Responsive Design** where web pages
+render well on a variety of devices and window or screen sizes
+(desktops, cell phones, tablets, etc.).
+
+As an example, here is the eatery pool shown on a **cell phone**:
+
+?? screen print
+
+And here is the same screen manifest on a **desktop browser**:
+
+?? screen print
+
+For more information, see [baseUI Responsive Design].
 
 
 ## Running the App
@@ -406,12 +424,17 @@ Release  | What                                            | *When*
 
 - The Eateries List screen has changed as follows:
 
-  - it is now **responsive**, adjusting the original cell-phone list
+  - It is now **responsive**, adjusting the original cell-phone list
     to a more detailed table when enough device real estate is
-    available.
+    available _(see [Responsive Design])_.
 
-  - it's mileage divider is now more visually distinct _(using
-    color)_, when pool entries are sorted by distance.
+  - When pool entries are sorted by distance, the mileage divider is
+    now more visually distinct _(using color)_.
+
+- A user-selectable **responsive boundary** is promoted through the
+  [User Menu], defining where additional screen content can be
+  manifest _(based on the screen width)_.  For more information, see
+  [baseUI Responsive Design].
 
 - Distance (mileage) is now visible in the Eatery Detail screen.
 
@@ -505,6 +528,8 @@ Release  | What                                            | *When*
 [Eatery Pool]:               #eatery-pool
 [Discovery]:                 #discovery
 [Authorization]:             #authorization
+[Responsive Design]:         #responsive-design
+
 
 [Running the App]:           #running-the-app
 [From Deployment]:           #from-deployment
@@ -530,6 +555,7 @@ Release  | What                                            | *When*
 [baseUI]:                    src/features/common/baseUI/README.md
 [Left Nav]:                  src/features/common/baseUI/README.md#left-nav
 [User Menu]:                 src/features/common/baseUI/README.md#user-menu
+[baseUI Responsive Design]:  src/features/common/baseUI/README.md#responsive-design
 
 [initFirebase]:              src/features/common/initFirebase/README.md
 [initGooglePlaces]:          src/features/common/initGooglePlaces/README.md

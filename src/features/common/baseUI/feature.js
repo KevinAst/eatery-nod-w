@@ -1,16 +1,17 @@
-import React                from 'react';
+import React                  from 'react';
 import {createFeature,
-        fassetValidations}  from 'feature-u';
+        fassetValidations}    from 'feature-u';
 
-import _baseUI              from './featureName';
-import _baseUIAct           from './actions';
-import reducer              from './state';
-import * as _baseUISel      from './state';
-import logic                from './logic';
+import _baseUI                from './featureName';
+import _baseUIAct             from './actions';
+import reducer                from './state';
+import * as _baseUISel        from './state';
+import logic                  from './logic';
 
-import MainLayout           from './comp/MainLayout';
-import ToggleUITheme        from './comp/ToggleUITheme';
-import About                from './comp/About';
+import MainLayout             from './comp/MainLayout';
+import ToggleUITheme          from './comp/ToggleUITheme';
+import MaintainResponsiveMode from './comp/MaintainResponsiveMode';
+import About                  from './comp/About';
 
 // feature: baseUI <<< full details in README
 //          Provides a UI foundation for an entire application.
@@ -38,7 +39,9 @@ export default createFeature({
     defineUse: {
       // inject User Menu entries
       // ... to ToggleUITheme ('light'/'dark')
-      'AppMotif.UserMenuItem.aa2_UIThemeToggle': ToggleUITheme,
+      'AppMotif.UserMenuItem.aa1_UIThemeToggle': ToggleUITheme,
+      // ... to MaintainResponsiveMode ('md'/'lg'/'off')
+      'AppMotif.UserMenuItem.aa2_MaintainResponsiveMode': MaintainResponsiveMode,
       // ... to display About info (gleaned from package.json)
       'AppMotif.UserMenuItem.zz8_About': About,
     },

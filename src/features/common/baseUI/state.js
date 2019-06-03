@@ -1,10 +1,11 @@
-import {expandWithFassets} from 'feature-u';
-import {combineReducers}   from 'redux';
-import {reducerHash}       from 'astx-redux-util';
-import {slicedReducer}     from 'feature-redux';
-import _baseUI             from './featureName';
-import _baseUIAct          from './actions';
-import {fetchUITheme}      from './uiThemeStorage';
+import {expandWithFassets}    from 'feature-u';
+import {combineReducers}      from 'redux';
+import {reducerHash}          from 'astx-redux-util';
+import {slicedReducer}        from 'feature-redux';
+import _baseUI                from './featureName';
+import _baseUIAct             from './actions';
+import {fetchUITheme}         from './uiThemeStorage';
+import {fetchResponsiveMode}  from './responsiveModeStorage';
 
 
 // ***
@@ -17,6 +18,11 @@ const reducer = slicedReducer(_baseUI, expandWithFassets( (fassets) => combineRe
   uiTheme: reducerHash({
     [_baseUIAct.toggleUITheme]: (state, action) => state==='dark' ? 'light' : 'dark',
   }, fetchUITheme() ), // initialState (default to a persistent state)
+
+  // responsiveMode: 'md'/'lg'/'off'
+  responsiveMode: reducerHash({
+    [_baseUIAct.setResponsiveMode]: (state, action) => action.responsiveMode,
+  }, fetchResponsiveMode() || 'sm' ), // initialState (from device storage, default to small (a tablet))
 
   // loc: {lat, lng} ... device GPS location
   curView: reducerHash({
@@ -39,6 +45,9 @@ const gfs = getFeatureState;      // ... concise alias (used internally)
 
                                   /** UI Theme: 'light'/'dark' */
 export const getUITheme         = (appState) => gfs(appState).uiTheme || 'light'; // default to 'light' (on first occurrence -or- deviceStorage() NOT supported)
+
+                                  /** Responsive Mode: 'md'/'lg'/'off' */
+export const getResponsiveMode  = (appState) => gfs(appState).responsiveMode;
 
                                   /** current view (ex: 'eateries') */
 export const curView            = (appState) => gfs(appState).curView;
