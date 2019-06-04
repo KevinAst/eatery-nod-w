@@ -78,9 +78,7 @@ export default function EateriesListScreen() {
                     className={classes.divider}
                     divider>
             <ListItemText primary={subTxt}
-                          primaryTypographyProps={{variant:'subtitle1'}}
-                          secondary=" (as the crow flies)"
-                          secondaryTypographyProps={{display:'inline'}}/>
+                          primaryTypographyProps={{variant:'subtitle1'}}/>
           </ListItem>
         ));
       }

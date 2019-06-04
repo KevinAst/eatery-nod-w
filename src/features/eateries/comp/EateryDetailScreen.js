@@ -88,7 +88,7 @@ export default function EateryDetailScreen({eatery}) {
                     {eatery.addr}
                   </Link>
                 }
-                secondary={`${eatery.distance} mile${eatery.distance===1?'':'s'} (as the crow flies)`}/>
+                secondary={`${eatery.distance} mile${eatery.distance===1?'':'s'}`}/>
           </ListItem>
 
           <ListItem>
