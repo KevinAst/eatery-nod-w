@@ -179,21 +179,21 @@ export default function MyResponsiveComp() {
 
 As an example, here is the eatery pool shown on a **cell phone**:
 
-?? screen print
+<p align="center"><img src="docs/ResponsivePhone.png" alt="ResponsivePhone" width="35%"></p>
 
 And here is the same screen manifest on a **desktop browser**:
 
-?? screen print
+<p align="center"><img src="docs/ResponsiveDesktop.png" alt="ResponsiveDesktop" width="90%"></p>
 
 The **user is in control of the responsive boundaries** where
 additional content can be manifest.  Here the User Menu that shows the
 **responsive** menu:
 
-?? screen print
+<p align="center"><img src="docs/ResponsiveControl.png" alt="ResponsiveControl" width="35%"></p>
 
 And here is the dialog that adjusts **responsive boundaries**:
 
-?? screen print
+<p align="center"><img src="docs/ResponsiveDialog.png" alt="ResponsiveDialog" width="35%"></p>
 
 </ul>
 

@@ -89,11 +89,11 @@ render well on a variety of devices and window or screen sizes
 
 As an example, here is the eatery pool shown on a **cell phone**:
 
-?? screen print
+<p align="center"><img src="src/features/common/baseUI/docs/ResponsivePhone.png" alt="ResponsivePhone" width="35%"></p>
 
 And here is the same screen manifest on a **desktop browser**:
 
-?? screen print
+<p align="center"><img src="src/features/common/baseUI/docs/ResponsiveDesktop.png" alt="ResponsiveDesktop" width="90%"></p>
 
 For more information, see [baseUI Responsive Design].
 
