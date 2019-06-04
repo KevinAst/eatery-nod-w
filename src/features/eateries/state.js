@@ -88,8 +88,10 @@ export const getFilteredEateries  = createSelector(
                             return filter.distance ? entry.distance <= filter.distance : true;
                           })
                           .sort((e1, e2) => ( // sort entries ... order by:
-                            filter.sortOrder==='distance' ? e1.distance-e2.distance : 0 || // distance (when requested)
-                            e1.name.localeCompare(e2.name) // name - either secondary (within distance), or primary (when no distance)
+                            // distance (when requested)
+                            (filter.sortOrder==='distance' ? e1.distance-e2.distance : 0) ||
+                            // name - either secondary (within distance), or primary (when no distance)
+                            e1.name.localeCompare(e2.name)
                           ));
 
     return entries;

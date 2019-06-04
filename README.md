@@ -431,8 +431,13 @@ Release  | What                                            | *When*
     to a more detailed table when enough device real estate is
     available _(see [Responsive Design])_.
 
-  - When pool entries are sorted by distance, the mileage divider is
-    now more visually distinct _(using color)_.
+  - When pool entries are sorted by distance:
+
+    - the mileage divider is now more visually distinct _(using
+      color)_
+
+    - eatery name is used as a secondary sort field (within the same
+      distance)
 
 - A user-selectable **responsive boundary** is promoted through the
   [User Menu], defining where additional screen content can be
