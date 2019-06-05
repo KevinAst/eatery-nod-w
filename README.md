@@ -455,6 +455,9 @@ Release  | What                                            | *When*
   can run **eatery-nod-w** and/or setup the project in your local
   environment.
 
+- All screen prints now reflect this web app _(retrofitted from the
+  eatery-nod react-native expo app)_.
+
 <!--- hack to push title down WITHIN ul --->
 &nbsp;
 
@@ -464,13 +467,14 @@ Release  | What                                            | *When*
   feature packages, by accessing them from the deployed server (see
   features: [initFirebase] and [initGooglePlaces]).
 
-- The Material-UI library was upgraded to V4, replacing **ALL** HOCs
-  with **React Hooks**!
+- The Material-UI library was upgraded to V4, replacing **ALL**
+  remaining HOCs with **React Hooks**!
 
 - Upgraded to React V16.8.6.
 
-- Define reusable custom hooks that reveal responsive breakpoints (based on media query)
-  ... see: [`src/util/responsiveBreakpoints.js`](src/util/responsiveBreakpoints.js)
+- Define a set of reusable custom hooks, which maintains responsive
+  breakpoints (based on consistent media queries) ... see:
+  [`src/util/responsiveBreakpoints.js`](src/util/responsiveBreakpoints.js)
 
 </ul></ul>
 
