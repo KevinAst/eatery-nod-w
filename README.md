@@ -579,7 +579,7 @@ Release  | What                                            | *When*
 
 [feature-u]:                 https://feature-u.js.org/
 [feature-u teaser]:          http://bit.ly/feature-u-teaser
-[feature-u article]:         http://bit.ly/feature-u-V1
+[feature-u article]:         http://bit.ly/feature-u-article
 [feature-u docs]:            https://feature-u.js.org/
 [feature-u repo]:            https://github.com/KevinAst/feature-u
 
