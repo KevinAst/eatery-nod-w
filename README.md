@@ -187,7 +187,7 @@ you can make changes)_, follow these instructions:
          //           For completeness, here is an example:
          dbcatrem2PwyWgLJciViS7q0szg2: {
            name: "Kevin",
-           pool: "KevinResa",
+           pool: "Date Night",
          },
        },
        pools: {
@@ -195,7 +195,7 @@ you can make changes)_, follow these instructions:
          //     NOTE: these entries are maintained by eatery-nod-w code!
          //           You just need to define the parent structure (in your schema)!!
          //           For completeness, here is an example:
-         KevinResa: {
+         "Date Night": {
            ChIJ1Wb6nh76dYgRbFqImosN0to: {
              id:   "ChIJ1Wb6nh76dYgRbFqImosN0to",
              name: "Andria's Countryside Restaurant",
@@ -381,7 +381,8 @@ DEPLOYMENT
 build ..... builds app for production (in the build/ directory)
 
 deploy .... deploy the app (to: https://eatery-nod-w.js.org/)
-
+            NOTE: this script automatically runs the "build" script
+                  (via the "predeploy" script)
 
 
 MISC
