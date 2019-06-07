@@ -2,7 +2,7 @@ import React,
        {useMemo}          from 'react';
 import {useSelector}      from 'react-redux'
 import PropTypes          from 'prop-types';
-import withStyles         from '@material-ui/core/styles/withStyles';
+import {makeStyles}       from '@material-ui/core/styles';
 import {MuiThemeProvider,      // NOTE: MuiThemeProvider **SHOULD** be at the root of ALL visible components
         createMuiTheme}   from '@material-ui/core/styles';
 import CssBaseline        from '@material-ui/core/CssBaseline';
@@ -31,6 +31,29 @@ import {getUITheme}       from '../state';
  * 
  * Please refer to the **`baseUI` README** for more information.
  */
+export default function MainLayout({children}) {
+
+  const uiTheme    = useSelector((appState) => getUITheme(appState), []);
+  const themeInUse = useMemo(() => uiTheme==='dark' ? darkTheme : lightTheme, [uiTheme]);
+  const classes    = useStyles();
+
+  return (
+    <MuiThemeProvider theme={themeInUse}>
+      <CssBaseline/>
+      <Notify/>
+      <main className={classes.main}>
+        <AppMotif>
+          {children}
+        </AppMotif>
+      </main>
+    </MuiThemeProvider>
+  );
+}
+
+MainLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 
 const lightTheme = createMuiTheme({
   typography: {
@@ -58,42 +81,18 @@ const darkTheme = createMuiTheme({
   },
 });
 
-const mainStyles = (theme) => ({
+const useStyles = makeStyles( theme => ({
   main: {
     width:        'auto',
     display:      'block', // Fix IE 11 issue.
-    //marginLeft:   theme.spacing.unit * 3, // AI: ?? bad news for the overall layout
-    //marginRight:  theme.spacing.unit * 3,
+ // marginLeft:   theme.spacing(3), // N/A: bad news for the overall layout
+ // marginRight:  theme.spacing(3),
 
-    // reactive design // AI: ?? THIS IS CAUSING HAVOC on my main content container overall width
-    //? [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-    //?   width:       400,
-    //?   marginLeft:  'auto',
-    //?   marginRight: 'auto',
-    //? },
+ // reactive design // N/A:  THIS IS CAUSING HAVOC on my main content container overall width
+ // [theme.breakpoints.up(400 + theme.spacing(3 * 2))]: {
+ //   width:       400,
+ //   marginLeft:  'auto',
+ //   marginRight: 'auto',
+ // },
   },
-});
-
-function MainLayout({classes, children}) {
-
-  const uiTheme    = useSelector((appState) => getUITheme(appState), []);
-  const themeInUse = useMemo(() => uiTheme==='dark' ? darkTheme : lightTheme, [uiTheme]);
-
-  return (
-    <MuiThemeProvider theme={themeInUse}>
-      <CssBaseline/>
-      <Notify/>
-      <main className={classes.main}>
-        <AppMotif>
-          {children}
-        </AppMotif>
-      </main>
-    </MuiThemeProvider>
-  );
-}
-
-MainLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export default /* MainLayoutWithStyles = */ withStyles(mainStyles)(MainLayout);
+}) );

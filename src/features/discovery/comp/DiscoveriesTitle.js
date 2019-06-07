@@ -18,7 +18,7 @@ export default function DiscoveriesTitle() {
                 color="inherit"
                 noWrap>
       Discovery
-      <Typography color="inherit" inline noWrap>
+      <Typography color="inherit"  display="inline" noWrap>
         &nbsp;({curUser.pool})
       </Typography>
     </Typography>

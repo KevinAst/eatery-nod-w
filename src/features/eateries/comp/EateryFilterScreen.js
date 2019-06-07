@@ -2,9 +2,8 @@ import React                 from 'react';
 
 import {useSelector,
         useDispatch}         from 'react-redux'
-
-import {withStyles}          from '@material-ui/core/styles';
-import withMobileDialog      from '@material-ui/core/withMobileDialog';
+import {makeStyles}          from '@material-ui/core/styles';
+import {useForCellPhone}     from 'util/responsiveBreakpoints';
 
 import eateryFilterFormMeta  from '../eateryFilterFormMeta';
 import ITextField            from 'util/iForms/comp/ITextField';
@@ -18,58 +17,25 @@ import DialogContentText     from '@material-ui/core/DialogContentText';
 import DialogTitle           from '@material-ui/core/DialogTitle';
 import FilterIcon            from '@material-ui/icons/FilterList';
 import FormHelperText        from '@material-ui/core/FormHelperText';
-import Grid                  from '@material-ui/core/Grid';
 import IconButton            from '@material-ui/core/IconButton';
 import InProgress            from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
 import Typography            from '@material-ui/core/Typography';
 import {TransitionSlide}     from 'util/Transition';
-
-
-const styles = theme => ({
-
-  titleBar: {
-    display:         'flex',
-    alignItems:      'center', // vertically align title text with close (X) to it's right
-    padding:         '10px 15px',
-    color:           theme.palette.common.white,
-    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
-  },
-
-  title: {
-    flexGrow: 1, // moves right-most toolbar items to the right
-  },
-
-  entry: {
-    margin:   '30px 0px',
-  },
-
-  icon: {
-    marginRight: theme.spacing.unit,
-  },
-
-  inProgress: {
-    margin: theme.spacing.unit * 4,
-  },
-
-});
-
-function CenterItems({children}) {
-  return (
-    <Grid container direction="row" justify="center" alignItems="center">
-      {children}
-    </Grid>
-  );
-}
+import CenterItems           from 'util/CenterItems';
 
 
 /**
  * EateryFilterScreen: gather filter information (selection criteria) 
  * for our eatery pool view.
  */
-function EateryFilterScreen({fullScreen, classes}) {
+export default function EateryFilterScreen() {
 
-  const dispatch  = useDispatch();
-  const formState = useSelector((appState) => eateryFilterFormMeta.formStateSelector(appState), []);
+  const dispatch    = useDispatch();
+  const formState   = useSelector((appState) => eateryFilterFormMeta.formStateSelector(appState), []);
+
+  const isCellPhone = useForCellPhone();
+
+  const classes     = useStyles();
 
   const iForm = eateryFilterFormMeta.IForm(formState, dispatch); // AI: unsure if I should wrap in useMemo()
 
@@ -85,7 +51,7 @@ function EateryFilterScreen({fullScreen, classes}) {
   return (
     <Dialog open={true}
             onClose={iForm.handleClose}
-            fullScreen={fullScreen}
+            fullScreen={isCellPhone}
             TransitionComponent={TransitionSlide}>
 
       <form onSubmit={iForm.handleProcess}>
@@ -153,8 +119,31 @@ function EateryFilterScreen({fullScreen, classes}) {
   );
 }
 
-const EateryFilterScreenWithStyles = withStyles(styles)(EateryFilterScreen);
 
-// inject responsive `fullScreen` true/false prop based on screen size
-// ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
-export default withMobileDialog({breakpoint: 'xs'})(EateryFilterScreenWithStyles);
+const useStyles = makeStyles( theme => ({
+
+  titleBar: {
+    display:         'flex',
+    alignItems:      'center', // vertically align title text with close (X) to it's right
+    padding:         '10px 15px',
+    color:           theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+  },
+
+  title: {
+    flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  entry: {
+    margin:   '30px 0px',
+  },
+
+  icon: {
+    marginRight: theme.spacing(1),
+  },
+
+  inProgress: {
+    margin: theme.spacing(4),
+  },
+
+}) );

@@ -5,7 +5,7 @@ import PropTypes      from 'prop-types';
 import {useFassets}   from 'feature-u';
 import {useSelector}  from 'react-redux'
 
-import withStyles     from '@material-ui/core/styles/withStyles';
+import {makeStyles}   from '@material-ui/core/styles';
 
 import LeftNav        from './LeftNav';
 import {openLeftNav}  from './LeftNav';
@@ -46,60 +46,14 @@ import Typography     from '@material-ui/core/Typography';
  * 
  * Please refer to the **`baseUI` README** for more information.
  */
-
-const appStyles = (theme) => ({
-
-  app: {
-    display: 'flex', // KJB: does not seem to be doing anything
-  },
-
-  appBar: {
-    //? ***Dashboard Sample***
-    //? zIndex:     theme.zIndex.drawer + 1,
-    //? transition: theme.transitions.create(['width', 'margin'], {
-    //?   easing:   theme.transitions.easing.sharp,
-    //?   duration: theme.transitions.duration.leavingScreen,
-    //? }),
-  },
-
-  bottomBar: {
-    top:        'auto',
-    bottom:     0,
-  },
-
-  toolbar: {
-    //? ***Dashboard Sample***
-    //? paddingRight: 24, // keep right padding when drawer closed
-  },
-
-  menuButton: {
-    //? marginLeft:  12, //? ...more ***Dashboard Sample***
-    marginRight: 36, // proper spacing between menu button and title
-  },
-
-  title: {
-    flexGrow: 1, // moves right-most toolbar items to the right
-  },
-
-  content: {
-    flexGrow: 1,
-    height: '100vh',                 // content window is height is same as our viewport (100%)
-    overflow: 'auto',                // add scrollbar ONLY when necessary
-
-    paddingTop:    '4em', // HACK: so ToolBar doesn't cover up ... must be a better way
-    paddingBottom: '4em', // HACK: so BottomBar doesn't cover up ... must be a better way
-    // padding: theme.spacing.unit * 3, // ... from sample content ... sample: 8 * 3
-  },
-
-});
-
-
-function AppMotif({classes, children}) {
+export default function AppMotif({children}) {
 
   const fassets = useFassets();
 
   const curUser = useSelector( (appState) => fassets.sel.curUser(appState), [fassets] );
   const curView = useSelector( (appState) => fassets.sel.curView(appState), [fassets] );
+
+  const classes = useStyles();
 
   // define our auxiliary view content
   const viewAuxiliaryContent    = fassets.get('AppMotif.auxViewContent.*@withKeys');
@@ -169,8 +123,49 @@ AppMotif.propTypes = {
   children: PropTypes.node.isRequired, // main page content (like eateries and discovery)
 };
 
-export default /* AppMotifWithStyles = */ withStyles(appStyles)(AppMotif);
 
+const useStyles = makeStyles( theme => ({
+  app: {
+    display: 'flex', // KJB: does not seem to be doing anything
+  },
+
+  appBar: {
+    // ***Dashboard Sample***
+    // zIndex:     theme.zIndex.drawer + 1,
+    // transition: theme.transitions.create(['width', 'margin'], {
+    //   easing:   theme.transitions.easing.sharp,
+    //   duration: theme.transitions.duration.leavingScreen,
+    // }),
+  },
+
+  bottomBar: {
+    top:        'auto',
+    bottom:     0,
+  },
+
+  toolbar: {
+    // ***Dashboard Sample***
+    // paddingRight: 24, // keep right padding when drawer closed
+  },
+
+  menuButton: {
+    marginRight: 36, // proper spacing between menu button and title
+  },
+
+  title: {
+    flexGrow: 1, // moves right-most toolbar items to the right
+  },
+
+  content: {
+    flexGrow: 1,
+    height: '100vh',                 // content window is height is same as our viewport (100%)
+    overflow: 'auto',                // add scrollbar ONLY when necessary
+
+    paddingTop:    '4em', // HACK: so ToolBar doesn't cover up ... must be a better way
+    paddingBottom: '4em', // HACK: so BottomBar doesn't cover up ... must be a better way
+    // padding: theme.spacing(3), // ... from sample content ... sample: 8 * 3
+  },
+}) );
 
 
 function resolveCurViewAuxiliaryContent(curView, viewAuxiliaryContent) {

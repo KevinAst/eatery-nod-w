@@ -1,9 +1,10 @@
 import React,
-       {useCallback,
+       {useState,
+        useCallback,
         useMemo}       from 'react';
 
 import {useFassets}    from 'feature-u';
-import withStyles      from '@material-ui/core/styles/withStyles';
+import {makeStyles}    from '@material-ui/core/styles';
 
 import AppBar          from '@material-ui/core/AppBar';
 import Drawer          from '@material-ui/core/Drawer';
@@ -11,20 +12,12 @@ import List            from '@material-ui/core/List';
 import Toolbar         from '@material-ui/core/Toolbar';
 import Typography      from '@material-ui/core/Typography';
 
-
-const leftNavStyles = (theme) => ({
-  leftNav: {
-    width: 250, // make width significant enough to space out our secondary menu icons
-  },
-});
-
-
 /**
  * LeftNav: our LeftNav component that accumulates menu items via use contract.
  */
-function LeftNav({classes}) {
+export default function LeftNav() {
 
-  const [leftNavVisible, setLeftNavVisible] = React.useState(false);
+  const [leftNavVisible, setLeftNavVisible] = useState(false);
 
   _openLeftNav       = useCallback(() => setLeftNavVisible(true),  []);
   const closeLeftNav = useCallback(() => setLeftNavVisible(false), []);
@@ -33,6 +26,8 @@ function LeftNav({classes}) {
   const orderedLeftNavItems = useMemo(() => (
     [...leftNavItems].sort(([item1Key], [item2Key]) => item1Key.localeCompare(item2Key))
   ), [leftNavItems]);
+
+  const classes = useStyles();
 
   // AI: have seen some usage of tabIndex in <div> under <Drawer> (unsure if needed)
   //     tabIndex={0} ... should be focus-able in sequential keyboard navigation, but its order is defined by the document's source order */}
@@ -57,8 +52,12 @@ function LeftNav({classes}) {
   );
 }
 
-export default /* LeftNavWithStyles = */  withStyles(leftNavStyles)(LeftNav);
 
+const useStyles = makeStyles( theme => ({
+  leftNav: {
+    width: 250, // make width significant enough to space out our secondary menu icons
+  },
+}) );
 
 
 /**

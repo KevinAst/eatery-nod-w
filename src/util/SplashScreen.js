@@ -1,24 +1,15 @@
-import React            from 'react';
-import PropTypes        from 'prop-types';
-import { withStyles }   from '@material-ui/core/styles';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
-import Progress         from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
-import Dialog           from '@material-ui/core/Dialog';
-import DialogContent    from '@material-ui/core/DialogContent';
-import DialogTitle      from '@material-ui/core/DialogTitle';
-import Typography       from '@material-ui/core/Typography';
-import {TransitionZoom} from 'util/Transition';
+import React             from 'react';
+import PropTypes         from 'prop-types';
 
-const styles = theme => ({
-  title: {
-    color:           theme.palette.common.white,
-    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
-  },
+import {makeStyles}      from '@material-ui/core/styles';
+import {useForCellPhone} from 'util/responsiveBreakpoints';
 
-  progress: {
-    margin: theme.spacing.unit * 4,
-  },
-});
+import Progress          from '@material-ui/core/LinearProgress';  // -or- '@material-ui/core/CircularProgress';
+import Dialog            from '@material-ui/core/Dialog';
+import DialogContent     from '@material-ui/core/DialogContent';
+import DialogTitle       from '@material-ui/core/DialogTitle';
+import Typography        from '@material-ui/core/Typography';
+import {TransitionZoom}  from 'util/Transition';
 
 
 /**
@@ -35,17 +26,20 @@ const styles = theme => ({
  *            I spend a small amount of time to override this without
  *            any success.
  */
-function SplashScreen({msg, classes, fullScreen}) {
+export default function SplashScreen({msg}) {
+
+  const isCellPhone = useForCellPhone();
+  const classes     = useStyles();
 
   return (
     <Dialog open={true}
-            fullScreen={fullScreen}
+            fullScreen={isCellPhone}
             TransitionComponent={TransitionZoom}>
-
+    
       <DialogTitle className={classes.title}>
         <center className={classes.title}>Eatery Nod</center>
       </DialogTitle>
-
+    
       <DialogContent>
         <center>
           <br/>
@@ -56,24 +50,28 @@ function SplashScreen({msg, classes, fullScreen}) {
           <br/>
         </center>
       </DialogContent>
-
+    
     </Dialog>
   );
 
 }
 
 SplashScreen.propTypes = {
-  msg:        PropTypes.string,
-  classes:    PropTypes.object.isRequired,
-  fullScreen: PropTypes.bool.isRequired,
+  msg: PropTypes.string,
 };
 
 SplashScreen.defaultProps = {
   msg: '',
 };
 
-const SplashScreen_withStyles = withStyles(styles)(SplashScreen);
 
-// inject responsive `fullScreen` true/false prop based on screen size
-// ... breakpoint screen size: xs, sm (DEFAULT), md, lg, xl
-export default withMobileDialog({breakpoint: 'xs'})(SplashScreen_withStyles);
+const useStyles = makeStyles( theme => ({
+  title: {
+    color:           theme.palette.common.white,
+    backgroundColor: theme.palette.primary.main, // theme.palette.primary.main (bluish) or theme.palette.secondary.main (redish)
+  },
+
+  progress: {
+    margin: theme.spacing(4),
+  },
+}) );

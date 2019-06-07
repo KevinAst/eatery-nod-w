@@ -2,7 +2,7 @@ import React              from 'react';
 import verify             from 'util/verify';
 import {SnackbarProvider,
         withSnackbar}     from 'notistack';
-import {withStyles}       from '@material-ui/core/styles';
+import {makeStyles}       from '@material-ui/core/styles';
 import Button             from "@material-ui/core/Button";
 import isString           from 'lodash.isstring';
 import isFunction         from 'lodash.isfunction';
@@ -83,9 +83,12 @@ import isFunction         from 'lodash.isfunction';
 //*** (required for our programmatic interface)
 //***
 
-function Notify(props) {
+export default function Notify(props) {
+
+  const classes = useStyles();
+
   return (
-    <SnackbarProvider maxSnack={3} dense={true} className={props.classes.variantSuccess}>
+    <SnackbarProvider maxSnack={3} dense={true} className={classes.variantSuccess}>
       <NotifyAPI_withSnackBar>
         {props.children}
       </NotifyAPI_withSnackBar>
@@ -96,7 +99,7 @@ function Notify(props) {
 // apply snackbar variant style changes in support cr/lf
 // ... via: whiteSpace of 'pre-line'
 // ... this honors cr/lf within our snackbar items
-const crlfStyles = (theme) => ({
+const useStyles = makeStyles( theme => ({
   variantSuccess: {
     whiteSpace: 'pre-line',
   },
@@ -109,8 +112,7 @@ const crlfStyles = (theme) => ({
   variantError: {
     whiteSpace: 'pre-line',
   },
-});
-export default withStyles(crlfStyles)(Notify);
+}) );
 
 
 //***

@@ -17,5 +17,11 @@ baseUI
                                                  ==============
                                                    storeUITheme(...fromCurState)
 
+  > change the responsiveMode to the supplied value ('md'/'lg'/'off')
+ .setResponsiveMode(responsiveMode') .........................................................................  - baseUI.responsiveMode = 'md'/'lg'/'off'
+                                                 persistResponsiveMode:
+                                                 =====================
+                                                   storeResponsiveMode(...fromCurState)
+
   > change the curView to the supplied viewName
  .changeView(viewName) .......................................................................................  - baseUI.curView = action.viewName (FROM action payload)

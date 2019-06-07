@@ -21,7 +21,7 @@ export default function EateriesTitle() {
                 color="inherit"
                 noWrap>
       Pool
-      <Typography color="inherit" inline noWrap>
+      <Typography color="inherit" display="inline" noWrap>
         &nbsp;({curUser.pool})
       </Typography>
 
