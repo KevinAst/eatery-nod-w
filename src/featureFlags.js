@@ -6,7 +6,7 @@ export default {
 
   useWIFI: true,  // should app use WIFI? ... regulates various services: real/mocked
 
-  mockGPS: false, // should app mock GPS? ... regulates util/deviceLocation.js getCurPos():  real/mocked
+  mockGPS: true,  // should app mock GPS? ... regulates util/deviceLocation.js getCurPos():  real/mocked
                   // false: use real device location
                   // true:  mock device location (default to Glen Carbon IL)
                   // {lat, lng}: specify mocked location, example:
