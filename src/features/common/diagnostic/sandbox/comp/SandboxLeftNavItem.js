@@ -4,6 +4,7 @@ import {notify,
         toast,
         alert,
         confirm}     from 'util/notify';
+import {splash}      from 'util/SplashScreen';
 
 import Divider       from '@material-ui/core/Divider';
 import ListItem      from '@material-ui/core/ListItem';
@@ -21,6 +22,39 @@ export default function SandboxLeftNavItem() {
 
   return (
     <>
+
+    {/* Sandbox "splash" tests */}
+    <Divider/>
+    <ListItem>
+      <ListItemText primary="SplashScreen test ... "/>
+    </ListItem>
+    <ListItem button
+              onClick={() => {
+                  alert.success({msg: 'Show programmatic SplashScreen THEN take down in 10 seconds',
+                                 actions: [
+                                   {
+                                     txt:    'Do It',
+                                     action: () => {
+                                       splash(`A programmatic splash message on: ${new Date().toLocaleString()}`);
+                                       setTimeout(() => splash(), 10000);
+                                     },
+                                   },
+                                   {
+                                     txt:    'Do It in 2 sec',
+                                     action: () => {
+                                       setTimeout(() => splash(`A programmatic message on: ${new Date().toLocaleString()}`), 2000);
+                                       setTimeout(() => splash(), 10000);
+                                     },
+                                   },
+                                   {
+                                     txt: 'Cancel',
+                                   },
+                                 ],
+                  });
+              }}>
+      <ListItemIcon><MsgIcon/></ListItemIcon>
+      <ListItemText primary="splash"/>
+    </ListItem>
 
     {/* Sandbox "toast" tests */}
     <Divider/>

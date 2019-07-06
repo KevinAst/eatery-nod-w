@@ -1,4 +1,4 @@
-import React             from 'react';
+import React, {useState} from 'react';
 import PropTypes         from 'prop-types';
 
 import {makeStyles}      from '@material-ui/core/styles';
@@ -18,42 +18,31 @@ import {TransitionZoom}  from 'util/Transition';
  * The SplashScreen will responsively/dynamically utilize the full
  * screen for cell phone devices.
  *
- * NOTE: Currently we dynamically size based on the message content,
- *       within the constraint of the screen.  Not sure if I like
- *       this or not ... it is good for cell phones, but can be rather
- *       small for browsers (typically the message is pretty small).
- *       FYI: This is pretty much the default behavior of <Dialog>.
- *            I spend a small amount of time to override this without
- *            any success.
+ * The SplashScreen can be instantiated with a direct message to display:
+ * ```js
+ * <SplashScreen msg="hello world"/>
+ * ```
+ * 
+ * In support of the programmatic API, a single SplashScreen must be statically
+ * instantiated in the root of your DOM (without any msg):
+ * ```js
+ * <SplashScreen/>
+ * ```
+ *
+ * Supporting the following programmatic API:
+ * ```js
+ *   + splash(msg): void ... display the supplied msg in the programmatic SplashScreen
+ *   + splash(): void    ... clear the programmatic SplashScreen
+ * ```
  */
 export default function SplashScreen({msg}) {
 
   const isCellPhone = useForCellPhone();
   const classes     = useStyles();
 
-  return (
-    <Dialog open={true}
-            fullScreen={isCellPhone}
-            TransitionComponent={TransitionZoom}>
-    
-      <DialogTitle className={classes.title}>
-        <center className={classes.title}>Eatery Nod</center>
-      </DialogTitle>
-    
-      <DialogContent>
-        <center>
-          <br/>
-          <img width="120px" src='/eatery.png' alt='eatery-nod'/>
-          <br/>
-          <Progress className={classes.progress} color="secondary"/>
-          <Typography variant="body2">{msg}</Typography>
-          <br/>
-        </center>
-      </DialogContent>
-    
-    </Dialog>
-  );
-
+  // conditionally render SplashScreenProgrammatic when NO msg is supplied
+  return msg ? <SplashScreenCommon msg={msg} open={true} fullScreen={isCellPhone} classes={classes} />
+             : <SplashScreenProgrammatic                 fullScreen={isCellPhone} classes={classes} />;
 }
 
 SplashScreen.propTypes = {
@@ -63,7 +52,6 @@ SplashScreen.propTypes = {
 SplashScreen.defaultProps = {
   msg: '',
 };
-
 
 const useStyles = makeStyles( theme => ({
   title: {
@@ -75,3 +63,65 @@ const useStyles = makeStyles( theme => ({
     margin: theme.spacing(4),
   },
 }) );
+
+
+// ***
+// *** Our programmatic API (see docs above)
+// ***
+
+// <SplashScreenProgrammatic fullScreen= classes= />
+function SplashScreenProgrammatic({fullScreen, classes}) {
+
+  // maintain our programmatic state ... the msg to display
+  const [msg, setMsg] = useState('');
+
+  // broaden the scope of our msg setter (used in our `splash(msg)` programmatic API)
+  if (_setMsg && _setMsg!==setMsg) { // validate that only one instance exists
+    throw new Error('***ERROR*** <SplashScreen/> (supporting the programmatic `splash(msg)` API) should only be instantiated ONE TIME (in the app root DOM)');
+  }
+  _setMsg = setMsg; // THIS should work ... no need for: _setMsg = useCallback((msg) => setMsg(msg),  []);
+
+  // render our component
+  return <SplashScreenCommon msg={msg} open={msg ? true : false} fullScreen={fullScreen} classes={classes} />;
+}
+
+// our programmatic API
+export function splash(msg='') {
+  // implement in terms of <SplashScreenProgrammatic> state
+  if (!_setMsg) {
+    throw new Error('***ERROR*** the programmatic `splash(msg)` API requires <SplashScreen/> be instantiated in the app root DOM');
+  }
+  _setMsg(msg);
+}
+let _setMsg = null; // expose our inner function
+
+
+// ***
+// *** Our "common" rendering agent shared by BOTH `<SplashScreen>` and `<SplashScreenProgrammatic>`
+// ***
+
+// <SplashScreenCommon msg= open= fullScreen= classes= />
+function SplashScreenCommon({msg, open, fullScreen, classes}) {
+  return (
+    <Dialog open={open}
+            fullScreen={fullScreen}
+            TransitionComponent={TransitionZoom}>
+      
+      <DialogTitle className={classes.title}>
+        <center className={classes.title}>Eatery Nod</center>
+      </DialogTitle>
+      
+      <DialogContent>
+        <center>
+          <br/>
+          <img width="120px" src='/eatery.png' alt='eatery-nod'/>
+          <br/>
+          <Progress className={classes.progress} color="secondary"/>
+          <Typography variant="body2">{msg}</Typography>
+          <br/>
+        </center>
+      </DialogContent>
+      
+    </Dialog>
+  );
+}
