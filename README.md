@@ -34,6 +34,7 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
     - [Deployment]
   - [NPM Scripts]
 - [Revision History]
+  - [v2.2.0] - _**Better Async Initialization** (July xx, 2019)_
   - [v2.1.0] - _**Responsive Design** (June 07, 2019)_
   - [v2.0.0] - _**React Hooks** (May 10, 2019)_
   - [v1.0.0] - _**Initial Release** (May 05, 2019)_
@@ -407,9 +408,33 @@ eject ..... eject the Create React App project tooling
 
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
+[v2.2.0] | Better Async Initialization                     | *July xx, 2019*
 [v2.1.0] | Responsive Design                               | *June 07, 2019*
 [v2.0.0] | React Hooks                                     | *May 10, 2019*
 [v1.0.0] | Initial Release                                 | *May 05, 2019*
+
+
+<!-- *** RELEASE *************************************************************** -->
+
+### v2.2.0 - Better Async Initialization *(July xx, 2019)*
+
+<ul><ul> <!--- indentation hack --->
+
+[GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v2.2.0)
+&bull;
+[GitHub Release](https://github.com/KevinAst/eatery-nod-w/releases/tag/v2.2.0)
+&bull;
+[Diff](https://github.com/KevinAst/eatery-nod-w/compare/v2.1.0...v2.2.0)
+
+**Technical:**
+
+- The `bootstrap` feature was replaced with **feature-u**'s new
+  `Feature.appInit()` Application Life Cycle Hook _(supporting blocking
+  async initialization)_.
+
+  ?? MORE: anything else?
+
+</ul></ul>
 
 
 <!-- *** RELEASE *************************************************************** -->
@@ -559,6 +584,7 @@ Release  | What                                            | *When*
 [NPM Scripts]:               #npm-scripts
 
 [Revision History]:    #revision-history
+ [v2.2.0]:             #v220---better-async-initialization-july-xx-2019
  [v2.1.0]:             #v210---responsive-design-june-07-2019
  [v2.0.0]:             #v200---react-hooks-may-10-2019
  [v1.0.0]:             #v100---initial-release-may-05-2019

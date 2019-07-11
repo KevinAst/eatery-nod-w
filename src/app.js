@@ -1,12 +1,13 @@
 import 'util/ErrorExtensionPolyfill';
-import React                 from 'react';
-import ReactDOM              from 'react-dom';
-import {launchApp}           from 'feature-u';
-import {createReducerAspect} from 'feature-redux';
-import {createLogicAspect}   from 'feature-redux-logic';
-import {createRouteAspect}   from 'feature-router';
-import features              from 'features';
-import SplashScreen          from 'util/SplashScreen';
+import React                  from 'react';
+import ReactDOM               from 'react-dom';
+import {launchApp}            from 'feature-u';
+import {createReducerAspect}  from 'feature-redux';
+import {createLogicAspect}    from 'feature-redux-logic';
+import {createRouteAspect}    from 'feature-router';
+import features               from 'features';
+import SplashScreen, {splash} from 'util/SplashScreen';
+import discloseError          from 'util/discloseError';
 import configureEateryNodDiagnostics  from 'util/configureEateryNodDiagnostics';
 
 // launch our application, exposing the feature-u Fassets object (facilitating cross-feature-communication)!
@@ -16,7 +17,13 @@ export default launchApp({
   registerRootAppElm(rootAppElm) {
     ReactDOM.render(rootAppElm,
                     document.getElementById('root'));
-  }
+  },
+  //? showStatus(msg='', err=null) { // ?? defensive: default parameters
+  //?   splash(msg + (err ? ` ... WITH ERROR: ${err.formatUserMsg()}` : ''));
+  //?   if (err) {
+  //?     discloseError({err, logIt:true});
+  //?   }
+  //? }
 });
 
 

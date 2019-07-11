@@ -46,4 +46,9 @@ export default createFeature({
     }
   },
 
+  // ?? TEMP TEST of appInit() <<< SYNCHRONOUS
+  appInit({showStatus, fassets, appState, dispatch}) {
+    showStatus('DOING SYNCHRONOUS INIT of location feature');
+  },
+
 });
