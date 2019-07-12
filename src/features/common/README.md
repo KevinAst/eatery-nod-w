@@ -7,7 +7,6 @@ The **common** directory is a collection of **app-neutral** features.
   - [**authService**](auth/subFeatures/authService/README.md): a persistent authentication service (retaining active user)
     - [**authServiceFirebase**](auth/subFeatures/authServiceFirebase/AuthServiceFirebase.js): the **real** AuthServiceAPI derivation based on Firebase
     - [**authServiceMock**](auth/subFeatures/authServiceMock/AuthServiceMock.js):             the **mock** AuthServiceAPI derivation
-- [**bootstrap**](bootstrap/README.md): provide critical-path app initialization through the `'bootstrap.*'` use contract
 - [**initFirebase**](initFirebase/README.md): initializes the Google Firebase service when WIFI is enabled
 - [**initGooglePlaces**](initGooglePlaces/README.md): initializes the Google Places service service when WIFI is enabled
 - [**location**](location/README.md): Initializes and promotes the GPS location for use by the app.

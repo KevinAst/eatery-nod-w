@@ -3,8 +3,13 @@
 The **auth** feature promotes complete user authentication.
 It accomplishes the following:
 
- - starts authorization process by monitoring bootstrap initialization complete
-   (`fassets.actions.bootstrapComplete`) **(logic)**
+ - starts authorization process through appDidStart() application-life-cycle-hook
+   ```js
+   appDidStart({fassets, appState, dispatch}) {
+     // kick-start our authorization process
+     dispatch( _authAct.autoSignIn() );
+   }
+   ```
 
    - interacts with authentication service **(logic)**
 

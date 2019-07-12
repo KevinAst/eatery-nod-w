@@ -2,7 +2,6 @@ import auth                          from './common/auth/feature';
 import authService                   from './common/auth/subFeatures/authService/feature';
 import authServiceFirebase           from './common/auth/subFeatures/authServiceFirebase/feature';
 import authServiceMock               from './common/auth/subFeatures/authServiceMock/feature';
-import bootstrap                     from './common/bootstrap/feature';
 import discovery                     from './discovery/feature';
 import discoveryService              from './discovery/subFeatures/discoveryService/feature';
 import discoveryServiceGooglePlaces  from './discovery/subFeatures/discoveryServiceGooglePlaces/feature';
@@ -48,8 +47,6 @@ export default [
   authService,
   authServiceFirebase,
   authServiceMock,
-  
-  bootstrap,
   
   initFirebase,
   initGooglePlaces,

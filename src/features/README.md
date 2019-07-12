@@ -16,7 +16,6 @@ The **eatery-nod-w** application is composed of the following **features**:
      - [**authService**](common/auth/subFeatures/authService/README.md): a persistent authentication service (retaining active user)
        - [**authServiceFirebase**](common/auth/subFeatures/authServiceFirebase/AuthServiceFirebase.js): the **real** AuthServiceAPI derivation based on Firebase
        - [**authServiceMock**](common/auth/subFeatures/authServiceMock/AuthServiceMock.js):             the **mock** AuthServiceAPI derivation
-   - [**bootstrap**](common/bootstrap/README.md): provide critical-path app initialization through the `'bootstrap.*'` use contract
    - [**initFirebase**](common/initFirebase/README.md): initializes the Google Firebase service when WIFI is enabled
    - [**initGooglePlaces**](common/initGooglePlaces/README.md): initializes the Google Places service service when WIFI is enabled
    - [**location**](common/location/README.md): Initializes and promotes the GPS location for use by the app.
