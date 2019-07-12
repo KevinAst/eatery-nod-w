@@ -33,4 +33,10 @@ export default createFeature({
   reducer,
   logic,
   route,
+
+  appDidStart({fassets, appState, dispatch}) {
+    // kick-start our authorization process
+    dispatch( _authAct.autoSignIn() );
+  },
+
 });

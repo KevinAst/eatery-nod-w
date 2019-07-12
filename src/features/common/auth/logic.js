@@ -1,5 +1,4 @@
 import {createLogic}        from 'redux-logic';
-import {expandWithFassets}  from 'feature-u';
 import _auth                from './featureName';
 import _authAct             from './actions';
 import {curUser}            from './state';
@@ -9,25 +8,6 @@ import {toast}              from 'util/notify';
 import {fetchCredentials,
         storeCredentials,
         removeCredentials}  from './credentialsStorage';
-
-/**
- * Start our authorization process, once the bootstrap initialization process is complete.
- * 
- * NOTE: We could auto-start our auth process (via feature-u app life cycle handlers),
- *       except our downstream processes are dependent on device.loc, so we wait and
- *       trigger the process here.
- */
-export const startAuthorization = expandWithFassets( (fassets) => createLogic({
-
-  name: `${_auth}.startAuthorization`,
-  type: String(fassets.actions.bootstrapComplete),
-  
-  process({getState, action}, dispatch, done) {
-    dispatch( _authAct.autoSignIn() );
-    done();
-  },
-}));
-
 
 /**
  * Monitor authorization startup, fetching credentials stored on device (if any).
@@ -287,9 +267,7 @@ export const signOut = createLogic({
 
 // promote all logic modules for this feature
 // ... NOTE: individual logic modules are unit tested using the named exports.
-export default expandWithFassets( (fassets) => [
-
-  startAuthorization(fassets),
+export default [
 
   checkDeviceCredentials,
   autoSignIn,
@@ -309,4 +287,4 @@ export default expandWithFassets( (fassets) => [
 
   supplementSignOutUser,
   signOut,
-]);
+];

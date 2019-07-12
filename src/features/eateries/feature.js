@@ -44,7 +44,7 @@ export default createFeature({
   route,
 
   // default the app view to be self
-  appDidStart({fassets, appState, dispatch}) {
+  appInit({showStatus, fassets, appState, dispatch}) {
     dispatch( fassets.actions.changeView(_eateries) );
   },
 });

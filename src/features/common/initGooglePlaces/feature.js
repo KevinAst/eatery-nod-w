@@ -1,8 +1,6 @@
 import {createFeature}         from 'feature-u';
 import featureFlags            from 'featureFlags';
-import {createBootstrapFn}     from 'features/common/bootstrap/bootstrapFn';
 import initializeGooglePlaces  from './initializeGooglePlaces';
-import delay                   from 'util/delay'; // ?? temp
 
 // feature: initGooglePlaces
 //          initialize the Google Places service (when needed)
@@ -12,23 +10,5 @@ export default createFeature({
   // Google Places is only required when we are using real services (i.e. when WIFI enabled)
   enabled: featureFlags.useWIFI,
 
-  // initialize Google Places using our bootstrap process
-  fassets: {
-    defineUse: {
-      'bootstrap.initGooglePlaces': createBootstrapFn( 'Waiting for Google Places Initialization', 
-                                                       ({dispatch, fassets}) => initializeGooglePlaces() ),
-    },
-  },
-
-  // ?? TEMP TEST of appInit()
-  async appInit({showStatus, fassets, appState, dispatch}) {
-    showStatus('Waiting 2 secs for initGooglePlaces RESOURCE AA');
-//  await delay(2); // ?? without error
-    await delay(2, '***ERROR*** WowZee Test'); // ?? with error
-    
-
-    showStatus('Waiting 2 secs for initGooglePlaces RESOURCE BB');
-    await delay(2);
-  },
-
+  appInit: initializeGooglePlaces,
 });

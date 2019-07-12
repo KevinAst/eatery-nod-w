@@ -7,23 +7,19 @@ import {createLogicAspect}    from 'feature-redux-logic';
 import {createRouteAspect}    from 'feature-router';
 import features               from 'features';
 import SplashScreen, {splash} from 'util/SplashScreen';
-import discloseError          from 'util/discloseError';
 import configureEateryNodDiagnostics  from 'util/configureEateryNodDiagnostics';
 
 // launch our application, exposing the feature-u Fassets object (facilitating cross-feature-communication)!
 export default launchApp({
-  aspects: appAspects(),
   features,
+  aspects: appAspects(),
   registerRootAppElm(rootAppElm) {
     ReactDOM.render(rootAppElm,
                     document.getElementById('root'));
   },
-  //? showStatus(msg='', err=null) { // ?? defensive: default parameters
-  //?   splash(msg + (err ? ` ... WITH ERROR: ${err.formatUserMsg()}` : ''));
-  //?   if (err) {
-  //?     discloseError({err, logIt:true});
-  //?   }
-  //? }
+  showStatus(msg='', err=null) {
+    splash(msg, err);
+  },
 });
 
 
