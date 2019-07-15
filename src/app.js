@@ -11,12 +11,15 @@ import configureEateryNodDiagnostics  from 'util/configureEateryNodDiagnostics';
 
 // launch our application, exposing the feature-u Fassets object (facilitating cross-feature-communication)!
 export default launchApp({
+
   features,
   aspects: appAspects(),
+
   registerRootAppElm(rootAppElm) {
     ReactDOM.render(rootAppElm,
                     document.getElementById('root'));
   },
+
   showStatus(msg='', err=null) {
     splash(msg, err);
   },
