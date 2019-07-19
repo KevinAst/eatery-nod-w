@@ -2,10 +2,10 @@ import 'util/ErrorExtensionPolyfill';
 import React                  from 'react';
 import ReactDOM               from 'react-dom';
 import {launchApp}            from 'feature-u';
+import features               from 'features';
 import {createReducerAspect}  from 'feature-redux';
 import {createLogicAspect}    from 'feature-redux-logic';
 import {createRouteAspect}    from 'feature-router';
-import features               from 'features';
 import SplashScreen, {splash} from 'util/SplashScreen';
 import configureEateryNodDiagnostics  from 'util/configureEateryNodDiagnostics';
 
