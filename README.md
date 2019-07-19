@@ -428,7 +428,7 @@ Release  | What                                            | *When*
 
 **Technical:**
 
-- The `bootstrap` feature was replaced with **feature-u**'s new
+- The `bootstrap` feature was replaced with **feature-u**'s new v2.1.0
   `Feature.appInit()` Application Life Cycle Hook _(supporting blocking
   async initialization)_.
 
