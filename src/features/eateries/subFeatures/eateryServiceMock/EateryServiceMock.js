@@ -1,5 +1,6 @@
 import geodist          from 'geodist';
 import EateryServiceAPI from '../eateryService/EateryServiceAPI';
+import featureFlags     from 'featureFlags';
 
 /**
  * EateryServiceMock is the **mock** EateryServiceAPI derivation.
@@ -8,6 +9,11 @@ import EateryServiceAPI from '../eateryService/EateryServiceAPI';
  *       the monitored DB is retained between service invocations.
  */
 export default class EateryServiceMock extends EateryServiceAPI {
+
+  constructor() {
+    super();
+    !featureFlags.useWIFI && console.log('***eatery-nod-w*** mocking EateryService (via EateryServiceMock)');
+  }
 
   /**
    * Our persistent monitor that manages various aspects of a given pool.

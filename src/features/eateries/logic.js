@@ -18,7 +18,6 @@ let curPoolMonitor = {   // current "pool" monitor (initially a placebo)
 };
 
 let   originalEateryService = null;
-const mockEateryService     = new EateryServiceMock();
 
 
 /**
@@ -36,7 +35,7 @@ export const setupGuestUser = expandWithFassets( (fassets) => createLogic({
 
       // swap out our eatery service with a mocked in-memory source
       originalEateryService = fassets.eateryService;
-      fassets.eateryService = mockEateryService; // AI: we are mutating fassets ... may be a  code smell
+      fassets.eateryService = new EateryServiceMock(); // AI: we are mutating fassets ... may be a  code smell
 
       // inform user of what is going on
       toast({ msg:'as a "guest" user, your Eatery pool is a "mocked" in-memory data source'});

@@ -1,5 +1,6 @@
 import AuthServiceAPI from '../authService/AuthServiceAPI';
 import User           from '../authService/User';
+import featureFlags   from 'featureFlags';
 
 /**
  * AuthServiceMock is the **mock** AuthServiceAPI derivation.
@@ -8,6 +9,11 @@ import User           from '../authService/User';
  *       is retained between service invocations.
  */
 export default class AuthServiceMock extends AuthServiceAPI {
+
+  constructor() {
+    super();
+    !featureFlags.useWIFI && console.log('***eatery-nod-w*** mocking AuthService (via AuthServiceMock)');
+  }
 
   /**
    * Our "current" active user, retained between service invocations,

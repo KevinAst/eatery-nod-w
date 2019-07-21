@@ -1,6 +1,7 @@
 import DiscoveryServiceAPI from '../discoveryService/DiscoveryServiceAPI';
 import verify              from 'util/verify';
 import isString            from 'lodash.isstring';
+import featureFlags        from 'featureFlags';
 
 import {discoverySearchPage1,   // NOTE: tight coupling with EateryServiceMock (IT's OK ... were a MOCK :-)
         discoverySearchPage2,
@@ -13,6 +14,11 @@ import {discoverySearchPage1,   // NOTE: tight coupling with EateryServiceMock (
  * ... see DiscoveryServiceAPI for complete description
  */
 export default class DiscoveryServiceMock extends DiscoveryServiceAPI {
+
+  constructor() {
+    super();
+    !featureFlags.useWIFI && console.log('***eatery-nod-w*** mocking DiscoveryService (via DiscoveryServiceMock)');
+  }
 
   searchDiscoveries({loc,           // ... see DiscoveryServiceAPI
                      searchText='',

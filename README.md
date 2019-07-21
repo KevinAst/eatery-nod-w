@@ -438,6 +438,9 @@ Release  | What                                            | *When*
     because that is where the mocked data is seeded.
   - LOCATION defined constants are used for common mocking locations.
 
+- The console log now reflects any mocking setup (both GPS location,
+  and services).
+
 - ?? MORE: anything else?
 
 </ul></ul>
