@@ -432,7 +432,13 @@ Release  | What                                            | *When*
   `Feature.appInit()` Application Life Cycle Hook _(supporting blocking
   async initialization)_.
 
-  ?? MORE: anything else?
+- Added more intelligence to `featureFlags` regarding GPS location
+  mocking.
+  - A "New Orleans" location is forced when services are mocked,
+    because that is where the mocked data is seeded.
+  - LOCATION defined constants are used for common mocking locations.
+
+- ?? MORE: anything else?
 
 </ul></ul>
 
