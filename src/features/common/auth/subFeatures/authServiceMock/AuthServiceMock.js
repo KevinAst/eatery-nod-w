@@ -22,55 +22,54 @@ export default class AuthServiceMock extends AuthServiceAPI {
   currentAppUser = null; // type: User (our application User object)
 
 
-  signIn(email, pass) { // ... see AuthServiceAPI
+  async signIn(email, pass) { // ... see AuthServiceAPI
 
-    return new Promise( (resolve, reject) => {
+    //***
+    //*** stimulate various errors with variations in email/pass
+    //***
 
-      // stimulate various errors with variations in email/pass
-      if (pass === 'unexpect') { // ... unexpected condition
-        return reject(
-          new Error(`***ERROR*** Simulated Unexpected Condition`)
-            .defineAttemptingToMsg('sign in to eatery-nod')
-        );
-      }
+    // unexpected condition
+    if (pass === 'unexpect') {
+      throw new Error(`***ERROR*** Simulated Unexpected Condition`)
+                  .defineAttemptingToMsg('sign in to eatery-nod');
+    }
 
-      if (pass === 'expect') { // ... expected condition
-        return reject(
-          new Error(`***ERROR*** Invalid Password`) // do NOT expose details to the user (e.g. Invalid Password)
-            .defineUserMsg('Invalid SignIn credentials.') // keep generic
-            .defineAttemptingToMsg('sign in to eatery-nod')
-        );
-      }
+    // expected condition
+    if (pass === 'expect') {
+      throw new Error(`***ERROR*** Invalid Password`) // do NOT expose details to the user (e.g. Invalid Password)
+                  .defineUserMsg('Invalid SignIn credentials.') // keep generic
+                  .defineAttemptingToMsg('sign in to eatery-nod');
+    }
 
-      // define our mock user
-      this.currentAppUser = new User({
-        "name":          "MockGuy",
-        email,
-        "emailVerified": false,
-        "pool":          "mock"
-      });
+    //***
+    //*** sign in the supplied user
+    //***
 
-      // sign in the supplied user
-      if (pass === 'unverify') { // ... simulate user unverified
-        return resolve(this.currentAppUser);
-      }
-
-      // ... all other cases: user is verified
-      this.currentAppUser.emailVerified = true;
-      return resolve(this.currentAppUser);
-
+    // define our mock user
+    this.currentAppUser = new User({
+      "name":          "MockGuy",
+      email,
+      "emailVerified": false,
+      "pool":          "mock"
     });
+
+    // simulate user unverified
+    if (pass === 'unverify') {
+      return this.currentAppUser;
+    }
+
+    // all other cases: user is verified
+    this.currentAppUser.emailVerified = true;
+    return this.currentAppUser;
+
   }
 
 
-  refreshUser() { // ... see AuthServiceAPI
-    return new Promise( (resolve, reject) => {
-      // very simple mock ... assume they have now been verified
-      this.currentAppUser = this.currentAppUser.clone();
-      this.currentAppUser.emailVerified = true;
-      return resolve(this.currentAppUser);
-
-    });
+  async refreshUser() { // ... see AuthServiceAPI
+    // very simple mock ... assume they have now been verified
+    this.currentAppUser = this.currentAppUser.clone();
+    this.currentAppUser.emailVerified = true;
+    return this.currentAppUser;
   }
 
 
@@ -79,11 +78,8 @@ export default class AuthServiceMock extends AuthServiceAPI {
   }
 
 
-  signOut() { // ... see AuthServiceAPI
-    return new Promise( (resolve, reject) => {
-      this.currentAppUser = null; // reset our local User object, now that we are signed-out
-      return resolve(undefined);
-    });
+  async signOut() { // ... see AuthServiceAPI
+    this.currentAppUser = null; // reset our local User object, now that we are signed-out
   }
 
 };

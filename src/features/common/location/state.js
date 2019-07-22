@@ -20,7 +20,7 @@ const reducer = slicedReducer(_location, expandWithFassets( (fassets) => reducer
 
   // tear down guest user
   // ... for "guest" user signOut, reset back to original "real" location (for subsequent "real" signin)
-  [fassets.actions.signOut]: (state, action) => action.user.originalLoc,
+  [fassets.actions.signOut]: (state, action) => action.user.originalLoc || state,
 
 }, null))); // initialState
 
