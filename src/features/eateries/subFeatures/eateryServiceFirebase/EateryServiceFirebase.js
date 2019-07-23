@@ -137,7 +137,7 @@ export default class EateryServiceFirebase extends EateryServiceAPI {
       }
 
       // remove the eatery to our DB pool
-      // console.log(`xx EateryServiceFirebase.removeEatery() removeing eatery: /pools/${this.curPoolMonitor.pool}/${eateryId}`);
+      // console.log(`xx EateryServiceFirebase.removeEatery() removing eatery: /pools/${this.curPoolMonitor.pool}/${eateryId}`);
 
       const dbRef = firebase.database().ref(`/pools/${this.curPoolMonitor.pool}/${eateryId}`);
       dbRef.set(null)
