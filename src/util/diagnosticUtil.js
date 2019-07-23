@@ -13,11 +13,13 @@ import noOp from 'util/noOp';
  * @private
  */
 
-// ... do$/skip$ ... nice in that you can find ALL directives pretty fast (both enabled/disabled)
+//***
+//*** do$/skip$ ... nice in that you can find ALL directives pretty fast (both enabled/disabled)
+//***
 
 export function do$(desc, doThis=noOp) {
   console.log(`***DIAGNOSTIC*** ${desc}`);
-  return doThis();
+  return doThis(desc);
 }
 
 export function skip$(desc, doThis) {
@@ -26,13 +28,24 @@ export function skip$(desc, doThis) {
 }
 
 //***
-//*** various aliases
+//*** diag$ / diag$.skip ... nice in that the semantics are better for LOG only
 //***
 
-// ... diag$ / diag$.skip ... nice in that the semantics are better for LOG only
 export const diag$ = do$;
 diag$.skip = skip$;
 
-// ... YES$ / NO$ ... hmmm
+
+//***
+//*** diag$.on / diag$.off
+//***
+
+diag$.on  = do$;
+diag$.off = skip$;
+
+
+//***
+//*** YES$ / NO$ ... hmmm
+//***
+
 export const YES$ = do$;
 export const NO$  = skip$;
