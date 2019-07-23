@@ -1,4 +1,5 @@
 import featureFlags  from 'featureFlags';
+import {diag$}       from 'util/diagnosticUtil';
 import delay         from 'util/delay';
 
 const mockedLocation = featureFlags.useLocation(); // null indicates NOT mocking
@@ -80,8 +81,8 @@ function getCurPos_real() {
 //***
 
 async function getCurPos_mock() {
-  // enable TEMPORARILY ... for testing long running process -and- errors
-  false && await delay(3000, 'Simulated GPS Location Error');
+
+  await diag$.off('Simulate GPS Location Error in long-running process', (msg) => delay(3000, msg));
 
   // expose our mocked location
   // ... NOTE: this function is only active if we have a mockedLocation :-)
