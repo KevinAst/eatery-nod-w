@@ -52,7 +52,7 @@ export default function discloseError({err,
     // ... unrecognized named parameter
     const unknownArgKeys = Object.keys(unknownArgs);
     check(unknownArgKeys.length === 0,  `unrecognized named parameter(s): ${unknownArgKeys}`);
-    // ... unrecognized positional parameter (NOTE: when defaulting entire struct, arguents.length is 0)
+    // ... unrecognized positional parameter (NOTE: when defaulting entire struct, arguments.length is 0)
     check(arguments.length === 0 || arguments.length === 1, 'unrecognized positional parameters (only named parameters can be specified)');
   }
   // NOTE: this handler CANNOT throw an error, 
@@ -68,7 +68,7 @@ export default function discloseError({err,
 
   // show user when requested
   if (showUser) {
-    // unexpeded errors display as error toasts with additional details link
+    // unexpended errors display as error toasts with additional details link
     if (err.isUnexpected()) {
       toast.error({  // ... will auto close -OR- when "details" is clicked
         msg: err.formatUserMsg(),
@@ -86,7 +86,7 @@ If this problem persists, please contact your tech support.`
       });
     }
 
-    // expeded errors display as warning toasts with NO additional detail
+    // expended errors display as warning toasts with NO additional detail
     else {
       toast.warn({  // ... will auto close
         msg: err.formatUserMsg()
@@ -111,6 +111,7 @@ If this problem persists, please contact your tech support.`
     const prefix = err.isUnexpected() ? '*** Unexpected Error:\n\n' : '*** Expected Error:\n\n';
     console.log(prefix + err);
     if (err.isUnexpected()) { // produce stack traces only for unexpected errors
+      console.log('Stack Trace ...');
       console.log(err);
     }
   }

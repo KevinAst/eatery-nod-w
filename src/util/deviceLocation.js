@@ -82,7 +82,7 @@ function getCurPos_real() {
 
 async function getCurPos_mock() {
 
-  await diag$.off('Simulate GPS Location Error in long-running process', (msg) => delay(3000, msg));
+  await diag$.off('Simulate GPS Location Error in long-running process', (errMsg) => delay(3000, errMsg));
 
   // expose our mocked location
   // ... NOTE: this function is only active if we have a mockedLocation :-)

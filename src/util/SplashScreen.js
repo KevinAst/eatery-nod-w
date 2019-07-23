@@ -107,6 +107,8 @@ let _setSplashState = null; // expose our inner function
 // *** Our "common" rendering agent shared by BOTH `<SplashScreen>` and `<SplashScreenProgrammatic>`
 // ***
 
+let _errLastReported = null;
+
 // <SplashScreenCommon msg= open= fullScreen= classes= />
 function SplashScreenCommon({msg, err, open, fullScreen, classes}) {
 
@@ -127,6 +129,26 @@ ${err}
 
 If this problem persists, please contact your tech support.`
     });
+  }
+
+  // when supplied, log the details of the error (with traceback) for tech review
+  // NOTE 1: we refrain from using console.warn() and console.error() 
+  //         because of BAD semantics inferred by react-native/expo:
+  //          - console.warn():  generates yellow popup
+  //          - console.error(): kills app with "red screen of death"
+  // NOTE 2: react-native/expo appears to be doing something non standard
+  //         when passing error as the 2nd parameter of log():
+  //             log('msg', error)
+  //         ... in this case is merely emitting error.toString()
+  //         ... we can however receive a stack trace by calling log(error) as the first parameter
+  if (err && err !== _errLastReported) {
+    _errLastReported = err;
+    const prefix = err.isUnexpected() ? '*** Unexpected Error:\n\n' : '*** Expected Error:\n\n';
+    console.log(prefix + err);
+    if (err.isUnexpected()) { // produce stack traces only for unexpected errors
+      console.log('Stack Trace ...');
+      console.log(err);
+    }
   }
 
   // render our component
