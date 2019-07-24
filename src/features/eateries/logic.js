@@ -281,16 +281,17 @@ export const addToPool = createLogic({
   name: `${_eateries}.addToPool`,
   type: String(_eateriesAct.dbPool.add.eateryDetail),
 
-  transform({getState, action, fassets}, next, reject) {
-
-    // add the new eatery
-    fassets.eateryService.addEatery(action.eatery)
-           .catch( (err) => {
-             // report unexpected error to user
-             discloseError({err});
-           });
-
-    next(action);
+  async transform({getState, action, fassets}, next, reject) {
+    try {
+      // add the new eatery
+      await fassets.eateryService.addEatery(action.eatery);
+      next(action);
+    }
+    catch(err) {
+      // report unexpected error to user
+      discloseError({err});
+      reject(action);
+    }
   },
 
 });
@@ -301,16 +302,17 @@ export const removeFromPool = createLogic({
   name: `${_eateries}.removeFromPool`,
   type: String(_eateriesAct.dbPool.remove),
 
-  transform({getState, action, fassets}, next, reject) {
-
-    // remove the supplied eatery
-    fassets.eateryService.removeEatery(action.eateryId)
-           .catch( (err) => {
-             // report unexpected error to user
-             discloseError({err});
-           });
-
-    next(action);
+  async transform({getState, action, fassets}, next, reject) {
+    try {
+      // remove the supplied eatery
+      await fassets.eateryService.removeEatery(action.eateryId)
+      next(action);
+    }
+    catch(err) {
+      // report unexpected error to user
+      discloseError({err});
+      reject(action);
+    }
   },
 
 });

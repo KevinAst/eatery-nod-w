@@ -55,62 +55,46 @@ export default class EateryServiceMock extends EateryServiceAPI {
   }
 
 
-  addEatery(eatery) { // ... see EateryServiceAPI
+  async addEatery(eatery) { // ... see EateryServiceAPI
+    // verify we are monitoring a pool
+    // ... NOTE: same as production service
+    if (!this.curPoolMonitor.pool) {
+      // unexpected condition
+      throw new Error('***ERROR*** (within app logic) EateryServiceMock.addEatery(): may only be called once a successful monitorDbEateryPool() has completed.')
+              .defineAttemptingToMsg('add an Eatery to the DB');
+    }
 
-    // utilize promise as per API ... resolves: void
-    return new Promise( (resolve, reject) => {
+    // add the eatery to our DB pool
+    // NOTE: this must be immutable to allow redux to recognize the change
+    // console.log(`xx addEatery: `, eatery);
+    this.curPoolMonitor.eateries = {
+      ...this.curPoolMonitor.eateries,
+      [eatery.id]: eatery
+    };
 
-      // verify we are monitoring a pool
-      // ... NOTE: same as production service
-      if (!this.curPoolMonitor.pool) {
-        return reject(
-          // unexpected condition
-          new Error('***ERROR*** (within app logic) EateryServiceMock.addEatery(): may only be called once a successful monitorDbEateryPool() has completed.')
-            .defineAttemptingToMsg('add an Eatery to the DB')
-        );
-      }
-
-      // add the eatery to our DB pool
-      // NOTE: this must be immutable to allow redux to recognize the change
-      // console.log(`xx addEatery: `, eatery);
-      this.curPoolMonitor.eateries = {
-        ...this.curPoolMonitor.eateries,
-        [eatery.id]: eatery
-      };
-
-      // notify our monitorCB
-      this.curPoolMonitor.monitorCB(this.curPoolMonitor.eateries);
-    });
+    // notify our monitorCB
+    this.curPoolMonitor.monitorCB(this.curPoolMonitor.eateries);
   }
 
 
-  removeEatery(eateryId) { // ... see EateryServiceAPI
+  async removeEatery(eateryId) { // ... see EateryServiceAPI
+    // verify we are monitoring a pool
+    // ... NOTE: same as production service
+    if (!this.curPoolMonitor.pool) {
+      // unexpected condition
+      throw new Error('***ERROR*** (within app logic) EateryServiceMock.removeEatery(): may only be called once a successful monitorDbEateryPool() has completed.')
+              .defineAttemptingToMsg('remove an Eatery from the DB');
+    }
 
-    // utilize promise as per API ... resolves: void
-    return new Promise( (resolve, reject) => {
+    // remove the eatery to our DB pool
+    // NOTE: this must be immutable to allow redux to recoginize the change
+    // console.log(`xx removeEatery: ${eateryId}`);
+    const eateries = Object.assign({}, this.curPoolMonitor.eateries);
+    delete eateries[eateryId];
+    this.curPoolMonitor.eateries = eateries;
 
-      // verify we are monitoring a pool
-      // ... NOTE: same as production service
-      if (!this.curPoolMonitor.pool) {
-        return reject(
-          // unexpected condition
-          new Error('***ERROR*** (within app logic) EateryServiceMock.removeEatery(): may only be called once a successful monitorDbEateryPool() has completed.')
-            .defineAttemptingToMsg('remove an Eatery from the DB')
-        );
-      }
-
-
-      // remove the eatery to our DB pool
-      // NOTE: this must be immutable to allow redux to recoginize the change
-      // console.log(`xx removeEatery: ${eateryId}`);
-      const eateries = Object.assign({}, this.curPoolMonitor.eateries);
-      delete eateries[eateryId];
-      this.curPoolMonitor.eateries = eateries;
-
-      // notify our monitorCB
-      this.curPoolMonitor.monitorCB(this.curPoolMonitor.eateries);
-
-    });
+    // notify our monitorCB
+    this.curPoolMonitor.monitorCB(this.curPoolMonitor.eateries);
   }
 
 };
