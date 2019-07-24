@@ -259,17 +259,20 @@ export const addToPoolPrep = createLogic({
   name: `${_eateries}.addToPoolPrep`,
   type: String(_eateriesAct.dbPool.add),
 
-  process({getState, action, fassets}, dispatch, done) {
+  async process({getState, action, fassets}, dispatch, done) {
+    try {
+      const eatery = await fassets.discoveryService.fetchEateryDetail(action.eateryId);
+      dispatch( _eateriesAct.dbPool.add.eateryDetail(eatery) );
+    }
+    catch(err) {
+      dispatch( _eateriesAct.dbPool.add.eateryDetail.fail(action.eateryId, err) );
 
-    fassets.discoveryService.fetchEateryDetail(action.eateryId)
-      .then(eatery => {
-        dispatch( _eateriesAct.dbPool.add.eateryDetail(eatery) );
-        done();
-      })
-      .catch(err => {
-        dispatch( _eateriesAct.dbPool.add.eateryDetail.fail(action.eateryId, err) );
-        done();
-      });
+      // report unexpected error to user
+      discloseError({err: err.defineAttemptingToMsg('DiscoveryService.fetchEateryDetail()')});
+    }
+    finally {
+      done();
+    }
   },
 
 });

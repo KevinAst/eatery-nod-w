@@ -90,22 +90,22 @@ export const retrieve = createLogic({
   type: String(_discoveryAct.retrieve),
   warnTimeout: 0, // long-running logic ... UNFORTUNATELY GooglePlaces is sometimes EXCRUCIATINGLY SLOW!
 
-  process({getState, action, fassets}, dispatch, done) {
+  async process({getState, action, fassets}, dispatch, done) {
+    try {
+      const discoveriesResp = await fassets.discoveryService.searchDiscoveries(action.filter);
 
-    fassets.discoveryService.searchDiscoveries(action.filter)
-       .then(discoveriesResp => { 
-         // console.log(`xx here is our discoveriesResp: `, discoveriesResp);
-         dispatch( _discoveryAct.retrieve.complete(action.filter, discoveriesResp) );
-         done();
-       })
-       .catch(err => {
-         dispatch( _discoveryAct.retrieve.fail(err) );
+      // console.log(`xx here is our discoveriesResp: `, discoveriesResp);
+      dispatch( _discoveryAct.retrieve.complete(action.filter, discoveriesResp) );
+    }
+    catch(err) {
+      dispatch( _discoveryAct.retrieve.fail(err) );
 
-         // report unexpected error to user
-         discloseError({err: err.defineAttemptingToMsg('DiscoveryService.searchDiscoveries()')});
-
-         done();
-       });
+      // report unexpected error to user
+      discloseError({err: err.defineAttemptingToMsg('DiscoveryService.searchDiscoveries()')});
+    }
+    finally {
+      done();
+    }
   },
 
 });
@@ -121,22 +121,22 @@ export const nextPage = createLogic({
   type: String(_discoveryAct.nextPage),
   warnTimeout: 0, // long-running logic ... UNFORTUNATELY GooglePlaces is sometimes EXCRUCIATINGLY SLOW!
 
-  process({getState, action, fassets}, dispatch, done) {
+  async process({getState, action, fassets}, dispatch, done) {
+    try {
+      const discoveriesResp = await fassets.discoveryService.searchDiscoveriesNextPage(action.pagetoken);
 
-    fassets.discoveryService.searchDiscoveriesNextPage(action.pagetoken)
-       .then(discoveriesResp => {
-         // console.log(`xx here is our discoveriesRes: `, discoveriesResp);
-         dispatch( _discoveryAct.nextPage.complete(discoveriesResp) );
-         done();
-       })
-       .catch(err => {
-         dispatch( _discoveryAct.nextPage.fail(err) );
+      // console.log(`xx here is our discoveriesRes: `, discoveriesResp);
+      dispatch( _discoveryAct.nextPage.complete(discoveriesResp) );
+    }
+    catch(err) {
+      dispatch( _discoveryAct.nextPage.fail(err) );
 
-         // report unexpected error to user
-         discloseError({err: err.defineAttemptingToMsg('DiscoveryService.searchDiscoveriesNextPage()')});
-
-         done();
-       });
+      // report unexpected error to user
+      discloseError({err: err.defineAttemptingToMsg('DiscoveryService.searchDiscoveriesNextPage()')});
+    }
+    finally {
+      done();
+    }
   },
 
 });

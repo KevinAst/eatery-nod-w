@@ -39,7 +39,7 @@
 export default class DiscoveryServiceAPI {
 
   /**
-   * Search/retrieve nearby restaurants, returning a set of
+   * Search/retrieve nearby restaurants (asynchronously), returning a set of
    * Discoveries (see class description).
    *
    * **Please Note**: this service uses named parameters.
@@ -56,50 +56,48 @@ export default class DiscoveryServiceAPI {
    * @param {string} minprice the minimum price range '0'-'4'
    * (from most affordable to most expensive), DEFAULT TO '1'.
    * 
-   * @return {discoveries via promise} a promise resolving to the
-   * following discoveries structure:
+   * @return {discoveries} the following discoveries structure:
    *   {
    *     pagetoken: 'use-in-next-request', // undefined for no more pages (or 60 entries limit)
    *     discoveries: [ <Discovery> ]
    *   }
    */
-  searchDiscoveries({loc,
-                     searchText='',
-                     distance=5,
-                     minprice='1',
-                     ...unknownArgs}={}) {
+  async searchDiscoveries({loc,
+                           searchText='',
+                           distance=5,
+                           minprice='1',
+                           ...unknownArgs}={}) {
     throw new Error(`***ERROR*** ${this.constructor.name}.searchDiscoveries() is a required service method that has NOT been implemented`);
   }
 
 
   /**
-   * Fetch the next-page of a previous searchDiscoveries() request.
+   * Fetch the next-page of a previous searchDiscoveries() request (asynchronously).
    * 
    * @param pagetoken the next page token (supplied by prior
    * searchDiscoveries() invocation).
    * 
-   * @return {discoveries via promise} a promise resolving to the
-   * following discoveries structure (same as searchDiscoveries()):
+   * @return {discoveries} the following discoveries structure (same as searchDiscoveries()):
    *   {
    *     pagetoken: 'use-in-next-request', // undefined for no more pages (or 60 entries limit)
    *     discoveries: [ <Discovery> ]
    *   }
    */
-  searchDiscoveriesNextPage(pagetoken) {
+  async searchDiscoveriesNextPage(pagetoken) {
     throw new Error(`***ERROR*** ${this.constructor.name}.searchDiscoveriesNextPage() is a required service method that has NOT been implemented`);
   }
 
 
   /**
-   * Fetch (i.e. retreive) the details of a fully populated eatery using the
+   * Asynchronously fetch (i.e. retrieve) the details of a fully populated eatery using the
    * supplied eateryId.
    * 
    * @param {string} eateryId the id for the detailed entry to retrieve
    * (same id as returned in Discovery)
    * 
-   * @return {promise} a promise resolving the Eatery
+   * @return {Eatery} an Eatery, fully populated
    */
-  fetchEateryDetail(eateryId) {
+  async fetchEateryDetail(eateryId) {
     throw new Error(`***ERROR*** ${this.constructor.name}.fetchEateryDetail() is a required service method that has NOT been implemented`);
   }
 
