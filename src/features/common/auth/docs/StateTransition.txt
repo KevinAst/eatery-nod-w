@@ -63,8 +63,8 @@ auth
                                                  ==================
                                                    transform():
                                                    -----------
-                                                     fassets.authService.refreshUser()
-                                                       .then( supplement action with most current user)
+                                                     const user = await fassets.authService.refreshUser();
+                                                     ... supplement action with most current user
                                                                     
     > USED in secondary signin screen to request service
            to resend the verification email instructions

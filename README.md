@@ -441,6 +441,8 @@ Release  | What                                            | *When*
 - The console log now reflects any mocking setup (both GPS location,
   and services).
 
+- Simplified asynchronous processes via async/await (removing explicit promises).
+
 - ?? MORE: anything else?
 
 </ul></ul>
