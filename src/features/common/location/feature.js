@@ -4,6 +4,8 @@ import _locationAct        from './actions';
 import reducer,
        {getLocation}       from './state';
 import {getCurPos}         from 'util/deviceLocation';
+import diag$               from 'util/diag$';
+import delay               from 'util/delay';
 
 // feature: location
 //          initialize the GPS location for use by the app (full details in README)
@@ -28,6 +30,7 @@ export default createFeature({
 
     // obtain current device location
     const location = await getCurPos();
+    await diag$.off('Simulate long-running GPS Location process', () => delay(3000));
 
     // maintain the current location in our app state
     dispatch( _locationAct.setLocation(location) );

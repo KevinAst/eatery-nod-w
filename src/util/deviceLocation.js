@@ -1,5 +1,5 @@
 import featureFlags  from 'featureFlags';
-import {diag$}       from 'util/diagnosticUtil';
+import diag$         from 'util/diag$';
 import delay         from 'util/delay';
 
 const mockedLocation = featureFlags.useLocation(); // null indicates NOT mocking
