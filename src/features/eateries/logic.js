@@ -265,8 +265,6 @@ export const addToPoolPrep = createLogic({
       dispatch( _eateriesAct.dbPool.add.eateryDetail(eatery) );
     }
     catch(err) {
-      dispatch( _eateriesAct.dbPool.add.eateryDetail.fail(action.eateryId, err) );
-
       // report unexpected error to user
       discloseError({err: err.defineAttemptingToMsg('DiscoveryService.fetchEateryDetail()')});
     }

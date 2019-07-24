@@ -28,13 +28,6 @@ export default generateActions.root({
                         actionMeta: {
                           traits: ['eatery'],
                         },
-      
-          fail: { // actions.dbPool.add.eateryDetail.fail(eateryId, err): Action
-                  // > in process of adding eatery, detail retrieval failed
-                  actionMeta: {
-                    traits: ['eateryId', 'err'],
-                  },
-          },
         },
       
       },

@@ -40,9 +40,6 @@ discovery
                                                                                                       - set appState.discovery.inProgress = null
 
    .fail(err) .....................................................................................   - set appState.discovery.inProgress = null
-                                                 NOTE: auto reported to user via logic:
-                                                       diag.communicateUnexpectedErrors << WHA: doesn't exist
-                                                       MONITORING ALL .fail actions
 
 
 
@@ -58,6 +55,3 @@ discovery
                                                                                                       - set appState.discovery.inProgress = null
 
    .fail(err) .....................................................................................   - set appState.discovery.inProgress = null
-                                                 NOTE: auto reported to user via logic:
-                                                       diag.communicateUnexpectedErrors << WHA: doesn't exist
-                                                       MONITORING ALL .fail actions
