@@ -43,7 +43,7 @@ import isString            from 'lodash.isstring';
 export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
 
   /**
-   * Search/retrieve nearby restaurants, returning a set of
+   * Search/retrieve nearby restaurants (asynchronously), returning a set of
    * Discoveries (see class description).
    *
    * **Please Note**: this service uses named parameters.
@@ -60,13 +60,13 @@ export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
    * @param {string} minprice the minimum price range '0'-'4'
    * (from most affordable to most expensive), DEFAULT TO '1'.
    * 
-   * @return {discoveries via promise} a promise resolving to the
-   * following discoveries structure:
+   * @return {discoveries} the following discoveries structure:
    *   {
    *     pagetoken: 'use-in-next-request', // undefined for no more pages (or 60 entries limit)
    *     discoveries: [ <Discovery> ]
    *   }
    */
+  // NOTE: we directly manage our own promise (not async/await) BECAUSE Google PlacesService is NOT promise based
   searchDiscoveries({loc,
                      searchText='',
                      distance=5,
@@ -118,6 +118,7 @@ export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
     // *** issue the Google PlacesService request
     // ***
 
+    // NOTE: we directly manage our own promise (not async/await) BECAUSE Google PlacesService is NOT promise based
     return new Promise( (resolve, reject) => {
 
       // retain _resolve/_reject in an outer scope 
@@ -159,18 +160,18 @@ export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
 
 
   /**
-   * Fetch the next-page of a previous searchDiscoveries() request.
+   * Fetch the next-page of a previous searchDiscoveries() request (asynchronously).
    * 
    * @param pagetoken the next page token (supplied by prior
    * searchDiscoveries() invocation).
    * 
-   * @return {discoveries via promise} a promise resolving to the
-   * following discoveries structure (same as searchDiscoveries()):
+   * @return {discoveries} the following discoveries structure (same as searchDiscoveries()):
    *   {
    *     pagetoken: 'use-in-next-request', // undefined for no more pages (or 60 entries limit)
    *     discoveries: [ <Discovery> ]
    *   }
    */
+  // NOTE: we directly manage our own promise (not async/await) BECAUSE Google PlacesService is NOT promise based
   searchDiscoveriesNextPage(pagetoken) {
 
     const check = verify.prefix('DiscoveryServiceGooglePlaces.searchDiscoveriesNextPage() parameter violation: ');
@@ -179,6 +180,7 @@ export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
     
     // process any pagetoken requests
     if (_pagination) {
+      // NOTE: we directly manage our own promise (not async/await) BECAUSE Google PlacesService is NOT promise based
       return new Promise( (resolve, reject) => {
 
         // retain _resolve/_reject in an outer scope 
@@ -197,16 +199,18 @@ export default class DiscoveryServiceGooglePlaces extends DiscoveryServiceAPI {
 
 
   /**
-   * Fetch (i.e. retrieve) the details of a fully populated eatery using the
+   * Asynchronously fetch (i.e. retrieve) the details of a fully populated eatery using the
    * supplied eateryId.
    * 
    * @param {string} eateryId the id for the detailed entry to retrieve
    * (same id as returned in Discovery)
    * 
-   * @return {promise} a promise resolving the Eatery
+   * @return {Eatery} an Eatery, fully populated
    */
+  // NOTE: we directly manage our own promise (not async/await) BECAUSE Google PlacesService is NOT promise based
   fetchEateryDetail(eateryId) {
 
+    // NOTE: we directly manage our own promise (not async/await) BECAUSE Google PlacesService is NOT promise based
     return new Promise( (resolve, reject) => {
 
       try {

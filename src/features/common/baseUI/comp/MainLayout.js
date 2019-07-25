@@ -8,6 +8,7 @@ import {MuiThemeProvider,      // NOTE: MuiThemeProvider **SHOULD** be at the ro
 import CssBaseline        from '@material-ui/core/CssBaseline';
 import AppMotif           from './AppMotif';
 import Notify             from 'util/notify';
+import SplashScreen       from 'util/SplashScreen';
 import {getUITheme}       from '../state';
 
 
@@ -28,6 +29,9 @@ import {getUITheme}       from '../state';
  *
  * - the **Notify** utility is activated, supporting programmatic
  *   **toasts, alerts, and confirmations**
+ *
+ * - the **SplashScreen** utility is activated, supporting the programmatic
+ *   `splash(msg)` API
  * 
  * Please refer to the **`baseUI` README** for more information.
  */
@@ -41,6 +45,7 @@ export default function MainLayout({children}) {
     <MuiThemeProvider theme={themeInUse}>
       <CssBaseline/>
       <Notify/>
+      <SplashScreen/>
       <main className={classes.main}>
         <AppMotif>
           {children}

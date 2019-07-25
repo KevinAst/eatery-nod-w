@@ -6,14 +6,16 @@ This document highlights how actions, logic, and reducers interact
 together to maintain this feature's state (a text document is used to
 accommodate the wide free-format content).
 
+NOTE: Following dispatch occurs from 'auth' feature application-life-cycle-hook
+
+      appDidStart({fassets, appState, dispatch}) {
+        // kick-start our authorization process
+        dispatch( _authAct.autoSignIn() );
+      }
+
 
 Actions (see: actions.js)                        Logic (see: logic.js)                                          Reducer (see: state.js)
 ==============================================   ============================================================   ===============================
-fassets.actions.bootstrapComplete() .........................................................................   - NONE
-                                                 startAuthorization:
-                                                 ==================
-                                                   DISPATCH .autoSignIn()           
-
 auth                                             
   .autoSignIn() ............................................................................................   - NONE
                                                  checkDeviceCredentials:
@@ -61,8 +63,8 @@ auth
                                                  ==================
                                                    transform():
                                                    -----------
-                                                     fassets.authService.refreshUser()
-                                                       .then( supplement action with most current user)
+                                                     const user = await fassets.authService.refreshUser();
+                                                     ... supplement action with most current user
                                                                     
     > USED in secondary signin screen to request service
            to resend the verification email instructions

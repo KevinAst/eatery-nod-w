@@ -1,6 +1,6 @@
 import ReactDOMServer from 'react-dom/server';
 import {launchApp}    from 'feature-u';
-import {diag$}        from 'util/diagnosticUtil';
+import diag$          from 'util/diag$';
 import logActions     from 'features/common/diagnostic/logActions/feature'; // enable eatery-nod "logActions" feature
 import sandbox        from 'features/common/diagnostic/sandbox/feature';    // enable eatery-nod "sandbox" feature (in left-nav)
 import configureFeatureUIntegrationTests  from 'util/configureFeatureUIntegrationTests';

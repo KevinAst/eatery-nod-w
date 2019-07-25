@@ -1,22 +1,28 @@
 import 'util/ErrorExtensionPolyfill';
-import React                 from 'react';
-import ReactDOM              from 'react-dom';
-import {launchApp}           from 'feature-u';
-import {createReducerAspect} from 'feature-redux';
-import {createLogicAspect}   from 'feature-redux-logic';
-import {createRouteAspect}   from 'feature-router';
-import features              from 'features';
-import SplashScreen          from 'util/SplashScreen';
+import React                  from 'react';
+import ReactDOM               from 'react-dom';
+import {launchApp}            from 'feature-u';
+import features               from 'features';
+import {createReducerAspect}  from 'feature-redux';
+import {createLogicAspect}    from 'feature-redux-logic';
+import {createRouteAspect}    from 'feature-router';
+import SplashScreen, {splash} from 'util/SplashScreen';
 import configureEateryNodDiagnostics  from 'util/configureEateryNodDiagnostics';
 
 // launch our application, exposing the feature-u Fassets object (facilitating cross-feature-communication)!
 export default launchApp({
-  aspects: appAspects(),
+
   features,
+  aspects: appAspects(),
+
   registerRootAppElm(rootAppElm) {
     ReactDOM.render(rootAppElm,
                     document.getElementById('root'));
-  }
+  },
+
+  showStatus(msg='', err=null) {
+    splash(msg, err);
+  },
 });
 
 

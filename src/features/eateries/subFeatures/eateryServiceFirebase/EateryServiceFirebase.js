@@ -75,78 +75,62 @@ export default class EateryServiceFirebase extends EateryServiceAPI {
 
 
   /**
-   * Add new Eatery to the DB being monitored.
+   * Add new Eatery to the DB being monitored (asynchronously).
    *
    * This method can only be called, once a successful
    * monitorDbEateryPool() has been established, because of the
    * persistent nature of this service.
    * 
    * @param {Eatery} eatery the eatery entry to add
-   * 
-   * @returns {void via promise} a void promise, resolved when add
-   * complete and captures async errors.
    */
-  addEatery(eatery) {
-    return new Promise( (resolve, reject) => {
+  async addEatery(eatery) {
+    // verify we are monitoring a pool
+    if (!this.curPoolMonitor.pool) {
+      // unexpected condition
+      throw new Error('***ERROR*** (within app logic) EateryServiceFirebase.addEatery(): may only be called once a successful monitorDbEateryPool() has completed.')
+              .defineAttemptingToMsg('add an Eatery to the DB');
+    }
 
-      // verify we are monitoring a pool
-      if (!this.curPoolMonitor.pool) {
-        return reject(
-          // unexpected condition
-          new Error('***ERROR*** (within app logic) EateryServiceFirebase.addEatery(): may only be called once a successful monitorDbEateryPool() has completed.')
-            .defineAttemptingToMsg('add an Eatery to the DB')
-        );
-      }
-
+    try {
       // add the eatery to our DB pool
       // console.log(`xx EateryServiceFirebase.addEatery() adding eatery: /pools/${this.curPoolMonitor.pool}/${eatery.id}`);
-
       const dbRef = firebase.database().ref(`/pools/${this.curPoolMonitor.pool}/${eatery.id}`);
-      dbRef.set(eatery)
-           .then( () => { // a void resolve indicates the add is complete
-           })
-           .catch( err => { // unexpected error
-             return reject(err.defineAttemptingToMsg(`add eatery (${eatery.id}) to pool ${this.curPoolMonitor.pool}`));
-           });
-    });
+      await dbRef.set(eatery);
+    }
+    catch(err) {
+      // re-throw unexpected error with qualifier
+      throw err.defineAttemptingToMsg(`add eatery (${eatery.name}) to pool ${this.curPoolMonitor.pool}`);
+    }
   }
 
 
   /**
-   * Remove the supplied eateryId from the DB being monitored.
+   * Remove the supplied eateryId from the DB being monitored (asynchronously).
    *
    * This method can only be called, once a successful
    * monitorDbEateryPool() has been established, because of the
    * persistent nature of this service.
    * 
    * @param {number} eateryId the eatery id to remove
-   * 
-   * @returns {void via promise} a void promise, resolved when remove
-   * complete and captures async errors.
    */
-  removeEatery(eateryId) {
-    return new Promise( (resolve, reject) => {
+  async removeEatery(eateryId) {
+    // verify we are monitoring a pool
+    if (!this.curPoolMonitor.pool) {
+      // unexpected condition
+      throw new Error('***ERROR*** (within app logic) EateryServiceFirebase.removeEatery(): may only be called once a successful monitorDbEateryPool() has completed.')
+              .defineAttemptingToMsg('remove an Eatery from the DB');
+    }
 
-      // verify we are monitoring a pool
-      if (!this.curPoolMonitor.pool) {
-        return reject(
-          // unexpected condition
-          new Error('***ERROR*** (within app logic) EateryServiceFirebase.removeEatery(): may only be called once a successful monitorDbEateryPool() has completed.')
-            .defineAttemptingToMsg('remove an Eatery from the DB')
-        );
-      }
-
+    try {
       // remove the eatery to our DB pool
-      // console.log(`xx EateryServiceFirebase.removeEatery() removeing eatery: /pools/${this.curPoolMonitor.pool}/${eateryId}`);
-
+      // console.log(`xx EateryServiceFirebase.removeEatery() removing eatery: /pools/${this.curPoolMonitor.pool}/${eateryId}`);
       const dbRef = firebase.database().ref(`/pools/${this.curPoolMonitor.pool}/${eateryId}`);
-      dbRef.set(null)
-           .then( () => { // a void resolve indicates the remove is complete
-           })
-           .catch( err => { // unexpected error
-             return reject(err.defineAttemptingToMsg(`remove eatery (${eateryId}) from pool ${this.curPoolMonitor.pool}`));
-           });
-    });
+      await dbRef.set(null);
+    }
+    catch(err) {
+      // re-throw unexpected error with qualifier
+      throw err.defineAttemptingToMsg(`remove an eatery from pool ${this.curPoolMonitor.pool}`);
+    }
   }
 
 };

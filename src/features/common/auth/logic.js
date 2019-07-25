@@ -1,5 +1,4 @@
 import {createLogic}        from 'redux-logic';
-import {expandWithFassets}  from 'feature-u';
 import _auth                from './featureName';
 import _authAct             from './actions';
 import {curUser}            from './state';
@@ -9,25 +8,6 @@ import {toast}              from 'util/notify';
 import {fetchCredentials,
         storeCredentials,
         removeCredentials}  from './credentialsStorage';
-
-/**
- * Start our authorization process, once the bootstrap initialization process is complete.
- * 
- * NOTE: We could auto-start our auth process (via feature-u app life cycle handlers),
- *       except our downstream processes are dependent on device.loc, so we wait and
- *       trigger the process here.
- */
-export const startAuthorization = expandWithFassets( (fassets) => createLogic({
-
-  name: `${_auth}.startAuthorization`,
-  type: String(fassets.actions.bootstrapComplete),
-  
-  process({getState, action}, dispatch, done) {
-    dispatch( _authAct.autoSignIn() );
-    done();
-  },
-}));
-
 
 /**
  * Monitor authorization startup, fetching credentials stored on device (if any).
@@ -114,30 +94,28 @@ export const signIn = createLogic({
   type: String(_authAct.signIn),
   warnTimeout: 0, // long-running logic ... UNFORTUNATELY signin using our firebase service is sometimes EXCRUCIATINGLY SLOW!
 
-  process({getState, action, fassets}, dispatch, done) {
-    
-    fassets.authService.signIn(action.email, action.pass)
+  async process({getState, action, fassets}, dispatch, done) {
+    try {
+      // signin via our authService
+      const user = await fassets.authService.signIn(action.email, action.pass);
 
-           .then( user => { // user has successfully signed in
+      // retain these credentials on our device (to streamline subsequent app launch)
+      storeCredentials(action.email, action.pass);
 
-             // retain these credentials on our device (to streamline subsequent app launch)
-             storeCredentials(action.email, action.pass);
+      // communicate a new user is in town
+      dispatch( _authAct.signIn.complete(user) );
 
-             // communicate a new user is in town
-             dispatch( _authAct.signIn.complete(user) );
+      done();
+    }
+    catch(err) {
+      discloseError({err,
+                     showUser: err.isUnexpected()}); // expected errors are shown to the user via the re-direction to the signIn screen (see next step)
 
-             done();
-           })
+      // re-direct to SignIn screen, prepopulated with appropriate msg
+      dispatch( _authAct.signIn.open(action, err.formatUserMsg()) ); // NOTE: action is a cheap shortcut to domain (contains email/pass) ... pre-populating sign-in form with last user input
 
-           .catch( (err) => {
-             discloseError({err,
-                            showUser: err.isUnexpected()}); // expected errors are shown to the user via the re-direction to the signIn screen (see next step)
-
-             // re-direct to SignIn form, prepopulated with appropriate msg
-             dispatch( _authAct.signIn.open(action, err.formatUserMsg()) ); // NOTE: action is a cheap shortcut to domain (contains email/pass) ... pre-populating sign-in form with last user input
-
-             done();
-           });
+      done();
+    }
   },
 
 });
@@ -205,23 +183,31 @@ export const checkEmailVerified = createLogic({
   name: `${_auth}.checkEmailVerified`,
   type: String(_authAct.signIn.checkEmailVerified),
 
-  transform({getState, action, fassets}, next, reject) {
+  async transform({getState, action, fassets}, next, reject) {
+    try {
+      // fetch the most up-to-date user
+      const user = await fassets.authService.refreshUser();
 
-    toast({ msg:`verifying your email: ${curUser(getState()).email}` });
-    // fetch the most up-to-date user
-    fassets.authService.refreshUser()
-           .then( user => {
-             // supplement action with the most up-to-date user
-             action.user = user;
-             next(action);
-           })
-           .catch( err => {
-             // report unexpected error to user
-             discloseError({err});
+      if (user.emailVerified) {
+        toast({ msg:`your email has been verified: ${curUser(getState()).email}` });
+      }
+      else {
+        toast.warn({ msg:`your email has NOT YET been verified: ${curUser(getState()).email}` });
+      }
 
-             // nix the entire action
-             reject();
-           });
+      // supplement action with the most up-to-date user
+      action.user = user;
+      
+      // continue the action
+      next(action);
+    }
+    catch(err) {
+      // report unexpected error to user
+      discloseError({err});
+
+      // nix the entire action
+      reject();
+    }
   },
 
 });
@@ -269,16 +255,18 @@ export const signOut = createLogic({
   name: `${_auth}.signOut`,
   type: String(_authAct.signOut),
 
-  process({getState, action, fassets}, dispatch, done) {
-    fassets.authService.signOut()
-           .catch( (err) => {
-             // report unexpected error to user
-             discloseError({err});
-           });
-
-    removeCredentials();
-
-    done();
+  async process({getState, action, fassets}, dispatch, done) {
+    try {
+      await fassets.authService.signOut();
+    }
+    catch(err) {
+      // report unexpected error to user
+      discloseError({err});
+    }
+    finally {
+      removeCredentials();
+      done();
+    }
   },
 
 });
@@ -287,9 +275,7 @@ export const signOut = createLogic({
 
 // promote all logic modules for this feature
 // ... NOTE: individual logic modules are unit tested using the named exports.
-export default expandWithFassets( (fassets) => [
-
-  startAuthorization(fassets),
+export default [
 
   checkDeviceCredentials,
   autoSignIn,
@@ -309,4 +295,4 @@ export default expandWithFassets( (fassets) => [
 
   supplementSignOutUser,
   signOut,
-]);
+];

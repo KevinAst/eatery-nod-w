@@ -4,8 +4,8 @@ Initializes and promotes the GPS location for use by the app.
 
 It accomplishes the following:
 
- - Initializes the location through the `'bootstrap.location'` use
-   contract.
+ - Initializes the location through the appInit()
+   application-life-cycle-hook
 
  - Promotes the location through `fassets.sel.getLocation(appState)`.
 

@@ -30,35 +30,29 @@ export default class EateryServiceAPI {
 
 
   /**
-   * Add new Eatery to the DB being monitored.
+   * Add new Eatery to the DB being monitored (asynchronously).
    *
    * This method can only be called, once a successful
    * monitorDbEateryPool() has been established, because of the
    * persistent nature of this service.
    * 
    * @param {Eatery} eatery the eatery entry to add
-   * 
-   * @returns {void via promise} a void promise, resolved when add
-   * complete and captures async errors.
    */
-  addEatery(eatery) {
+  async addEatery(eatery) {
     throw new Error(`***ERROR*** ${this.constructor.name}.addEatery() is a required service method that has NOT been implemented`);
   }
 
 
   /**
-   * Remove the supplied eateryId from the DB being monitored.
+   * Remove the supplied eateryId from the DB being monitored (asynchronously).
    *
    * This method can only be called, once a successful
    * monitorDbEateryPool() has been established, because of the
    * persistent nature of this service.
    * 
    * @param {number} eateryId the eatery id to remove
-   * 
-   * @returns {void via promise} a void promise, resolved when remove
-   * complete and captures async errors.
    */
-  removeEatery(eateryId) {
+  async removeEatery(eateryId) {
     throw new Error(`***ERROR*** ${this.constructor.name}.removeEatery() is a required service method that has NOT been implemented`);
   }
 

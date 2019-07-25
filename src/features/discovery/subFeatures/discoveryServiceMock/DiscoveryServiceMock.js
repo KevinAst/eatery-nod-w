@@ -1,6 +1,7 @@
 import DiscoveryServiceAPI from '../discoveryService/DiscoveryServiceAPI';
 import verify              from 'util/verify';
 import isString            from 'lodash.isstring';
+import featureFlags        from 'featureFlags';
 
 import {discoverySearchPage1,   // NOTE: tight coupling with EateryServiceMock (IT's OK ... were a MOCK :-)
         discoverySearchPage2,
@@ -14,16 +15,17 @@ import {discoverySearchPage1,   // NOTE: tight coupling with EateryServiceMock (
  */
 export default class DiscoveryServiceMock extends DiscoveryServiceAPI {
 
-  searchDiscoveries({loc,           // ... see DiscoveryServiceAPI
-                     searchText='',
-                     distance=5,
-                     minprice='1',
-                     ...unknownArgs}={}) {
-    
-    // ***
-    // *** validate parameters
-    // ***
+  constructor() {
+    super();
+    !featureFlags.useWIFI && console.log('***eatery-nod-w*** mocking DiscoveryService (via DiscoveryServiceMock)');
+  }
 
+  async searchDiscoveries({loc,           // ... see DiscoveryServiceAPI
+                           searchText='',
+                           distance=5,
+                           minprice='1',
+                           ...unknownArgs}={}) {
+    // validate parameters
     // NOTE: same as production
     const check = verify.prefix('DiscoveryServiceMock.searchDiscoveries() parameter violation: ');
 
@@ -40,35 +42,29 @@ export default class DiscoveryServiceMock extends DiscoveryServiceAPI {
     const unknownArgKeys = Object.keys(unknownArgs);
     check(unknownArgKeys.length===0,      `unrecognized named parameter(s): ${unknownArgKeys}`);
 
-    return new Promise( (resolve, reject) => {
-      // console.log(`xx RETURNING following discoverySearch: `, discoverySearchPage1);
-      return resolve(discoverySearchPage1);
-    });
-
+    // return mocked discoveries (first page)
+    // console.log(`xx RETURNING following discoverySearch: `, discoverySearchPage1);
+    return discoverySearchPage1;
   }
 
 
-  searchDiscoveriesNextPage(pagetoken) { // ... see DiscoveryServiceAPI
-
+  async searchDiscoveriesNextPage(pagetoken) { // ... see DiscoveryServiceAPI
+    // validate parameters
     // NOTE: same as production
     const check = verify.prefix('DiscoveryServiceMock.searchDiscoveriesNextPage() parameter violation: ');
     check(pagetoken, 'pagetoken is required');
     check(isString(pagetoken), `supplied pagetoken (${pagetoken}) must be a string`);
 
-    return new Promise( (resolve, reject) => {
-      // console.log(`xx RETURNING following discoverySearch: `, discoverySearchPage2);
-      return resolve(discoverySearchPage2);
-    });
+    // return mocked discoveries (second page)
+    // console.log(`xx RETURNING following discoverySearch: `, discoverySearchPage2);
+    return discoverySearchPage2;
   }
 
 
-  fetchEateryDetail(eateryId) { // ... see DiscoveryServiceAPI
-
-    return new Promise( (resolve, reject) => {
-      // console.log(`xx fetchEateryDetail(${eateryId}) ... returning: `, eateriesMockDB[eateryId]);
-      return resolve(eateriesMockDB[eateryId]);
-    });
-
+  async fetchEateryDetail(eateryId) { // ... see DiscoveryServiceAPI
+    // return mocked discovery
+    // console.log(`xx fetchEateryDetail(${eateryId}) ... returning: `, eateriesMockDB[eateryId]);
+    return eateriesMockDB[eateryId];
   }
 
 } // end of ... DiscoveryServiceMock class definition

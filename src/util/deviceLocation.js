@@ -1,13 +1,18 @@
 import featureFlags  from 'featureFlags';
+import diag$         from 'util/diag$';
+import delay         from 'util/delay';
+
+const mockedLocation = featureFlags.useLocation(); // null indicates NOT mocking
 
 /**
  * Return the current device location asynchronously (via a promise).
  * 
- * NOTE: This service method can be mocked via: featureFlags.mockGPS
+ * NOTE: This service method can be mocked via: featureFlags.useLocation()
  *
  * @returns {Promise} the current device location {lat, lng}
  */
-export const getCurPos = featureFlags.mockGPS ? getCurPos_mock : getCurPos_real;
+export const getCurPos = mockedLocation ? console.log(`***eatery-nod-w*** mocking location to: ${mockedLocation.name}`) || getCurPos_mock
+                                        : getCurPos_real;
 
 
 //***
@@ -16,6 +21,8 @@ export const getCurPos = featureFlags.mockGPS ? getCurPos_mock : getCurPos_real;
 
 function getCurPos_real() {
 
+  // NOTE: because geolocation.getCurrentPosition() below is NOT promised based,
+  //       WE MUST wrap in our own promise (i.e. we cannot use async/await syntax)
   return new Promise( (resolve, reject) => {
 
     // insure geolocation is available in this browser
@@ -63,6 +70,8 @@ function getCurPos_real() {
         //maximumAge:       0,    // acceptable age of cached loc (mills) ... DEFAULT: 0 - do NOT use cached position
       });
   });
+
+
 }
 
 
@@ -71,23 +80,11 @@ function getCurPos_real() {
 //*** our MOCK implementation
 //***
 
-function getCurPos_mock() {
+async function getCurPos_mock() {
 
-  const GlenCarbonIL = {lat: 38.752209, lng: -89.986610};
-  const defaultLoc   = GlenCarbonIL;
-  const mockLoc      = featureFlags.mockGPS.lat ? featureFlags.mockGPS : defaultLoc;
+  await diag$.off('Simulate GPS Location Error in long-running process', (errMsg) => delay(3000, errMsg));
 
-  // console.log(`xx getCurPos_mock() request ... mocked to: `, mockLoc);
-  return new Promise( (resolve, reject) => {
-    // setTimeout(() => { // TEMPORARY: for testing delay just a bit
-
-    // TEMPORARY: for testing, simulate error condition
-    //            ... NOTE: reject() passes error into .catch(), throw does NOT
-    // return reject(new Error('Simulated Error in Expo GPS Location acquisition') );
-
-    // communicate device location
-    return resolve(mockLoc);
-    // }, 10000); // TEMPORARY: for testing delay just a bit
-  });
-
+  // expose our mocked location
+  // ... NOTE: this function is only active if we have a mockedLocation :-)
+  return mockedLocation;
 }

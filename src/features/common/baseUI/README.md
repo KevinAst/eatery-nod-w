@@ -16,6 +16,8 @@ application.  It manages the following characteristics:
   - an **[About Dialog]** is promoted from information gleaned from the `package.json`
   - the **[Notify]** utility is activated, supporting programmatic
     **toasts, alerts, and confirmations**
+  - the **[SplashScreen]** utility is activated, supporting the programmatic
+    `splash(msg)` API
 - _when an active user is **signed-in**, the following items are also
   manifest (through the [App Motif] component):_
   - a **[Left Nav]** menu
@@ -34,6 +36,7 @@ application.  It manages the following characteristics:
   - [UI Theme]
   - [About Dialog]
   - [Notify]
+  - [SplashScreen]
 - [App Motif]
   - [Left Nav]
   - [User Menu]
@@ -92,6 +95,9 @@ The following items are provided through the  `<MainLayout>` component:
 - the **[Notify]** utility is activated, supporting programmatic
   **toasts, alerts, and confirmations**
 
+- the **[SplashScreen]** utility is activated, supporting the programmatic
+  `splash(msg)` API
+
 These items are manifest through the following html (within the
 `<MainLayout>` component):
 
@@ -100,6 +106,7 @@ These items are manifest through the following html (within the
   <MuiThemeProvider> ... provides UI Theme capability
     <CssBaseline/>   ... injects Material UI CSS constructs supporting Responsive Design
     <Notify/>        ... bootstraps notify utility (toasts/alerts/confirm)
+    <SplashScreen/>  ... bootstraps SplashScreen utility (splash(msg))
     <main>
       <AppMotif>     ... conditionally active when user is signed in
         ... app-specific content injected here
@@ -304,6 +311,24 @@ Here is a rendition of a sign-out confirmation _(from above)_:
 </ul>
 
 
+### SplashScreen
+
+<ul> <!--- indentation hack --->
+
+The **SplashScreen** utility is activated by injecting the `<SplashScreen/>`
+component.
+
+This supports the programmatic API of SplashScreen messages _(see
+**SplashScreen utility** for complete details)_:
+
+```js
++ splash(msg) ... activiate SplashScreen with given message
++ splash() ...... deactivate SplashScreen
+```
+
+</ul>
+
+
 ## App Motif
 
 AppMotif is a re-usable top-level component that establishes the
@@ -442,6 +467,7 @@ Transition](docs/StateTransition.txt) diagram.
 [UI Theme]:               #ui-theme
 [About Dialog]:           #about-dialog
 [Notify]:                 #notify
+[SplashScreen]:           #splashscreen
 [App Motif]:              #app-motif
 [Left Nav]:               #left-nav
 [User Menu]:              #user-menu

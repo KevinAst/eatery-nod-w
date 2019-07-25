@@ -1,24 +1,42 @@
-/**
- * featureFlags (see description below)
- */
+// GPS location defined constants (a convenience)
+const LOCATION = {
+  DEVICE:        null, // PRODUCTION: actual device location (null directive)
+  GlenCarbonIL:  {lat: 38.752209, lng: -89.986610, name: 'Glen Carbon, IL'},
+  NewOrleansLA:  {lat: 30.010479, lng: -90.119414, name: 'New Orleans, LA'},
+  KokomoIN:      {lat: 40.48643,  lng: -86.1336,   name: 'Kokomo, IN'},
+  TroyMI:        {lat: 42.60559,  lng: -83.14993,  name: 'Troy, MI'},
+};
 
+
+// various featureFlags used throughout the application
 export default {
 
-  useWIFI: true,  // should app use WIFI? ... regulates various services: real/mocked
+  // should app use WIFI?
+  // ... regulates various services (real/mocked)
+  useWIFI: true,
 
-  mockGPS: false, // should app mock GPS? ... regulates util/deviceLocation.js getCurPos():  real/mocked
-                  // false: use real device location
-                  // true:  mock device location (default to Glen Carbon IL)
-                  // {lat, lng}: specify mocked location, example:
-                  //             {lat: 40.48643,  lng: -86.1336}   ... Kokomo IN
-                  //             {lat: 42.60559,  lng: -83.14993}  ... Troy MI
-                  //             {lat: 30.010479, lng: -90.119414} ... New Orleans, LA
-                  //             {lat: 38.752209, lng: -89.986610} ... Glen Carbon IL
+  // GPS location (real/mocked)
+  //  - PRODUCTION: LOCATION.DEVICE       (actual device location)
+  //  - DEMO:       LOCATION.GlenCarbonIL (using WIFI at DEMO, outside of GC, but persistent data is in GC)
+  //  - OTHER:      LOCATION.whatever     (mock to whatever you want)
+  location: LOCATION.DEVICE,
 
-  log:     false, // should app emit diagnostic logs?
-                  // false:     no logs
-                  // true:      generate 'non verbose' logs (e.g. actions will NOT include redux state)
-                  // 'verbose': generate 'verbose'     logs (e.g. actions WILL     include redux state)
+  // value-added GPS location heuristic
+  // ... regulates getCurPos() service (real/mocked)
+  useLocation() {
+    // when our services are mocked (i.e. NO WIFI),
+    //   we force a New Orleans mock location
+    //   ... because this is where the mocked data is seeded
+    // otherwise, we use the desired location directive
+    return this.useWIFI ? this.location : LOCATION.NewOrleansLA;
+  },
 
-  sandbox: false, // should app enable diagnostic sandbox controls?
+  // should app emit diagnostic logs?
+  //  - false:     no logs
+  //  - true:      generate 'non verbose' logs (e.g. actions will NOT include redux state)
+  //  - 'verbose': generate 'verbose'     logs (e.g. actions WILL     include redux state)
+  log:     false,
+
+  // should app enable diagnostic sandbox controls?
+  sandbox: false,
 };

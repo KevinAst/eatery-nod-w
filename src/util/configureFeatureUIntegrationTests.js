@@ -8,7 +8,7 @@ import {createLogicMiddleware} from 'redux-logic';
 import {featureRoute, 
         PRIORITY}              from 'feature-router';
 import SplashScreen            from 'util/SplashScreen';
-import {diag$}                 from 'util/diagnosticUtil';
+import diag$                   from 'util/diag$';
 
 
 // ***

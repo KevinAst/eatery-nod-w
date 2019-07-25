@@ -18,7 +18,6 @@ let curPoolMonitor = {   // current "pool" monitor (initially a placebo)
 };
 
 let   originalEateryService = null;
-const mockEateryService     = new EateryServiceMock();
 
 
 /**
@@ -36,7 +35,7 @@ export const setupGuestUser = expandWithFassets( (fassets) => createLogic({
 
       // swap out our eatery service with a mocked in-memory source
       originalEateryService = fassets.eateryService;
-      fassets.eateryService = mockEateryService; // AI: we are mutating fassets ... may be a  code smell
+      fassets.eateryService = new EateryServiceMock(); // AI: we are mutating fassets ... may be a  code smell
 
       // inform user of what is going on
       toast({ msg:'as a "guest" user, your Eatery pool is a "mocked" in-memory data source'});
@@ -260,17 +259,18 @@ export const addToPoolPrep = createLogic({
   name: `${_eateries}.addToPoolPrep`,
   type: String(_eateriesAct.dbPool.add),
 
-  process({getState, action, fassets}, dispatch, done) {
-
-    fassets.discoveryService.fetchEateryDetail(action.eateryId)
-      .then(eatery => {
-        dispatch( _eateriesAct.dbPool.add.eateryDetail(eatery) );
-        done();
-      })
-      .catch(err => {
-        dispatch( _eateriesAct.dbPool.add.eateryDetail.fail(action.eateryId, err) );
-        done();
-      });
+  async process({getState, action, fassets}, dispatch, done) {
+    try {
+      const eatery = await fassets.discoveryService.fetchEateryDetail(action.eateryId);
+      dispatch( _eateriesAct.dbPool.add.eateryDetail(eatery) );
+    }
+    catch(err) {
+      // report unexpected error to user
+      discloseError({err: err.defineAttemptingToMsg('DiscoveryService.fetchEateryDetail()')});
+    }
+    finally {
+      done();
+    }
   },
 
 });
@@ -282,16 +282,17 @@ export const addToPool = createLogic({
   name: `${_eateries}.addToPool`,
   type: String(_eateriesAct.dbPool.add.eateryDetail),
 
-  transform({getState, action, fassets}, next, reject) {
-
-    // add the new eatery
-    fassets.eateryService.addEatery(action.eatery)
-           .catch( (err) => {
-             // report unexpected error to user
-             discloseError({err});
-           });
-
-    next(action);
+  async transform({getState, action, fassets}, next, reject) {
+    try {
+      // add the new eatery
+      await fassets.eateryService.addEatery(action.eatery);
+      next(action);
+    }
+    catch(err) {
+      // report unexpected error to user
+      discloseError({err});
+      reject(action);
+    }
   },
 
 });
@@ -302,16 +303,17 @@ export const removeFromPool = createLogic({
   name: `${_eateries}.removeFromPool`,
   type: String(_eateriesAct.dbPool.remove),
 
-  transform({getState, action, fassets}, next, reject) {
-
-    // remove the supplied eatery
-    fassets.eateryService.removeEatery(action.eateryId)
-           .catch( (err) => {
-             // report unexpected error to user
-             discloseError({err});
-           });
-
-    next(action);
+  async transform({getState, action, fassets}, next, reject) {
+    try {
+      // remove the supplied eatery
+      await fassets.eateryService.removeEatery(action.eateryId)
+      next(action);
+    }
+    catch(err) {
+      // report unexpected error to user
+      discloseError({err});
+      reject(action);
+    }
   },
 
 });

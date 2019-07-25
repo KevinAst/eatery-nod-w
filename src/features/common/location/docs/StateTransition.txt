@@ -11,5 +11,4 @@ Actions (see: actions.js)                        Logic (see: logic.js)          
 location
 
   > set current GPS location
-    ... dispatched via the 'bootstrap.location' use contract
  .setLocation(loc) ...........................................................................................  - location.loc = action.loc

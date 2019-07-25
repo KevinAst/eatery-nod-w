@@ -13,16 +13,16 @@ export default class AuthServiceAPI {
    * @param {String} email the identifying user email
    * @param {String} pass the user password
    *
-   * @returns {User via promise} the signed-in eatery-nod User object.
-   * NOTE: This returned user may still be in an unverified state.
+   * @returns {User} the signed-in eatery-nod User object.  NOTE: This
+   * returned user may still be in an unverified state.
    */
-  signIn(email, pass) {
+  async signIn(email, pass) {
     throw new Error(`***ERROR*** ${this.constructor.name}.signIn() is a required service method that has NOT been implemented`);
   }
 
 
   /**
-   * Refresh the current signed-in user.
+   * Refresh the current signed-in user (asynchronously).
    *
    * This method is typically used to insure the authorization status
    * is up-to-date.
@@ -30,11 +30,10 @@ export default class AuthServiceAPI {
    * This method can only be called, once a successful signIn() has
    * completed, because of the persistent nature of this service.
    * 
-   * @returns {User via promise} the refreshed signed-in eatery-nod
-   * User object.  NOTE: The returned user may still be in an
-   * unverified state.
+   * @returns {User} the refreshed signed-in eatery-nod User object.
+   * NOTE: The returned user may still be in an unverified state.
    */
-  refreshUser() {
+  async refreshUser() {
     throw new Error(`***ERROR*** ${this.constructor.name}.refreshUser() is a required service method that has NOT been implemented`);
   }
 
@@ -54,15 +53,12 @@ export default class AuthServiceAPI {
 
 
   /**
-   * Sign-out the current signed-in user.
+   * Sign-out the current signed-in user (asynchronously).
    *
    * This method can only be called, once a successful signIn() has
    * completed, because of the persistent nature of this service.
-   * 
-   * @returns {void via promise} a void promise is needed to capture
-   * async errors.
    */
-  signOut() {
+  async signOut() {
     throw new Error(`***ERROR*** ${this.constructor.name}.signOut() is a required service method that has NOT been implemented`);
   }
 
