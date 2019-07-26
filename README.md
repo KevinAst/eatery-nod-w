@@ -244,8 +244,11 @@ because the modules _(or features)_ are smaller and more focused.
 When features are **plug-and-play**, the application is in essence
 broken up into several mini-apps _(so to speak)_.
 
-Here is a complete list of [**eatery-nod-w**
-features](src/features/README.md).
+Here is a complete list of the **eatery-nod-w**
+[**features**](src/features/README.md) that make up the application, and
+the [**plugin aspects**](src/aspects/README.md) that auto-configure
+the frameworks in it's run-time stack.
+
 
 You can find more information about **[feature-u]** here:
 
