@@ -34,11 +34,6 @@ frequent, so **eatery-nod-w** provides the spinning wheel!
     - [Deployment]
   - [NPM Scripts]
 - [Revision History]
-  - [v3.0.0] - _**Next xx** (Month xx, 2019)_
-  - [v2.2.0] - _**Better Async Initialization** (July 25, 2019)_
-  - [v2.1.0] - _**Responsive Design** (June 07, 2019)_
-  - [v2.0.0] - _**React Hooks** (May 10, 2019)_
-  - [v1.0.0] - _**Initial Release** (May 05, 2019)_
 
 
 ## Eatery Pool
@@ -429,6 +424,10 @@ Release  | What                                            | *When*
 [Diff](https://github.com/KevinAst/eatery-nod-w/compare/v2.2.0...v3.0.0)
 
 **Technical:**
+
+- Simplify mainline by extracting plugin accumulation/configuration in
+  a new `aspects/` directory _(consistent with how features are
+  accumulated)_.
 
 - ?? more
 
