@@ -1,4 +1,4 @@
-# eatery-nod-w app
+# eatery-nod-w features
 
 The **eatery-nod-w** application is composed of the following **features**:
 
