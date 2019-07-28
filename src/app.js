@@ -1,4 +1,3 @@
-import 'util/ErrorExtensionPolyfill';
 import ReactDOM     from 'react-dom';
 import {launchApp}  from 'feature-u';
 import features     from 'features';
