@@ -122,7 +122,7 @@ if (!Error.prototype.defineUserMsg) { // key off of one of several extension poi
   /**
    * Return an indicator as to whether this error was
    * expected (say user input error),
-   * or not (say a catestrophic error).
+   * or not (say a catastrophic error).
    *
    * @return {boolean} error expected (true) or not (false).
    */
@@ -134,7 +134,7 @@ if (!Error.prototype.defineUserMsg) { // key off of one of several extension poi
 
   /**
    * Return an indicator as to whether this error was
-   * unexpected (say a catestrophic error),
+   * unexpected (say a catastrophic error),
    * or not (say user input error).
    *
    * @return {boolean} error unexpected (true) or not (false).
@@ -149,7 +149,7 @@ if (!Error.prototype.defineUserMsg) { // key off of one of several extension poi
    * additional details of what was being attempted.
    *
    * Errors with this context are prefixed with ' ... attempting to: ',
-   * so word your phrasing appropriatly.
+   * so word your phrasing appropriately.
    * 
    * Multiple attempting-to phrases can be used, which will be
    * combined with the ', -and- ' phrase.
@@ -180,7 +180,7 @@ if (!Error.prototype.defineUserMsg) { // key off of one of several extension poi
 
 
   /**
-   * Extend the Error toString() to prefix user-specfic context.
+   * Extend the Error toString() to prefix user-specific context.
    */
   const prior_toString = Error.prototype.toString; // monkey patch
   Error.prototype.toString = function() {
