@@ -19,7 +19,7 @@ export default {
   //  - PRODUCTION: LOCATION.DEVICE       (actual device location)
   //  - DEMO:       LOCATION.GlenCarbonIL (using WIFI at DEMO, outside of GC, but persistent data is in GC)
   //  - OTHER:      LOCATION.whatever     (mock to whatever you want)
-  location: LOCATION.GlenCarbonIL,
+  location: LOCATION.DEVICE,
 
   // value-added GPS location heuristic
   // ... regulates getCurPos() service (real/mocked)
