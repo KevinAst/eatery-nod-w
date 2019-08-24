@@ -407,7 +407,7 @@ eject ..... eject the Create React App project tooling
 
 Release  | What                                            | *When*
 ---------|-------------------------------------------------|------------------
-[v3.0.0] | Next xx                                         | *Month xx, 2019*
+[v2.3.0] | Simplified Mainline                             | *August 24, 2019*
 [v2.2.0] | Better Async Initialization                     | *July 25, 2019*
 [v2.1.0] | Responsive Design                               | *June 07, 2019*
 [v2.0.0] | React Hooks                                     | *May 10, 2019*
@@ -416,23 +416,21 @@ Release  | What                                            | *When*
 
 <!-- *** RELEASE *************************************************************** -->
 
-### v3.0.0 - Next xx *(Month xx, 2019)*
+### v2.3.0 - Simplified Mainline *(August 24, 2019)*
 
 <ul><ul> <!--- indentation hack --->
 
-[GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v3.0.0)
+[GitHub Content](https://github.com/KevinAst/eatery-nod-w/tree/v2.3.0)
 &bull;
-[GitHub Release](https://github.com/KevinAst/eatery-nod-w/releases/tag/v3.0.0)
+[GitHub Release](https://github.com/KevinAst/eatery-nod-w/releases/tag/v2.3.0)
 &bull;
-[Diff](https://github.com/KevinAst/eatery-nod-w/compare/v2.2.0...v3.0.0)
+[Diff](https://github.com/KevinAst/eatery-nod-w/compare/v2.2.0...v2.3.0)
 
 **Technical:**
 
-- Simplify mainline by extracting plugin accumulation/configuration in
-  a new `aspects/` directory _(consistent with how features are
-  accumulated)_.
-
-- ?? more
+- Simplify mainline (`app.js`) by extracting Aspect Plugin 
+  accumulation/configuration in a new `aspects/` directory
+  _(consistent with how features are accumulated)_.
 
 </ul></ul>
 
@@ -616,7 +614,7 @@ Release  | What                                            | *When*
 [NPM Scripts]:               #npm-scripts
 
 [Revision History]:    #revision-history
- [v3.0.0]:             #v300---next-xx-month-xx-2019
+ [v2.3.0]:             #v230---simplified-mainline-august-24-2019
  [v2.2.0]:             #v220---better-async-initialization-july-25-2019
  [v2.1.0]:             #v210---responsive-design-june-07-2019
  [v2.0.0]:             #v200---react-hooks-may-10-2019
