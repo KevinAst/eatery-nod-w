@@ -8,7 +8,17 @@ import UserMenuItem  from 'features/common/baseUI/comp/UserMenuItem';
 
 /**
  * About: display info about this app (gleaned from package.json)
- * 
+ *
+ * NOTE: These env vars require the following .env file (in your project root per CRA):
+ *
+ *   .env
+ *   ====
+ *   REACT_APP_NAME=$npm_package_name
+ *   REACT_APP_VERSION=$npm_package_version
+ *   REACT_APP_DESCRIPTION=$npm_package_description
+ *   REACT_APP_ABOUT_DOCS=$npm_package_about_docs
+ *   REACT_APP_ABOUT_HIST=$npm_package_about_hist
+ *
  * NOTE: Because this is a "custom" component that is held in Menu
  *       (a ButtonBase MenuItem) it must be able to hold a ref ... hence
  *       the React.forwardRef()!
