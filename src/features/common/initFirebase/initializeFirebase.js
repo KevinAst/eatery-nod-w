@@ -3,7 +3,7 @@ import {decode}  from 'util/encoder';
 
 // initialize the Google Firebase service
 // ... a feature-u app-life-cycle-hook
-export default async function initializeFirebase({showStatus, fassets, appState, dispatch}) {
+export default async function initializeFirebase({showStatus, fassets, getState, dispatch}) {
 
   // inform user what we are doing
   showStatus('Initializing Firebase');

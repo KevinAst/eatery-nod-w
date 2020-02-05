@@ -24,7 +24,7 @@ export default createFeature({
     }
   },
 
-  async appInit({showStatus, fassets, appState, dispatch}) {
+  async appInit({showStatus, fassets, getState, dispatch}) {
     // inform user what we are doing
     showStatus('Initializing GPS Location');
 

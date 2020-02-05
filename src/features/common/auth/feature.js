@@ -34,7 +34,7 @@ export default createFeature({
   logic,
   route,
 
-  appDidStart({fassets, appState, dispatch}) {
+  appDidStart({fassets, getState, dispatch}) {
     // kick-start our authorization process
     dispatch( _authAct.autoSignIn() );
   },

@@ -2,7 +2,7 @@ import {decode}  from 'util/encoder';
 
 // initialize the Google Places service
 // ... a feature-u app-life-cycle-hook
-export default async function initializeGooglePlaces({showStatus, fassets, appState, dispatch}) {
+export default async function initializeGooglePlaces({showStatus, fassets, getState, dispatch}) {
 
   // inform user what we are doing
   showStatus('Initializing Google Places');

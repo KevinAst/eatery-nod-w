@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 export default createFeature({
   name:    'pwa',
 
-  appInit({showStatus, fassets, appState, dispatch}) {
+  appInit({showStatus, fassets, getState, dispatch}) {
     // FROM: CRA (Create React App):
     // If you want your app to work offline and load faster, you can change
     // unregister() to register() below. Note this comes with some pitfalls.
